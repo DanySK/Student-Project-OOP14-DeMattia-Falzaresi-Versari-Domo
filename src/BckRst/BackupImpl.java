@@ -3,7 +3,6 @@ import java.io.File;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -59,9 +58,15 @@ public class BackupImpl implements Backup {
 			TransformerFactory transFact = TransformerFactory.newInstance();
 			Transformer trans = transFact.newTransformer();
 			DOMSource dom = new DOMSource(document);
-			StreamResult strOut = new StreamResult(new File(System.getProperty("user.home")+System.getProperty("file.separator")+this.fileName));
+			File tmpFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"tmp.dom");
+			StreamResult strOut = new StreamResult(tmpFile);
 			//save the file
 			trans.transform(dom, strOut);
+			Crypter en = new Crypter(tmpFile.getName(),fileName);
+			en.doEncryption();
+			tmpFile.delete();
+			Crypter de = new Crypter("output.xml",fileName);
+			de.doDecryption();
 			return true;
 		}
 		catch (Exception exc){
