@@ -8,4 +8,9 @@ package BckRst;
 	 */
 public interface Restore {
 
+	/**
+	 * Check if the configuration file is present
+	 * @return True or False
+	 */
+	boolean checkFilePresence();
 }

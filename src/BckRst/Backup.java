@@ -10,4 +10,9 @@ package BckRst;
 
 public interface Backup {
 
+	/**
+	 * Start do backup everything and return true if no error occour
+	 * @throws Exception 
+	 */
+	boolean BackupNow();
 }
