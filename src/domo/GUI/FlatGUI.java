@@ -1,7 +1,6 @@
 package domo.GUI;
 
 import java.awt.Dimension;
-import java.awt.MenuBar;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,28 +28,71 @@ public class FlatGUI {
 		double height 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * yScale;
 		mainFrame.setSize(new Dimension((int)width,(int)height));
 		
-		JMenu menu = new JMenu("File");
-		//menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription("");
-		JMenuItem menuItem = new JMenuItem("A text-only menu item",
-                KeyEvent.VK_T);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(
-				KeyEvent.VK_1, ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
-				"This doesn't really do anything");
-		menuItem.addActionListener(new ActionListener() {
+		
+		//Implementazione della barra menu'
+		JMenu menuFile = new JMenu("File");
+		//nuovo oggetto menu
+		JMenuItem menuNew = new JMenuItem("New",
+                KeyEvent.VK_N);
+		menuNew.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_N, ActionEvent.ALT_MASK));
+		menuNew.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("premuto ITEM");
+				System.out.println("premuto New");
+			}
+		});
+		menuFile.add(menuNew);
+		
+		JMenuItem menuOpen = new JMenuItem("Open",
+                KeyEvent.VK_O);
+		menuOpen.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_O, ActionEvent.ALT_MASK));
+		menuOpen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("premuto Open");
+			}
+		});
+		menuFile.add(menuOpen);
+		
+		JMenuItem menuClose = new JMenuItem("Close",
+                KeyEvent.VK_Q);
+		menuClose.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+		menuClose.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				FlatGUI.this.mainFrame.dispose();
+			}
+		});
+		menuFile.add(menuClose);
+		menuBar.add(menuFile);
+		
+		JMenu menuInsert = new JMenu("Insert");
+		JMenuItem menuAddRoom = new JMenuItem("Insert New Room",
+                KeyEvent.VK_R);
+		menuAddRoom.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_R, ActionEvent.ALT_MASK));
+		menuAddRoom.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
 		});
-		menu.add(menuItem);
-
+		menuInsert.add(menuAddRoom);
+		menuBar.add(menuInsert);
 		
-		menuBar.add(menu);
+		
+		
+		
 		
 		
 		mainFrame.setJMenuBar(menuBar);
