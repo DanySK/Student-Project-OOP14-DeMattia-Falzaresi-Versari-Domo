@@ -1,5 +1,5 @@
 import BckRst.*;
-
+import domo.GUI.*;
 
 public class MainClass {
 
@@ -14,6 +14,10 @@ public class MainClass {
 		else{
 			System.out.println("No Buono!");
 		}
+		
+		//usato per OSX (barra menu a schermo)
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		FlatGUI t = new FlatGUI("Domo");
 
 	}
 
