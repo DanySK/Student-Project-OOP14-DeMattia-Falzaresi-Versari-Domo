@@ -31,6 +31,7 @@ public class BackupImpl implements Backup {
 	public boolean BackupNow(){
 		try{
 			// Creation of the document builder
+			//
 			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuild = docBuildFactory.newDocumentBuilder();
 			Document document = docBuild.newDocument();
