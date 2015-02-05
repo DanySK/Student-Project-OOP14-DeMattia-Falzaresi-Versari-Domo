@@ -32,7 +32,7 @@ public class FlatGUI {
 		JMenu menu = new JMenu("File");
 		//menu.setMnemonic(KeyEvent.VK_A);
 		menu.getAccessibleContext().setAccessibleDescription(
-		        "The only menu in this program that has menu items");
+		        "");
 		JMenuItem menuItem = new JMenuItem("A text-only menu item",
                 KeyEvent.VK_T);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(
