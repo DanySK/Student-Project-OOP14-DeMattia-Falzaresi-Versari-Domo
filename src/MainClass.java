@@ -14,7 +14,7 @@ public class MainClass {
 		else{
 			System.out.println("No Buono!");
 		}
-		
+		//branch test
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		FlatGUI t = new FlatGUI("Domo");
