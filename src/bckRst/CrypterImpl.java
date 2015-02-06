@@ -71,35 +71,35 @@ public class CrypterImpl implements Crypter {
 	
 	public void doDecryption() throws Exception {
 			crypt.init(Cipher.DECRYPT_MODE, secretKey);
-			File dataFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+enFileName);
-			File newDataFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+decFileName);
+			File dataFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + enFileName);
+			File newDataFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + decFileName);
 
 		    try {         
 		       fis = new FileInputStream(dataFile);
-		    } catch(Exception e) {  
+		    } catch (Exception e) {  
 		        //Exception
 		    }  
 
-		    if(dataFile.exists()){
-		        cis = new CipherInputStream(fis,crypt);  
+		    if (dataFile.exists()) {
+		        cis = new CipherInputStream(fis, crypt);  
 		        try {
 		            fos = new FileOutputStream(newDataFile);  
 		              byte[] b = new byte[8];  
 		          int i;
-		              while ((i=cis.read(b)) != -1) {  
+		              while ((i = cis.read(b)) != -1) {  
 		                  fos.write(b, 0, i);  
 		             }                
 		            
-		        } finally{
+		        } finally {
 		            try {
-		                if(fos != null)
-		                {
+		                if (fos != null) {
 		                 fos.flush();  
-		                 fos.close();                   }
+		                 fos.close();
+		                 }
 		                 cis.close();  
 		                 fis.close(); 
 		            } catch (IOException e) {
-		                //IOException
+		                System.out.println("Errore: " + e);
 		            }
 		        }
 		    }
