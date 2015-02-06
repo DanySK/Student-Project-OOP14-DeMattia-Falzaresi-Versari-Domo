@@ -1,4 +1,4 @@
-import BckRst.*;
+import bckRst.*;
 import domo.GUI.*;
 
 public class MainClass {
@@ -8,7 +8,7 @@ public class MainClass {
 		System.out.println("Welcome!");
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
-		if(bac.BackupNow()){
+		if(bac.backupNow()){
 			System.out.println("OK!");
 		}
 		else{
