@@ -1,4 +1,4 @@
-import BckRst.*;
+import bckRst.*;
 import domo.GUI.*;
 
 public class MainClass {
@@ -8,13 +8,13 @@ public class MainClass {
 		System.out.println("Welcome!");
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
-		if(bac.BackupNow()){
+		if (bac.backupNow()) {
 			System.out.println("OK!");
 		}
-		else{
+		else {
 			System.out.println("No Buono!");
 		}
-		
+
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		FlatGUI t = new FlatGUI("Domo");
