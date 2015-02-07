@@ -12,6 +12,12 @@ public class RestoreImpl implements Restore {
 		public boolean checkFilePresence() {
 			return false;
 		}
+
+		@Override
+		public boolean restoreNow(String fileName) {
+			// TODO Auto-generated method stub
+			return false;
+		}
 	
 	
 

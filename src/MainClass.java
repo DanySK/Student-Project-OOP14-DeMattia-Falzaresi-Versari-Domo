@@ -8,10 +8,10 @@ public class MainClass {
 		System.out.println("Welcome!");
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
-		if(bac.backupNow()){
+		if (bac.backupNow()) {
 			System.out.println("OK!");
 		}
-		else{
+		else {
 			System.out.println("No Buono!");
 		}
 
