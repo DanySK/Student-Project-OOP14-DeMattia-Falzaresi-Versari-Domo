@@ -1,9 +1,9 @@
-package BckRst;
+package bckRst;
 
 	/**
 	 * 
 	 * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
-	 * @version 1.0.0
+	 * 
 	 * This is the interface for the backup class
 	 *
 	 */
@@ -11,8 +11,9 @@ package BckRst;
 public interface Backup {
 
 	/**
-	 * Start do backup everything and return true if no error occour
+	 * Start to backup everything.
 	 * @throws Exception 
+	 * @return True if backup is correctly done,False if an error occur
 	 */
-	boolean BackupNow();
+	boolean backupNow();
 }

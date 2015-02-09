@@ -1,4 +1,4 @@
-package BckRst;
+package bckRst;
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,24 +13,29 @@ import org.w3c.dom.*;
 	/**
 	 * 
 	 * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
-	 * @version 1.0.0
+	 * 
 	 */
 public class BackupImpl implements Backup {
 	private final String fileName;
 	
 	/**
-	 * Constructor
-	 * @param file: File Name
+	 * Constructor.
+	 * @param file File Name
 	 * @throws Exception 
 	 */
-	public BackupImpl(String file){
+	public BackupImpl(String file) {
 		this.fileName = file;
 		
 	}
-	
-	public boolean BackupNow(){
-		try{
+	/**
+	 *  BackupNow method allow to start an automated backup of the application.
+	 *  
+	 *  @return True if no error occurred False if something wrong is happened
+	 */
+	public boolean backupNow() {
+		try {
 			// Creation of the document builder
+			//
 			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuild = docBuildFactory.newDocumentBuilder();
 			Document document = docBuild.newDocument();
@@ -58,18 +63,19 @@ public class BackupImpl implements Backup {
 			TransformerFactory transFact = TransformerFactory.newInstance();
 			Transformer trans = transFact.newTransformer();
 			DOMSource dom = new DOMSource(document);
-			File tmpFile = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"tmp.dom");
+			File tmpFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom");
 			StreamResult strOut = new StreamResult(tmpFile);
+			
 			//save the file
 			trans.transform(dom, strOut);
-			Crypter en = new Crypter(tmpFile.getName(),fileName);
+			CrypterImpl en = new CrypterImpl(tmpFile.getName(), fileName);
 			en.doEncryption();
 			tmpFile.delete();
-			Crypter de = new Crypter("output.xml",fileName);
+			CrypterImpl de = new CrypterImpl("output.xml", fileName);
 			de.doDecryption();
-			return true;
+			return true; 
 		}
-		catch (Exception exc){
+		catch (Exception exc) {
 			return false;
 		}
 		
