@@ -1,3 +1,5 @@
+package domo.general;
+
 import java.awt.Dimension;
 import java.awt.Point;
 

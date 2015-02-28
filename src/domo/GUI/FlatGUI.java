@@ -45,6 +45,8 @@ public class FlatGUI {
 	private final double yScale = 1;
 	private final String USER_HOME_FOLDER = System.getProperty("user.home").toString();
 	private final String SISTEM_SEPARATOR = System.getProperty("file.separator").toString();
+	//private final Flat a = null;
+	
 	
 	public FlatGUI(String title) {
 		
@@ -134,17 +136,8 @@ public class FlatGUI {
 			leftPanel.add(a);
 		}
 		try {
-			URL newImage = this.getClass().getResource("");
-			URL newImage2 = this.getClass().getResource("/");
-			URL newImage3 = this.getClass().getResource("/bgDomo_h.png");
-			System.out.println(USER_HOME_FOLDER + SISTEM_SEPARATOR +"Pictures" + SISTEM_SEPARATOR + "img2.jpg");
-			System.out.println("URL: " + newImage);
-			System.out.println("URL: " + newImage2);
-			System.out.println("URL: " + newImage3);
-			//BufferedImage myPicture = ImageIO.read(new File(USER_HOME_FOLDER + SISTEM_SEPARATOR + "Pictures" + SISTEM_SEPARATOR + "img2.jpg"));
-			BufferedImage myPicture = ImageIO.read(getClass().getResource("/bgDomo_h.png"));
 			
-			
+			BufferedImage myPicture = ImageIO.read(getClass().getResource(SISTEM_SEPARATOR + "bgDomo_h.png"));			
 			
 			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 			mainFrame.getContentPane().add(picLabel, BorderLayout.CENTER);
@@ -212,7 +205,6 @@ public class FlatGUI {
 			ImageIcon newImage = new ImageIcon(scaledT);
 			this.setBounds(bounds);
 			this.setIcon(newImage);
-			
 		}
 		
 		public void setPosition(Point position) {
