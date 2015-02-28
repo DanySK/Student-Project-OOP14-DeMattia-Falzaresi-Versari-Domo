@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +41,14 @@ public class FlatGUI {
 	private JFrame mainFrame = new JFrame();
 	private JMenuBar menuBar = new JMenuBar();
 	private final List<?> roomContainer = new ArrayList<>();
-	private final double xScale = 0.7;
-	private final double yScale = 0.7;
-	private final String USER_HOME_FOLDER = System.getProperty("user.home");
-	private final String SISTEM_SEPARATOR = System.getProperty("file.separator");
+	private final double xScale = 1;
+	private final double yScale = 1;
+	private final String USER_HOME_FOLDER = System.getProperty("user.home").toString();
+	private final String SISTEM_SEPARATOR = System.getProperty("file.separator").toString();
 	
 	public FlatGUI(String title) {
-		if (System.getProperty("os.name").contains("Mac")) {
-			  System.setProperty("apple.laf.useScreenMenuBar", "true");
-			}
+		
+		mainFrame = new JFrame();
 		
 		mainFrame.setTitle(title);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,11 +133,20 @@ public class FlatGUI {
 			JButton a = new JButton("n " + i);
 			leftPanel.add(a);
 		}
-		try{
-			BufferedImage myPicture = ImageIO.read(new File(USER_HOME_FOLDER + SISTEM_SEPARATOR +"Pictures" + SISTEM_SEPARATOR + "img2.jpg"));
+		try {
+			URL newImage = this.getClass().getResource("");
+			URL newImage2 = this.getClass().getResource("/");
+			URL newImage3 = this.getClass().getResource("/bgDomo_h.png");
 			System.out.println(USER_HOME_FOLDER + SISTEM_SEPARATOR +"Pictures" + SISTEM_SEPARATOR + "img2.jpg");
+			System.out.println("URL: " + newImage);
+			System.out.println("URL: " + newImage2);
+			System.out.println("URL: " + newImage3);
+			//BufferedImage myPicture = ImageIO.read(new File(USER_HOME_FOLDER + SISTEM_SEPARATOR + "Pictures" + SISTEM_SEPARATOR + "img2.jpg"));
+			BufferedImage myPicture = ImageIO.read(getClass().getResource("/bgDomo_h.png"));
+			
+			
+			
 			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-			//JImageView picLabel = new JImageView(USER_HOME_FOLDER + SISTEM_SEPARATOR +"Pictures" + SISTEM_SEPARATOR + "img2.jpg");
 			mainFrame.getContentPane().add(picLabel, BorderLayout.CENTER);
 		}catch(IOException ex){
 
@@ -156,14 +165,14 @@ public class FlatGUI {
 		openFile.setFileFilter(filter);
 		int result = openFile.showOpenDialog(mainFrame);
 		if(result == JFileChooser.APPROVE_OPTION){
-			BufferedImage image = ImageIO.read(new File(openFile.getSelectedFile().getPath()));
 			
+			BufferedImage image = ImageIO.read(new File(openFile.getSelectedFile().getPath()));
 			ImageIcon icon = new ImageIcon(image);
 	        JLabel label = new JLabel(icon);
 	        label.setSize(new Dimension(image.getWidth(), image.getHeight()));
 			//JImageView label = new JImageView (openFile.getSelectedFile().getPath());
 			//System.out.println(""+openFile.getSelectedFile().getPath());
-	        label.setBounds(new Rectangle(10, 30, 750, 500));
+	        //label.setBounds(new Rectangle(10, 30, 750, 500));
 	        
 	        mainFrame.getContentPane().add(label, BorderLayout.CENTER);
 	        mainFrame.repaint();
