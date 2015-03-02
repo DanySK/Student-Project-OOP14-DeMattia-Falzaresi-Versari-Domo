@@ -1,3 +1,5 @@
+package domo.general;
+
 import bckRst.*;
 import domo.GUI.*;
 
