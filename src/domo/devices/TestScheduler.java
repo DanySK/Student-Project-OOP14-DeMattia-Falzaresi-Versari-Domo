@@ -1,4 +1,4 @@
-package devices;
+package domo.devices;
 
 import org.junit.Test;
 import org.junit.Assert;

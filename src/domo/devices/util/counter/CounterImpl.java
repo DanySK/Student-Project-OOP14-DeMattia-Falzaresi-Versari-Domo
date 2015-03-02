@@ -1,4 +1,4 @@
-package devices.util.counter;
+package domo.devices.util.counter;
 
 /**
  * 

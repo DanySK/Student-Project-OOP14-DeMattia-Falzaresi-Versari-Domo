@@ -1,4 +1,4 @@
-package devices;
+package domo.devices;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -4,8 +4,8 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
-import devices.util.counter.Counter;
-import devices.util.counter.CounterImpl;
+import domo.devices.util.counter.Counter;
+import domo.devices.util.counter.CounterImpl;
 
 /**
  * 

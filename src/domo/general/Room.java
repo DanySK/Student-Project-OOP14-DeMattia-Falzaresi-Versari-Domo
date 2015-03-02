@@ -3,7 +3,7 @@ package domo.general;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import devices.Sensor;
+import domo.devices.Sensor;
 
 /**
  * 
