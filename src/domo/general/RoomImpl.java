@@ -2,10 +2,12 @@ package domo.general;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import devices.Sensor;
+import devices.util.counter.Counter;
+import devices.util.counter.CounterImpl;
 
 /**
  * @author Marco Versari
@@ -15,7 +17,8 @@ public class RoomImpl implements Room {
 	
 	private final int id;
 	private final String name;
-	private final Set<Sensor> listSensor;
+	private final Map<Integer, Sensor> listSensor;
+	private final Counter counter;
 	private Point location;
 	private Dimension size;
 	
@@ -27,7 +30,8 @@ public class RoomImpl implements Room {
 	public RoomImpl(final int pId, final String pName) {
 		id = pId;
 		name = pName;
-		listSensor = new HashSet<Sensor>();
+		listSensor = new HashMap<Integer, Sensor>();
+		counter = new CounterImpl(0);
 	}
 
 	@Override
@@ -56,17 +60,17 @@ public class RoomImpl implements Room {
 	}
 
 	@Override
-	public void addSensor(final Sensor sensor) {
-		listSensor.add(sensor);
+	public int addSensor(final Sensor sensor) {
+		final int ret = counter.incCounter();
+		listSensor.put(ret, sensor);
+		return ret;
 	}
 
 	@Override
 	public void removeSensor(final int pId) {
-		listSensor.forEach(x-> {
-			if (x.getId() == pId) {
-				listSensor.remove(x);
-			}
-		});		
+		if (listSensor.containsKey(pId)) {
+			listSensor.remove(pId);
+		}		
 	}
 
 	@Override

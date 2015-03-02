@@ -19,8 +19,9 @@ public interface Flat {
 	/**
 	 * Add a room in the list by id.
 	 * @param room the room to add.
+	 * @return The room id
 	 */
-	void addRoom(Room room);
+	int addRoom(Room room);
 	
 	/**
 	 * Remove room in the list by id.

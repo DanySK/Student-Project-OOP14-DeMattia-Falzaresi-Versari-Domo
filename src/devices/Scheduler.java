@@ -8,12 +8,6 @@ package devices;
 public interface Scheduler {
 	
 	/**
-	 * Get the scheduler Instance.
-	 * @return the scheduler instance.
-	 */
-	Scheduler getSchedulerInstance();
-	
-	/**
 	 * Add a scheduling with a specific start and stop hours.
 	 * @param id the device id.
 	 * @param start Start hour.

@@ -46,8 +46,9 @@ public interface Room {
 	/**
 	 * Add a sensor to room.
 	 * @param sensor sensor to add.
+	 * @return room id.
 	 */
-	void addSensor(Sensor sensor);
+	int addSensor(Sensor sensor);
 	
 	/**
 	 * Remove a sensor from room.
