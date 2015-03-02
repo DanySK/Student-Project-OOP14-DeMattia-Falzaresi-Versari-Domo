@@ -20,6 +20,12 @@ public interface Room {
 	int getId();
 	
 	/**
+	 * Set room id.
+	 * @param pId Set room id.
+	 */
+	void setId(final int pId);
+	
+	/**
 	 * Get room name.
 	 * @return room name.
 	 */

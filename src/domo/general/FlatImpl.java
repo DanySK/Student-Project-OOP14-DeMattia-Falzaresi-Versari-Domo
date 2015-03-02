@@ -36,6 +36,7 @@ public class FlatImpl implements Flat {
 	@Override
 	public int addRoom(final Room room) {
 		final int ret = counter.incCounter();
+		room.setId(ret);
 		listRoom.put(ret, room);
 		return ret;
 	}

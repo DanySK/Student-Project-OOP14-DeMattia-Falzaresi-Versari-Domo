@@ -15,10 +15,10 @@ import domo.devices.util.counter.CounterImpl;
  */
 public class RoomImpl implements Room {
 	
-	private final int id;
 	private final String name;
 	private final Map<Integer, Sensor> listSensor;
 	private final Counter counter;
+	private int id;
 	private Point location;
 	private Dimension size;
 	
@@ -33,10 +33,25 @@ public class RoomImpl implements Room {
 		listSensor = new HashMap<Integer, Sensor>();
 		counter = new CounterImpl(0);
 	}
+	
+	/**
+	 * Initialize Room Class.	 * 
+	 * @param pName The room name;
+	 */
+	public RoomImpl(final String pName) {
+		name = pName;
+		listSensor = new HashMap<Integer, Sensor>();
+		counter = new CounterImpl(0);
+	}
 
 	@Override
 	public int getId() {		
 		return id;
+	}
+	
+	@Override
+	public void setId(final int pId) {		
+		this.id = pId;
 	}
 
 	@Override
