@@ -1,4 +1,4 @@
-package devices;
+package domo.devices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +13,22 @@ import java.util.Map;
 public final class SchedulerImpl implements Scheduler {
 	private static final int DAY_TIME = 24;
 	private final Map<Integer, List<Boolean>> listSensor;
-	private static SchedulerImpl instance = new SchedulerImpl();
+	private static SchedulerImpl instance;
 	
 	private SchedulerImpl() {
 		listSensor = new HashMap<>();
 	}
 	
-	@Override
-	public SchedulerImpl getSchedulerInstance() {
+	/**
+	 * Get class instance.
+	 * @return the class instance.
+	 */
+	public static SchedulerImpl getInstance() {
+		synchronized (SchedulerImpl.class) {
+			if (instance == null) {
+				instance = new SchedulerImpl();
+			}
+		}
 		return instance;
 	}
 	
@@ -56,8 +64,9 @@ public final class SchedulerImpl implements Scheduler {
 		
 		for (int i = 0; i < tmp.size(); i++) {		
 			if (i == start) {
-				for (int a = 0; a < duration && a < tmp.size(); a++, i++) {
+				for (int a = 0; a < duration && a < tmp.size(); a++) {
 					tmp.add(status);
+					i++;
 				}
 			}				
 			tmp.add(!status);

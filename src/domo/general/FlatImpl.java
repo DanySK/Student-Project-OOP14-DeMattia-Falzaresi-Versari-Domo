@@ -1,8 +1,11 @@
 package domo.general;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import domo.devices.util.counter.Counter;
+import domo.devices.util.counter.CounterImpl;
 
 /**
  * 
@@ -12,7 +15,8 @@ import java.util.List;
 public class FlatImpl implements Flat {
 	
 	private final String name;
-	private final List<Room> listRoom;
+	private final Map<Integer, Room> listRoom;
+	private final Counter counter;
 	
 	/**
 	 * initialize the flat class.
@@ -20,7 +24,8 @@ public class FlatImpl implements Flat {
 	 */
 	public FlatImpl(final String pName) {
 		name = pName;
-		listRoom = new ArrayList<Room>();
+		listRoom = new HashMap<Integer, Room>();
+		counter = new CounterImpl(0);
 	}
 
 	@Override
@@ -29,8 +34,11 @@ public class FlatImpl implements Flat {
 	}
 
 	@Override
-	public void addRoom(final Room room) {		
-		listRoom.add(room);
+	public int addRoom(final Room room) {
+		final int ret = counter.incCounter();
+		room.setId(ret);
+		listRoom.put(ret, room);
+		return ret;
 	}
 
 	@Override
@@ -40,7 +48,9 @@ public class FlatImpl implements Flat {
 
 	@Override
 	public void moveRoom(final int idRoom, final Point to) {
-		// TODO Auto-generated method stub		
+		if (listRoom.containsKey(idRoom)) {
+			listRoom.get(idRoom).setLocation(to);
+		}		
 	}
 
 }

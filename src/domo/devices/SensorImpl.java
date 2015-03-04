@@ -1,4 +1,4 @@
-package devices;
+package domo.devices;
 
 import java.awt.Dimension;
 import java.awt.Point;

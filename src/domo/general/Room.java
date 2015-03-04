@@ -3,7 +3,7 @@ package domo.general;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import devices.Sensor;
+import domo.devices.Sensor;
 
 /**
  * 
@@ -18,6 +18,12 @@ public interface Room {
 	 * @return room id.
 	 */
 	int getId();
+	
+	/**
+	 * Set room id.
+	 * @param pId Set room id.
+	 */
+	void setId(final int pId);
 	
 	/**
 	 * Get room name.
@@ -46,8 +52,9 @@ public interface Room {
 	/**
 	 * Add a sensor to room.
 	 * @param sensor sensor to add.
+	 * @return room id.
 	 */
-	void addSensor(Sensor sensor);
+	int addSensor(Sensor sensor);
 	
 	/**
 	 * Remove a sensor from room.
