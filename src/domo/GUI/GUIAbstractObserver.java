@@ -1,7 +1,7 @@
 package domo.GUI;
 
 
-import devices.Sensor;
+import domo.devices.Sensor;
 import domo.general.Room;
 
 public abstract class GUIAbstractObserver {

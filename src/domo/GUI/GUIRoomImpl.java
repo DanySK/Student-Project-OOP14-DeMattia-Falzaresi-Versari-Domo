@@ -23,6 +23,7 @@ public class GUIRoomImpl extends JLabel implements GUIRoom {
 	private BufferedImage img;
 
 	private Point offset;
+	private String name = new String();
 
 	public GUIRoomImpl(String imagePath, Point initialPosition) {
 		try {
@@ -94,6 +95,29 @@ public class GUIRoomImpl extends JLabel implements GUIRoom {
 			g2d.drawImage(img, offset.x, offset.y, this);
 			g2d.dispose();
 		}
+	}
+
+	@Override
+	public BufferedImage getImage() {
+		return this.img;
+	}
+
+	@Override
+	public void setImage(BufferedImage image) {
+		if(image != null) {
+			this.img = image;
+		}
+		
+	}
+
+	@Override
+	public String getTitle() {
+		return this.name;
+	}
+
+	@Override
+	public void setTitle(String title) {
+		this.name = title;
 	}
 
 
