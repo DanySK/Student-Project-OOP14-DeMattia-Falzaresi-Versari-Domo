@@ -19,7 +19,7 @@ public class MainClass {
 
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		FlatGUI t = new FlatGUI("Domo");
+		GUIFlatImpl t = new GUIFlatImpl("Domo");
 
 	}
 
