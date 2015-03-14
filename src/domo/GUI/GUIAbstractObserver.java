@@ -8,6 +8,8 @@ public abstract class GUIAbstractObserver {
 	
 	protected GUIFlat guiFlat;
 	
+	public abstract void flatAdded(Room room);
+	
 	public abstract void roomAdded(Room room);
 	
 	public abstract void sensorAdded(Sensor sensor);
