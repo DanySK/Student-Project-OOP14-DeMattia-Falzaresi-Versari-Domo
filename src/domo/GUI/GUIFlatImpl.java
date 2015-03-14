@@ -171,7 +171,7 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 	private void newRoom() {
 		
 		if (controller != null) {
-			controller.addedRoom(null);
+			controller.roomAdded(null);
 		}
 	}
 	

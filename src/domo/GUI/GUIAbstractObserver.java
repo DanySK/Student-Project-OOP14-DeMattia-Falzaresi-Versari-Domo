@@ -8,9 +8,9 @@ public abstract class GUIAbstractObserver {
 	
 	protected GUIFlat guiFlat;
 	
-	public abstract void addedRoom(Room room);
+	public abstract void roomAdded(Room room);
 	
-	public abstract void addedSensor(Sensor sensor);
+	public abstract void sensorAdded(Sensor sensor);
 	
 	public abstract void newProject();
 	
