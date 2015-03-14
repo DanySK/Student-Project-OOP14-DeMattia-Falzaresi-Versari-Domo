@@ -1,4 +1,4 @@
-package bckRst;
+package domo.bckRst;
 
 import java.io.File;
 import java.io.FileInputStream;

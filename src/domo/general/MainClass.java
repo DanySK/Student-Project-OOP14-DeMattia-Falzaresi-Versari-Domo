@@ -1,7 +1,7 @@
 package domo.general;
 
-import bckRst.*;
 import domo.GUI.*;
+import domo.bckRst.*;
 
 public class MainClass {
 

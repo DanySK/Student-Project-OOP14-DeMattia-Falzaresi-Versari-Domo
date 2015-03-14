@@ -1,4 +1,4 @@
-package bckRst;
+package domo.bckRst;
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilderFactory;
