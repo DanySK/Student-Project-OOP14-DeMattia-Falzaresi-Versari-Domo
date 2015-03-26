@@ -2,7 +2,9 @@ package domo.general;
 
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import domo.devices.util.counter.Counter;
 import domo.devices.util.counter.CounterImpl;
@@ -40,6 +42,11 @@ public class FlatImpl implements Flat {
 		listRoom.put(ret, room);
 		return ret;
 	}
+	
+	@Override
+	public Set<Room> getRooms() {		
+		return new HashSet<>(listRoom.values());
+	}
 
 	@Override
 	public void removeRoom(final int id) {		
@@ -52,5 +59,4 @@ public class FlatImpl implements Flat {
 			listRoom.get(idRoom).setLocation(to);
 		}		
 	}
-
 }
