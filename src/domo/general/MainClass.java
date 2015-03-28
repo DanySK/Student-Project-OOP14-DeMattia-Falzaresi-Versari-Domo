@@ -19,13 +19,6 @@ public class MainClass {
 		System.out.println("Welcome!");
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
-		if (bac.backupNow()) {
-			System.out.println("OK!");
-		}
-		else {
-			System.out.println("No Buono!");
-		}
-
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		//GUIFlatImpl t = new GUIFlatImpl("Domo");
@@ -54,6 +47,9 @@ public class MainClass {
 			}
 			System.out.println("Il Nome Dell'appartamento è "+fl.getName());
 			System.out.println("Il Nome di una stanza è " +nowRoom.getName());
+			System.out.println("Avvio il backup");
+			bac.backupNow(fl);
+			System.out.println("Backup terminato");
 			System.in.read();
 		}
 

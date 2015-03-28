@@ -10,6 +10,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
 
+import domo.general.Flat;
+
 	/**
 	 * 
 	 * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
@@ -32,7 +34,7 @@ public class BackupImpl implements Backup {
 	 *  
 	 *  @return True if no error occurred False if something wrong is happened
 	 */
-	public boolean backupNow() {
+	public boolean backupNow(Flat flatB) {
 		try {
 			// Creation of the document builder
 			//
@@ -57,7 +59,7 @@ public class BackupImpl implements Backup {
 			
 			//add attribute "name" to Flat
 			Element flatName = document.createElement("name");
-			flatName.appendChild(document.createTextNode("My Flat"));
+			flatName.appendChild(document.createTextNode(flatB.getName()));
 			flat.appendChild(flatName);
 			
 			TransformerFactory transFact = TransformerFactory.newInstance();
@@ -70,7 +72,8 @@ public class BackupImpl implements Backup {
 			trans.transform(dom, strOut);
 			CrypterImpl en = new CrypterImpl(tmpFile.getName(), fileName);
 			en.doEncryption();
-			tmpFile.delete();
+			//togliere il commento dalla riga sotto
+			//tmpFile.delete();
 			CrypterImpl de = new CrypterImpl("output.xml", fileName);
 			de.doDecryption();
 			return true; 
