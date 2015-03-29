@@ -1,5 +1,7 @@
 package domo.bckRst;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -11,6 +13,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
 
 import domo.general.Flat;
+import domo.general.Room;
 
 	/**
 	 * 
@@ -58,9 +61,31 @@ public class BackupImpl implements Backup {
 			// flat.setAttribute("id", "1");
 			
 			//add attribute "name" to Flat
-			Element flatName = document.createElement("name");
-			flatName.appendChild(document.createTextNode(flatB.getName()));
-			flat.appendChild(flatName);
+			Element flatEle = document.createElement("name");
+			flatEle.appendChild(document.createTextNode(flatB.getName()));
+			flat.appendChild(flatEle);
+			
+			//now I need to extract all rooms and backup it
+			Set<Room> roomB = new HashSet<>();
+			roomB = flatB.getRooms();
+			for (Room room : roomB) {
+				
+				//creation of element room
+				Element roomE = document.createElement("room");
+				rootEle.appendChild(roomE);
+				Attr roomAttr = document.createAttribute("id");
+				roomAttr.setValue(Integer.toString(room.getId()));
+				roomE.setAttributeNode(roomAttr);
+				
+				//room configuration
+				Element roomEle = document.createElement("name");
+				roomEle.appendChild(document.createTextNode(room.getName()));
+				roomE.appendChild(roomEle);
+				
+			}
+			
+			
+			
 			
 			TransformerFactory transFact = TransformerFactory.newInstance();
 			Transformer trans = transFact.newTransformer();
