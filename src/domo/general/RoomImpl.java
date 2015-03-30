@@ -3,7 +3,9 @@ package domo.general;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import domo.devices.Sensor;
 import domo.devices.util.counter.Counter;
@@ -91,6 +93,11 @@ public class RoomImpl implements Room {
 	@Override
 	public void moveSensor(final int pId, final Point to) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Set<Sensor> getSensor() {		
+		return new HashSet<Sensor>(listSensor.values());
 	}
 
 }
