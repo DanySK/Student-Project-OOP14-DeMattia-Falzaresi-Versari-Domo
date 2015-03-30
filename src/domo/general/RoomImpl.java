@@ -92,7 +92,9 @@ public class RoomImpl implements Room {
 
 	@Override
 	public void moveSensor(final int pId, final Point to) {
-		// TODO Auto-generated method stub
+		if (listSensor.containsKey(pId)) {
+			listSensor.get(pId).setLocation(to);
+		}
 	}
 
 	@Override
