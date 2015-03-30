@@ -84,9 +84,6 @@ public class BackupImpl implements Backup {
 				
 			}
 			
-			
-			
-			
 			TransformerFactory transFact = TransformerFactory.newInstance();
 			Transformer trans = transFact.newTransformer();
 			DOMSource dom = new DOMSource(document);

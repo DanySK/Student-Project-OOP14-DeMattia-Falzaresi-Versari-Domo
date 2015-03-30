@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import domo.GUI.*;
 import domo.bckRst.*;
 import domo.devices.Sensor;
@@ -19,6 +21,7 @@ public class MainClass {
 		System.out.println("Welcome!");
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
+		Flat fl;
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		//GUIFlatImpl t = new GUIFlatImpl("Domo");
@@ -27,14 +30,20 @@ public class MainClass {
 		System.out.println("Digita N per nuovo appartamento o C per caricare");
 		String s = br.readLine();
 		if (s.equals("C")) {
-			System.out.println("HAi scelto di caricare");
+			System.out.println("Hai scelto di caricare");
+			try {
+				fl = res.restoreNow("tmp.dom");
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else if (s.equals("N")) {
 			int roomId;
 			Set <Room> sRoom = new HashSet<>();
 			System.out.println("HAi scelto nuovo appartamento");
 			
-			Flat fl = new FlatImpl("appartamento");
+			fl = new FlatImpl("appartamento");
 			
 			roomId = fl.addRoom(new RoomImpl("Cucina"));
 			sRoom = fl.getRooms();
