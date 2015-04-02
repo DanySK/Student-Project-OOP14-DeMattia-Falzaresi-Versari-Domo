@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -14,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -44,7 +47,7 @@ public class ImageView extends JLabel {
 	private static final long serialVersionUID = -1218944812028248824L;
 
 	//private JLabel imageLabel;
-	private BufferedImage img;
+	private BufferedImage currentImage;
 	private BufferedImage filtImage;
 	private BufferedImage originalImage;
 	
@@ -82,15 +85,7 @@ public class ImageView extends JLabel {
 	
 	public ImageView (final BufferedImage imageBuf, Rectangle parentBound) {
 		this(imageBuf);
-		double widthFactor = parentBound.getWidth() / imageBuf.getWidth();
-		double heightFactor = parentBound.getHeight() / imageBuf.getHeight();
-		
-		double factorToUse = widthFactor >= heightFactor ? heightFactor : widthFactor;
-		this.setScale(factorToUse);
-		Point middlePoint = new Point((int) parentBound.getCenterX(), (int) parentBound.getCenterY());
-		middlePoint.x = middlePoint.x - (this.getWidth() / 2);
-		middlePoint.y = middlePoint.y - (this.getHeight() / 2);
-		this.setLocation(middlePoint);
+		this.setAspectFillToParent(parentBound);
 	}
 
 	public void setImage(final BufferedImage image) {
@@ -108,25 +103,42 @@ public class ImageView extends JLabel {
 							if (e.getButton() == MouseEvent.BUTTON1 && isMouseEnabled) {
 								isSelect = !isSelect;
 								if (isSelect) {
-									ImageView.this.setColorFilter(1, ColorFilter.COLOR_FILTER_RED);
+									//ImageView.this.setColorFilter(ColorFilter.COLOR_FILTER_RED);
+									ImageView.this.setBorder(BorderFactory.createLineBorder(Color.red, 1));
 								} else {
-									ImageView.this.setColorFilter(1, ColorFilter.COLOR_FILTER_NONE);
+									//ImageView.this.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
+									ImageView.this.setBorder(null);
+
 								}
 							}
 						}
 
+						
+						
 						public void mousePressed(final MouseEvent e) {
+							//ImageView.this.setScale(0.90);
+							//System.out.println("scala: " + ImageView.this.totalScaleFactor);
 							if (e.getSource() == ImageView.this && isMouseEnabled) {
 								pressed = e;
 								pPoint = ImageView.this.getLocation();
-
 								System.out.println("image press");
-
 							}
 						}
 					}
 					);
 
+			this.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(final MouseWheelEvent e) {
+					
+					if (e.getSource() == ImageView.this && isMouseEnabled && isSelect) {
+						double rotationAngle = e.getPreciseWheelRotation() > 0 ? 90 : -90;
+						System.out.println("wheel: " + e.getPreciseWheelRotation() + "\nAngolo: " + rotationAngle);
+						ImageView.this.rotate(rotationAngle);
+					}
+				}
+			});
+			
 			this.addMouseMotionListener(
 					new MouseMotionAdapter() {
 						public void mouseDragged(final MouseEvent e) {
@@ -142,9 +154,9 @@ public class ImageView extends JLabel {
 					}
 					);  
 		}
-		this.img = image;
+		this.currentImage = image;
 		if (this.originalImage == null) {
-			 this.originalImage = (BufferedImage) this.img;
+			 this.originalImage = copyImage(this.currentImage);
 		}
 	}
 	
@@ -153,26 +165,28 @@ public class ImageView extends JLabel {
 	}
 	
 	public void setScale(final double imgScale) {
-		
 		//http://stackoverflow.com/questions/4216123/how-to-scale-a-bufferedimage
 		Dimension old = this.getSize(); 
+		BufferedImage imgToResize = copyImage(this.originalImage);
+		this.totalScaleFactor *= imgScale;
 		
-		int newWidth = new Double(this.img.getWidth() * imgScale).intValue();
-		int newHeight = new Double(this.img.getHeight() * imgScale).intValue();
+		int newWidth = new Double(this.originalImage.getWidth() * this.totalScaleFactor).intValue();
+		int newHeight = new Double(this.originalImage.getHeight() * this.totalScaleFactor).intValue();
 		
-		BufferedImage retImg = new BufferedImage(newWidth, newHeight, this.img.getType());
+		BufferedImage retImg = new BufferedImage(newWidth, newHeight, this.originalImage.getType());
 	    Graphics2D g = retImg.createGraphics();
 	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g.drawImage(this.img, 0, 0, newWidth, newHeight, 0, 0, this.img.getWidth(), this.img.getHeight(), null);
+	    g.drawImage(imgToResize, 0, 0, newWidth, newHeight, 0, 0, imgToResize.getWidth(), imgToResize.getHeight(), null);
 	    g.dispose();
 	    
-		this.setImage(retImg);	
-		
+		this.currentImage = null;
+		this.currentImage = copyImage(retImg);
+		this.setImage(this.currentImage);	
+
 		int deltaX = (int) (this.getX() + (old.getWidth() - retImg.getWidth()));
 		int deltaY = (int) (this.getY() + (old.getHeight() - retImg.getHeight()));
 		
 		this.setLocation(new Point(deltaX, deltaY));
-	    //this.totalScaleFactor *= imgScale;
 	}
 	
 	public void rotate(double degree) {
@@ -180,9 +194,9 @@ public class ImageView extends JLabel {
 		AffineTransform transform = new AffineTransform();
 	    transform.rotate(radians, this.getWidth() / 2, this.getHeight() / 2);
 	    AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-	    this.img = op.filter(this.img, null);
+	    this.currentImage = op.filter(this.currentImage, null);
 	    this.totalRotationDegree  = (this.totalRotationDegree + degree) % 360;
-	    this.setImage(this.img);
+	    this.setImage(this.currentImage);
 	}
 	
 	public void rotate90() {
@@ -193,7 +207,7 @@ public class ImageView extends JLabel {
 		}
 	}
 	
-	public void setColorFilter(final double imgScale, final ColorFilter filter) {
+	public void setColorFilter(final ColorFilter filter) {
 		Image tmpImg;
 		RGBImageFilter filterRGB;
 		if (filter == ColorFilter.COLOR_FILTER_NONE) {
@@ -222,7 +236,7 @@ public class ImageView extends JLabel {
 			};
 			
 		}
-		tmpImg = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(this.img.getSource(), filterRGB));
+		tmpImg = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(this.currentImage.getSource(), filterRGB));
 		BufferedImage retImg;
 		if (tmpImg instanceof BufferedImage) {
 	        retImg = (BufferedImage) tmpImg;
@@ -234,8 +248,24 @@ public class ImageView extends JLabel {
 	    	bGr.dispose();
 	    }
 		this.filtImage = retImg;
-		this.setImage(retImg);
+		this.setImage(this.filtImage);
 
+	}
+	
+	public void setAspectFillToParent(Rectangle parentBound) {
+		parentBound.setLocation(new Point(0, 0));
+		double widthFactor = parentBound.getWidth() / this.currentImage.getWidth();
+		double heightFactor = parentBound.getHeight() / this.currentImage.getHeight();
+		
+		double factorToUse = widthFactor >= heightFactor ? heightFactor : widthFactor;
+		this.setScale(factorToUse);
+		Point middlePoint = new Point((int) parentBound.getCenterX(), (int) parentBound.getCenterY());
+		middlePoint.x = middlePoint.x - (this.getWidth() / 2);
+		middlePoint.y = middlePoint.y - (this.getHeight() / 2);
+//		middlePoint.x =(int) ((double) this.getX() * factorToUse);
+//		middlePoint.y =(int) ((double) this.getY() * factorToUse);
+
+		this.setLocation(middlePoint);
 	}
 	
 	public boolean containsPoint(Point point) {
@@ -249,4 +279,17 @@ public class ImageView extends JLabel {
 	public boolean getMouseEnabled() {
 		return this.isMouseEnabled;
 	}
+	
+	public boolean getIsSelect() {
+		return this.isSelect;
+	}
+	
+	private static BufferedImage copyImage(BufferedImage source){
+	    BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+	    Graphics g = b.getGraphics();
+	    g.drawImage(source, 0, 0, null);
+	    g.dispose();
+	    return b;
+	}
+
 }

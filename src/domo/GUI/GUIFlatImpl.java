@@ -10,6 +10,8 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -33,6 +35,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -57,6 +60,8 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 	
 	private final List<?> roomContainer = new ArrayList<>();
 	
+	private final List<ImageView> imageViewList = new ArrayList<>(); 
+	private ImageView mainImage;
 	private final double xScale = 0.7;
 	private final double yScale = 0.7;
 	private final String USER_HOME_FOLDER = System.getProperty("user.home").toString();
@@ -83,26 +88,29 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 		//centerPane.setOpaque(true);
 		//centerPane.setBackground(Color.CYAN);
 		
-		centerPane.addMouseMotionListener(new MouseMotionListener() {
-			
-			@Override
-			public void mouseMoved(final MouseEvent e) {				
-				//System.out.println("Move");
-			}
-			
-			@Override
-			public void mouseDragged(final MouseEvent e) {
-				//System.out.println("Drag");
-			}
-		});
 		
-		mainPanel.add(centerPane, BorderLayout.CENTER);
+
+		mainFrame.getRootPane().addComponentListener(new ComponentAdapter() {
+            public void componentResized(final ComponentEvent e) {
+                if (imageViewList.size() > 0) {
+                	imageViewList.forEach(a->{
+                		//a.setAspectFillToParent(centerPane.getBounds());
+                	});
+                }
+            }
+        });
 		
 		createJMenu();
 		createNorthMenu();
 		
 		JPanel leftPanel = new JPanel(new GridLayout(5, 1));
 		mainPanel.add(leftPanel, BorderLayout.WEST);
+		
+		mainPanel.add(centerPane, BorderLayout.CENTER);
+		
+		
+		
+		
 		
 		mainFrame.setVisible(true);
 	}
@@ -180,24 +188,119 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 	}
 	
 	private void createNorthMenu() {
-		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 100, 1));
+		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
 		
-		JButton btnNew = new JButton("New");
-		JButton btnOpen = new JButton("Open");
-		JButton btnSave = new JButton("Save");
-		JButton btnAddRoom = new JButton("Add Room");
-		JButton btnAddSensor = new JButton("AddSensor");
+		//ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		//System.out.println(GUIFlatImpl.class.getResource("/"));
+		ImageIcon imgNew = new ImageIcon("res/new.png");
+		ImageIcon imgOpen = new ImageIcon("res/open.png");
+		ImageIcon imgSave = new ImageIcon("res/save.jpg");
+		ImageIcon imgAddRoom = new ImageIcon("res/addRoom.png");
+		ImageIcon imgAddSensor = new ImageIcon("res/addSensor.png");
+		ImageIcon imgTrash = new ImageIcon("res/trash.png");
 		
+		JButton btnNew = new JButton(imgNew);
+		JButton btnOpen = new JButton(imgOpen);
+		JButton btnSave = new JButton(imgSave);
+		JButton btnAddRoom = new JButton(imgAddRoom);
+		JButton btnAddSensor = new JButton(imgAddSensor);
+		JButton btnTrash = new JButton(imgTrash);
+		
+		btnNew.setSize(new Dimension(50, 50));
+		btnOpen.setSize(new Dimension(50, 50));
+		btnSave.setSize(new Dimension(50, 50));
+		btnAddRoom.setSize(new Dimension(50, 50));
+		btnAddSensor.setSize(new Dimension(50, 50));
+		btnTrash.setSize(new Dimension(50, 50));
+		
+		btnNew.setToolTipText("New Project");
+		btnOpen.setToolTipText("Open Project");
+		btnSave.setToolTipText("Save Project");
+		btnAddRoom.setToolTipText("Add Sensor To Room");
+		btnAddSensor.setToolTipText("Insert Sensor");
+		btnTrash.setToolTipText("Delete Sensor/s");
+		
+		btnNew.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIFlatImpl.this.newFile();
+			}
+		});
+		btnOpen.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {			
+				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj", "dprj"));				
+			}
+		});
+		
+		btnSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		
+		btnAddRoom.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIFlatImpl.this.createRoomFrame();
+			}
+		});
+		
+		btnAddSensor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ImageView t = new ImageView("res/addSensor.png");
+					imageViewList.add(t);
+					t.setMouseEnabled(true);
+					t.setLocation(new Point(centerPane.getWidth() / 2, centerPane.getHeight() / 2));
+					centerPane.add(t, 0);
+					centerPane.moveToFront(t);
+					
+					mainFrame.repaint();
+					
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		btnTrash.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList <ImageView> toRemove = new ArrayList<ImageView>(imageViewList.size());
+				for (ImageView t : imageViewList) {
+					if (t.getIsSelect()) {
+						toRemove.add(t);
+					}
+				}
+				for (ImageView t : toRemove) {
+					if (t.getIsSelect()) {
+						centerPane.remove(t);
+					}
+				}
+				imageViewList.removeAll(toRemove);
+				centerPane.repaint();
+			}
+		});
+
 		northPanel.add(btnNew);
 		northPanel.add(btnOpen);
 		northPanel.add(btnSave);
 		northPanel.add(btnAddRoom);
 		northPanel.add(btnAddSensor);
-		
+		northPanel.add(btnTrash);
+
 		mainPanel.add(northPanel, BorderLayout.NORTH);
-		
+
 	}
-	
+
 	private String openFile(final FileNameExtensionFilter filter) {
 		JFileChooser openFile = new JFileChooser();
 		openFile.setFileFilter(filter);
@@ -208,17 +311,44 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 		return null;
 	}
 
-	private void newRoom() {
-		
-		if (controller != null) {
-			controller.roomAdded(null);
-			
+	private void newFile() {
+		if (mainImage != null) {
+			int choose = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the current project. All changes will be lost!", "ATTENTION!", JOptionPane.OK_CANCEL_OPTION);
+			if(choose == 0){
+				String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("JPEG file", "jpg", "jpeg"));
+				if (imgAddress != null) {
+					try {
+						BufferedImage imageBuf = ImageIO.read(new File(imgAddress));
+						centerPane.remove(mainImage);
+						mainImage = new ImageView(imageBuf, centerPane.getBounds());
+						centerPane.add(mainImage, 0);
+						mainFrame.repaint();
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		} else {
+			String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("JPEG file", "jpg", "jpeg"));
+			if (imgAddress != null) {
+				try {
+					BufferedImage imageBuf = ImageIO.read(new File(imgAddress));
+					mainImage = new ImageView(imageBuf, centerPane.getBounds());
+					centerPane.add(mainImage, 0);
+					mainFrame.repaint();
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-	
+
 	private void createRoomFrame() {
-		
+
 		JFrame addRoomFrame = new JFrame("New Room");
+		addRoomFrame.setLocation(new Point(this.mainFrame.getX() + 10, this.mainFrame.getY()+ 10));
 		JTextField txtname = new JTextField(10);
 		JLabel lblNome = new JLabel("nome stanza:");
 		lblNome.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
@@ -232,6 +362,23 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 		panel.add(btnOk);
 		panel.add(btnCancel);
 		
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addRoomFrame.dispose();
+			}
+		});
+		
+		btnOk.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (controller != null) {
+					controller.roomAdded(null);
+				}
+				addRoomFrame.dispose();
+			}
+		});
+
 		addRoomFrame.setContentPane(panel);
 		addRoomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -240,30 +387,6 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 		addRoomFrame.setMaximumSize(new Dimension(addRoomFrame.getPreferredSize().width, addRoomFrame.getPreferredSize().height));
 	}
 	
-	private void newFile() {
-		String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("JPEG file", "jpg", "jpeg"));
-		if (imgAddress != null) {
-			System.out.println("" + imgAddress);
-			try {
-				BufferedImage imageBuf = ImageIO.read(new File(imgAddress));
-				ImageView imageV = new ImageView(imageBuf, centerPane.getBounds());
-				
-		        centerPane.add(imageV, 0);
-				mainFrame.repaint();
-		        
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}
-	}
-	
-	
-	
-	
-
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		// TODO Auto-generated method stub
