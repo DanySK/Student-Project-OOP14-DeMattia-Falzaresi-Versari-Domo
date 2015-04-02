@@ -2,6 +2,7 @@ package domo.general;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Set;
 
 import domo.devices.Sensor;
 
@@ -36,6 +37,12 @@ public interface Room {
 	 * @return room size.
 	 */
 	Dimension getSize();
+	
+	/**
+	 * Get the sensor list.
+	 * @return all sensor in the room.
+	 */
+	Set<Sensor> getSensor();
 	
 	/**
 	 * Get room location.

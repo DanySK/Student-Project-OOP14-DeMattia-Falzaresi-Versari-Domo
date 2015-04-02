@@ -1,5 +1,9 @@
 package domo.bckRst;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import domo.general.Flat;
+
 	/**
 	 * 
 	 * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
@@ -17,7 +21,8 @@ public interface Restore {
 	/**
 	 * Restore from a specific file.
 	 * @param fileName the name of the file to restore
-	 * @return True if the restore is done, False if the restore process fail
+	 * @return a flat element
+	 * @throws ParserConfigurationException 
 	 */
-	boolean restoreNow(String fileName);
+	Flat restoreNow(String fileName) throws ParserConfigurationException;
 }

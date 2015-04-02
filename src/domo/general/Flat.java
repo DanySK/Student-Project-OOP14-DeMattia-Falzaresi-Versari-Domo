@@ -1,6 +1,7 @@
 package domo.general;
 
 import java.awt.Point;
+import java.util.Set;
 
 /**
  * 
@@ -22,6 +23,12 @@ public interface Flat {
 	 * @return The room id
 	 */
 	int addRoom(Room room);
+	
+	/**
+	 * Get the room list.
+	 * @return all rooms in the flat.
+	 */
+	Set<Room> getRooms();
 	
 	/**
 	 * Remove room in the list by id.
