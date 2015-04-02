@@ -9,7 +9,7 @@ import java.awt.Point;
  *
  */
 
-public interface Sensor {
+public interface Sensor  {
 	/**
 	 * 
 	 * @return the device id

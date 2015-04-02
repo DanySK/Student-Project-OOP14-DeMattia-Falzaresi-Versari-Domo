@@ -2,6 +2,7 @@ package domo.devices;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Observable;
 
 /**
  * 
@@ -9,7 +10,7 @@ import java.awt.Point;
  *
  */
 
-public class SensorImpl implements Sensor {
+public class SensorImpl extends Observable implements Sensor  {
 	
 	private SensorStatus status;
 	private Point position;
@@ -22,7 +23,7 @@ public class SensorImpl implements Sensor {
 	private final String image;	
 	
 	/**
-	 * 
+	 * Create A generic Sensor.
 	 * @param pId id of the device
 	 * @param pName name of the device
 	 * @param pType type of the device
@@ -67,7 +68,7 @@ public class SensorImpl implements Sensor {
 
 	@Override
 	public boolean isInAlert() {
-		return alert;
+		return alert;		
 	}
 
 	@Override
@@ -78,11 +79,12 @@ public class SensorImpl implements Sensor {
 	@Override
 	public void setAlert(final boolean pAlert) {
 		alert = pAlert;
+		notifyObservers(alert);
 	}
 
 	@Override
 	public void setStatus(final SensorStatus pStatus) {		
-		status = pStatus;
+		status = pStatus;		
 	}
 
 	@Override
