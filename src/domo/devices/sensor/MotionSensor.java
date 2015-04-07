@@ -11,6 +11,10 @@ import domo.devices.SensorTypology;
 public class MotionSensor extends SensorImpl {
 	
 	private static final String IMAGE_PATH = "..";
+	
+	private void ciao() {
+		
+	}
 
 	/**
 	 * Create a motion sensor object.
