@@ -1,6 +1,5 @@
 package domo.general;
 
-import java.awt.Point;
 import java.util.Set;
 
 /**
@@ -35,11 +34,4 @@ public interface Flat {
 	 * @param id room to remove.
 	 */
 	void removeRoom(int id);
-	
-	/**
-	 * Move the room position.
-	 * @param idRoom the id of the room to move.
-	 * @param to the point to move the room.
-	 */
-	void moveRoom(int idRoom, Point to);
 }

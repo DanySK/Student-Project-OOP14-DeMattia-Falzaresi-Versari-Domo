@@ -1,6 +1,5 @@
 package domo.general;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Set;
 
@@ -33,28 +32,10 @@ public interface Room {
 	String getName();
 	
 	/**
-	 * Get room size.
-	 * @return room size.
-	 */
-	Dimension getSize();
-	
-	/**
 	 * Get the sensor list.
 	 * @return all sensor in the room.
 	 */
-	Set<Sensor> getSensor();
-	
-	/**
-	 * Get room location.
-	 * @return room location.
-	 */
-	Point getLocation();
-	
-	/**
-	 * Set room location.
-	 * @param destination room destination point.
-	 */
-	void setLocation(Point destination);
+	Set<Sensor> getSensor();	
 	
 	/**
 	 * Add a sensor to room.

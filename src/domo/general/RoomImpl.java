@@ -1,6 +1,5 @@
 package domo.general;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,8 +20,6 @@ public class RoomImpl implements Room {
 	private final Map<Integer, Sensor> listSensor;
 	private final Counter counter;
 	private int id;
-	private Point location;
-	private Dimension size;
 	
 	/**
 	 * Initialize Room Class.
@@ -59,21 +56,6 @@ public class RoomImpl implements Room {
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public Dimension getSize() {
-		return new Dimension(size);
-	}
-
-	@Override
-	public Point getLocation() {
-		return new Point(location);
-	}
-
-	@Override
-	public void setLocation(final Point destination) {
-		location = new Point(destination);
 	}
 
 	@Override

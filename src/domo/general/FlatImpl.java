@@ -1,6 +1,5 @@
 package domo.general;
 
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -51,12 +50,5 @@ public class FlatImpl implements Flat {
 	@Override
 	public void removeRoom(final int id) {		
 		listRoom.remove(id);
-	}
-
-	@Override
-	public void moveRoom(final int idRoom, final Point to) {
-		if (listRoom.containsKey(idRoom)) {
-			listRoom.get(idRoom).setLocation(to);
-		}		
 	}
 }

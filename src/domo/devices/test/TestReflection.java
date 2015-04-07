@@ -24,7 +24,7 @@ public class TestReflection {
 	@Test
 	public void test() throws ClassNotFoundException {
 		// Ottengo il riferimento alla Classe di interesse
-		Class c = Class.forName("domo.devices.sensor.MotionSensor");
+		Class c = Class.forName("domo.devices.SensorImpl");
 
 		Method[] m = c.getDeclaredMethods();
 		for(int i = 0; i < m.length; i++) {
