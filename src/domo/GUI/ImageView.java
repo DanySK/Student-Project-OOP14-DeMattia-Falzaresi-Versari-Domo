@@ -142,7 +142,7 @@ public class ImageView extends JLabel {
 			this.addMouseMotionListener(
 					new MouseMotionAdapter() {
 						public void mouseDragged(final MouseEvent e) {
-							if (e.getSource() == ImageView.this && isMouseEnabled) {
+							if (e.getSource() == ImageView.this && isMouseEnabled && isSelect) {
 								pPoint = ImageView.this.getLocation(pPoint);
 								int x = ImageView.this.getLocation().x +  (e.getXOnScreen() - pressed.getXOnScreen());
 								int y = ImageView.this.getLocation().y +  (e.getYOnScreen() - pressed.getYOnScreen());
