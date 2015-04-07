@@ -19,6 +19,10 @@ public class MainClass {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Welcome!");
+		
+		//System.setProperty("apple.laf.useScreenMenuBar", "true");
+		GUIFlatImpl t = new GUIFlatImpl("Domo");
+		
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
 		Flat fl;
