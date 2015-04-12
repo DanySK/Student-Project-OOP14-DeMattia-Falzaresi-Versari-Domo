@@ -12,6 +12,8 @@ import domo.GUI.*;
 import domo.bckRst.*;
 import domo.devices.Sensor;
 import domo.devices.SensorTypology;
+import domo.devices.loader.DynamicLoader;
+import domo.devices.loader.DynamicLoaderImpl;
 import domo.devices.sensor.MotionSensor;
 
 public class MainClass {
@@ -50,6 +52,15 @@ public class MainClass {
 			Room nowRoom = null;
 			for (Room room : sRoom) {
 				if (room.getId() == roomId) {
+					//creation of a new dynamic loader
+					DynamicLoader<Sensor> instance = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");
+					System.out.println("Stampo l'elenco delle classi");
+					Set<String> setString = new HashSet<>();
+					setString = instance.updateModuleList();
+					for (String string : setString) {
+						System.out.println(string);
+					}
+					System.out.println("Stampa finita");
 					nowRoom=room;
 					//room.addSensor(new MotionSensor(0, "sensoreTest", SensorTypology.MOTION, "mot.jpg"));
 				}
