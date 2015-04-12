@@ -66,18 +66,6 @@ public interface Sensor  {
 	
 	/**
 	 * 
-	 * @param alert set the device alert
-	 */
-	void setAlert(boolean alert);
-	
-	/**
-	 * 
-	 * @param status set the device status
-	 */
-	void setStatus(SensorStatus status);
-	
-	/**
-	 * 
 	 * @return the device image path
 	 */
 	String getImagePath();

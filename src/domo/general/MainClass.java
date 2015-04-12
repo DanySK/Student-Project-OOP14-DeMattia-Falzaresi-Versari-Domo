@@ -11,7 +11,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import domo.GUI.*;
 import domo.bckRst.*;
 import domo.devices.Sensor;
-import domo.devices.SensorImpl;
 import domo.devices.SensorTypology;
 
 public class MainClass {
@@ -51,7 +50,7 @@ public class MainClass {
 			for (Room room : sRoom) {
 				if (room.getId() == roomId) {
 					nowRoom=room;
-					room.addSensor(new SensorImpl(0, "sensoreTest", SensorTypology.MOTION, "mot.jpg"));
+					//room.addSensor(new MotionSensor(0, "sensoreTest", SensorTypology.MOTION, "mot.jpg"));
 				}
 			}
 			System.out.println("Il Nome Dell'appartamento è "+fl.getName());
