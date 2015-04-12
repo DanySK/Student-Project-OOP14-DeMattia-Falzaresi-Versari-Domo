@@ -12,6 +12,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
 
+import domo.devices.Sensor;
 import domo.general.Flat;
 import domo.general.Room;
 
@@ -39,12 +40,13 @@ public class BackupImpl implements Backup {
 	 */
 	public boolean backupNow(Flat flatB) {
 		try {
+			
 			// Creation of the document builder
 			//
 			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuild = docBuildFactory.newDocumentBuilder();
 			Document document = docBuild.newDocument();
-			
+
 			//Creation of a new root element and add it to the document
 			Element rootEle = document.createElement("domo");
 			document.appendChild(rootEle);
@@ -53,17 +55,19 @@ public class BackupImpl implements Backup {
 			Element flat = document.createElement("flat");
 			rootEle.appendChild(flat);
 			
+			//Creation of all variables I need for the flat level
+			Element nameEle = document.createElement("name");
+			Attr idAttr = document.createAttribute("id");
+			
 			//Set Attribute for flat
-			Attr flatAttr = document.createAttribute("id");
-			flatAttr.setValue("1");
-			flat.setAttributeNode(flatAttr);
+			idAttr.setValue("1");
+			flat.setAttributeNode(idAttr);
 			// shorten way
 			// flat.setAttribute("id", "1");
 			
 			//add attribute "name" to Flat
-			Element flatEle = document.createElement("name");
-			flatEle.appendChild(document.createTextNode(flatB.getName()));
-			flat.appendChild(flatEle);
+			nameEle.appendChild(document.createTextNode(flatB.getName()));
+			flat.appendChild(nameEle);
 			
 			//now I need to extract all rooms and backup it
 			Set<Room> roomB = new HashSet<>();
@@ -72,15 +76,33 @@ public class BackupImpl implements Backup {
 				
 				//creation of element room
 				Element roomE = document.createElement("room");
-				rootEle.appendChild(roomE);
-				Attr roomAttr = document.createAttribute("id");
-				roomAttr.setValue(Integer.toString(room.getId()));
-				roomE.setAttributeNode(roomAttr);
+				Element roomName = document.createElement("name");
+				Attr roomID =document.createAttribute("id");
+				flat.appendChild(roomE);
+				roomID.setValue(Integer.toString(room.getId()));
+				roomE.setAttributeNode(roomID);
 				
 				//room configuration
-				Element roomEle = document.createElement("name");
-				roomEle.appendChild(document.createTextNode(room.getName()));
-				roomE.appendChild(roomEle);
+				roomName.appendChild(document.createTextNode(room.getName()));
+				roomE.appendChild(roomName);
+				
+				//now I need to extract all sensors for this room and backup it
+				Set<Sensor> sensorB = new HashSet<>();
+				sensorB = room.getSensor();
+				
+				for(Sensor sensor : sensorB){
+					//creation of element sensor and set his ID
+					Element sensorE = document.createElement("sensor");
+					roomE.appendChild(sensorE);
+					idAttr.setValue(Integer.toString(sensor.getId()));
+					sensorE.setAttributeNode(idAttr);
+					
+					//now I put all the information of this sensor
+					Element sensorName = document.createElement("name");
+					sensorName.appendChild(document.createTextNode(sensor.getName()));
+					sensorE.appendChild(sensorName);
+				}
+				
 				
 			}
 			

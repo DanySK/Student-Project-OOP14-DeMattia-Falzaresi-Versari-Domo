@@ -12,6 +12,7 @@ import domo.GUI.*;
 import domo.bckRst.*;
 import domo.devices.Sensor;
 import domo.devices.SensorTypology;
+import domo.devices.sensor.MotionSensor;
 
 public class MainClass {
 
@@ -56,8 +57,12 @@ public class MainClass {
 			System.out.println("Il Nome Dell'appartamento è "+fl.getName());
 			System.out.println("Il Nome di una stanza è " +nowRoom.getName());
 			System.out.println("Avvio il backup");
-			bac.backupNow(fl);
-			System.out.println("Backup terminato");
+			if(bac.backupNow(fl)){
+				System.out.println("Backup terminato");
+			}
+			else {
+				System.out.println("Errore nel Backup");
+			}
 			System.in.read();
 		}
 
