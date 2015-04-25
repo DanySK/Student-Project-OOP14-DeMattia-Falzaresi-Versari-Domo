@@ -62,7 +62,7 @@ public class MainClass {
 					}
 					System.out.println("Stampa finita");
 					nowRoom=room;
-					//room.addSensor(new MotionSensor(0, "sensoreTest", SensorTypology.MOTION, "mot.jpg"));
+					room.addSensor(new MotionSensor());
 				}
 			}
 			System.out.println("Il Nome Dell'appartamento è "+fl.getName());

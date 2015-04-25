@@ -94,13 +94,45 @@ public class BackupImpl implements Backup {
 					//creation of element sensor and set his ID
 					Element sensorE = document.createElement("sensor");
 					roomE.appendChild(sensorE);
-					idAttr.setValue(Integer.toString(sensor.getId()));
-					sensorE.setAttributeNode(idAttr);
+					Attr sensID =document.createAttribute("id");
+					sensID.setValue(Integer.toString(sensor.getId()));
+					sensorE.setAttributeNode(sensID);
 					
 					//now I put all the information of this sensor
-					Element sensorName = document.createElement("name");
-					sensorName.appendChild(document.createTextNode(sensor.getName()));
-					sensorE.appendChild(sensorName);
+					//Sensor Name
+					if(sensor.getName()!=null){
+						Element sensorName = document.createElement("name");
+						sensorName.appendChild(document.createTextNode(sensor.getName()));
+						sensorE.appendChild(sensorName);
+					}
+					
+					//Sensor Image
+					if(sensor.getImagePath()!=null){
+						Element sensorImage = document.createElement("image");
+						sensorImage.appendChild(document.createTextNode(sensor.getImagePath()));
+						sensorE.appendChild(sensorImage);
+					}
+				
+					//Sensor Location
+					if(sensor.getLocation()!=null){
+						Element sensorLocation = document.createElement("location");
+						sensorLocation.appendChild(document.createTextNode(sensor.getLocation().toString()));
+						sensorE.appendChild(sensorLocation);
+					}
+					
+					//Sensor Size
+					if(sensor.getSize()!=null){
+						Element sensorSize = document.createElement("size");
+						sensorSize.appendChild(document.createTextNode(sensor.getSize().toString()));
+						sensorE.appendChild(sensorSize);
+					}
+					
+					//Sensor Typology
+					if(sensor.getType()!=null){
+						Element sensorTypology = document.createElement("typology");
+						sensorTypology.appendChild(document.createTextNode(sensor.getType().toString()));
+						sensorE.appendChild(sensorTypology);
+					}
 				}
 				
 				
@@ -123,6 +155,7 @@ public class BackupImpl implements Backup {
 			return true; 
 		}
 		catch (Exception exc) {
+			System.out.print(exc.toString());
 			return false;
 		}
 		
