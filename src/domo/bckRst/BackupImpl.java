@@ -53,17 +53,12 @@ public class BackupImpl implements Backup {
 			
 			//Creation of the flat element
 			Element flat = document.createElement("flat");
+			flat.setAttribute("Id", "1");
 			rootEle.appendChild(flat);
 			
 			//Creation of all variables I need for the flat level
 			Element nameEle = document.createElement("name");
-			Attr idAttr = document.createAttribute("id");
-			
-			//Set Attribute for flat
-			idAttr.setValue("1");
-			flat.setAttributeNode(idAttr);
-			// shorten way
-			// flat.setAttribute("id", "1");
+
 			
 			//add attribute "name" to Flat
 			nameEle.appendChild(document.createTextNode(flatB.getName()));
@@ -76,15 +71,15 @@ public class BackupImpl implements Backup {
 				
 				//creation of element room
 				Element roomE = document.createElement("room");
+				roomE.setAttribute("Id", Integer.toString(room.getId()));
 				Element roomName = document.createElement("name");
-				Attr roomID =document.createAttribute("id");
+				Text roomNameTxt = document.createTextNode(room.getName());
+				roomName.appendChild(roomNameTxt);
 				flat.appendChild(roomE);
-				roomID.setValue(Integer.toString(room.getId()));
-				roomE.setAttributeNode(roomID);
 				
 				//room configuration
-				roomName.appendChild(document.createTextNode(room.getName()));
-				roomE.appendChild(roomName);
+				//roomName.appendChild(document.createTextNode(room.getName()));
+				//roomE.appendChild(roomName);
 				
 				//now I need to extract all sensors for this room and backup it
 				Set<Sensor> sensorB = new HashSet<>();
@@ -94,43 +89,46 @@ public class BackupImpl implements Backup {
 					//creation of element sensor and set his ID
 					Element sensorE = document.createElement("sensor");
 					roomE.appendChild(sensorE);
-					Attr sensID =document.createAttribute("id");
-					sensID.setValue(Integer.toString(sensor.getId()));
-					sensorE.setAttributeNode(sensID);
+					sensorE.setAttribute("Id",Integer.toString(sensor.getId()));
 					
 					//now I put all the information of this sensor
 					//Sensor Name
 					if(sensor.getName()!=null){
 						Element sensorName = document.createElement("name");
-						sensorName.appendChild(document.createTextNode(sensor.getName()));
+						Text sensNameText = document.createTextNode(sensor.getName());
+						sensorName.appendChild(sensNameText);
 						sensorE.appendChild(sensorName);
 					}
 					
 					//Sensor Image
 					if(sensor.getImagePath()!=null){
 						Element sensorImage = document.createElement("image");
-						sensorImage.appendChild(document.createTextNode(sensor.getImagePath()));
+						Text sensImageText =document.createTextNode(sensor.getImagePath());
+						sensorImage.appendChild(sensImageText);
 						sensorE.appendChild(sensorImage);
 					}
 				
 					//Sensor Location
 					if(sensor.getLocation()!=null){
 						Element sensorLocation = document.createElement("location");
-						sensorLocation.appendChild(document.createTextNode(sensor.getLocation().toString()));
+						Text sensLocText=document.createTextNode(sensor.getLocation().toString());
+						sensorLocation.appendChild(sensLocText);
 						sensorE.appendChild(sensorLocation);
 					}
 					
 					//Sensor Size
 					if(sensor.getSize()!=null){
 						Element sensorSize = document.createElement("size");
-						sensorSize.appendChild(document.createTextNode(sensor.getSize().toString()));
+						Text sensSizeText = document.createTextNode(sensor.getSize().toString());
+						sensorSize.appendChild(sensSizeText);
 						sensorE.appendChild(sensorSize);
 					}
 					
 					//Sensor Typology
 					if(sensor.getType()!=null){
 						Element sensorTypology = document.createElement("typology");
-						sensorTypology.appendChild(document.createTextNode(sensor.getType().toString()));
+						Text sensTypeText = document.createTextNode(sensor.getType().toString());
+						sensorTypology.appendChild(sensTypeText);
 						sensorE.appendChild(sensorTypology);
 					}
 				}

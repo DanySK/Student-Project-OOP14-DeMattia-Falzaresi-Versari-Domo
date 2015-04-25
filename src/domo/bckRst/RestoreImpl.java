@@ -10,7 +10,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import domo.general.Flat;
 
@@ -36,12 +38,16 @@ public class RestoreImpl implements Restore {
 				docBuild = docBuildFactory.newDocumentBuilder();
 				Document document = docBuild.parse(tmpFile);
 				//whit this I enter in the first Child "domo"
-				Node rootN = document.getFirstChild();
+				Element rootEle = document.getDocumentElement();
+				NodeList flatList = rootEle.getElementsByTagName("sensor");
 				
-				//whit this I enter in the flat child
-				Node flatN = rootN.getFirstChild();
-				System.out.println(flatN.getAttributes().toString());
-				
+				if(flatList != null){
+					for(int i=0;i<flatList.getLength();i++){
+						Element el = (Element)flatList.item(i);
+						System.out.println("il nome è "+el.getElementsByTagName("name").item(0).getFirstChild().getNodeValue());
+						System.out.println("il tipo è "+el.getElementsByTagName("typology").item(0).getFirstChild().getNodeValue());
+					}
+				}
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
