@@ -30,10 +30,10 @@ public class SensorImpl extends Observable implements Sensor  {
 	 * @param pImage path o the device images
 	 */
 	public SensorImpl(final int pId, final String pName, final SensorTypology pType, final String pImage)  {
-		id = pId;
-		name = pName;
-		type = pType;
-		image = pImage;
+		id 		= pId;
+		name 	= pName;
+		type 	= pType;
+		image 	= pImage;
 	}
 
 	@Override

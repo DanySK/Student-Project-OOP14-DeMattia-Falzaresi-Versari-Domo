@@ -44,6 +44,9 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import domo.devices.Sensor;
+import domo.devices.SensorStatus;
+import domo.devices.SensorTypology;
 import domo.general.Flat;
 import domo.general.Room;
 import domo.general.RoomImpl;
@@ -205,6 +208,8 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 		JButton btnAddRoom = new JButton(imgAddRoom);
 		JButton btnAddSensor = new JButton(imgAddSensor);
 		JButton btnTrash = new JButton(imgTrash);
+		
+		
 		
 		btnNew.setSize(new Dimension(50, 50));
 		btnOpen.setSize(new Dimension(50, 50));

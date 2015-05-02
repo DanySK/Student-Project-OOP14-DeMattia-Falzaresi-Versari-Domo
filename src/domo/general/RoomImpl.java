@@ -15,6 +15,7 @@ import domo.devices.util.counter.CounterImpl;
  * @author Marco Versari
  *
  */
+
 public class RoomImpl implements Room {
 	
 	private final String name;
