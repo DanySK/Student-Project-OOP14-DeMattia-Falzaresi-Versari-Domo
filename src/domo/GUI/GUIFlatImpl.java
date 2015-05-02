@@ -95,6 +95,7 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
                 if (imageViewList.size() > 0) {
                 	imageViewList.forEach(a->{
                 		//a.setAspectFillToParent(centerPane.getBounds());
+                		a.setAspectFillToParent(centerPane.getBounds());
                 	});
                 }
             }
