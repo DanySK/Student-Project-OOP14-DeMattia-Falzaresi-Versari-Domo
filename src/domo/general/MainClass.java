@@ -35,10 +35,14 @@ public class MainClass {
 			System.out.println("Hai scelto di caricare");
 			try {
 				fl = res.restoreNow("tmp.dom");
+				System.out.println("Restore Terminato!");
+				System.out.println("Nome Appartamento: "+fl.getName());
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
 		}
 		else if (s.equals("N")) {
 			int roomId;
