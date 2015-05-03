@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -23,6 +24,7 @@ import domo.general.Room;
 	 */
 public class BackupImpl implements Backup {
 	private final String fileName;
+	private Document document;
 	
 	/**
 	 * Constructor.
@@ -30,6 +32,17 @@ public class BackupImpl implements Backup {
 	 * @throws Exception 
 	 */
 	public BackupImpl(String file) {
+		
+		try {
+			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuild;
+			docBuild = docBuildFactory.newDocumentBuilder();
+			document = docBuild.newDocument();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.fileName = file;
 		
 	}
@@ -40,13 +53,7 @@ public class BackupImpl implements Backup {
 	 */
 	public boolean backupNow(Flat flatB) {
 		try {
-			
-			// Creation of the document builder
-			//
-			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuild = docBuildFactory.newDocumentBuilder();
-			Document document = docBuild.newDocument();
-
+		
 			//Creation of a new root element and add it to the document
 			Element rootEle = document.createElement("domo");
 			document.appendChild(rootEle);
@@ -69,16 +76,8 @@ public class BackupImpl implements Backup {
 			roomB = flatB.getRooms();
 			for (Room room : roomB) {
 				
-				//creation of element room
-				Element roomE = document.createElement("room");
-				roomE.setAttribute("Id", Integer.toString(room.getId()));
-				Element roomName = document.createElement("name");
-				Text roomNameTxt = document.createTextNode(room.getName());
-				roomName.appendChild(roomNameTxt);
-				flat.appendChild(roomE);
-				//room configuration
-				//roomName.appendChild(document.createTextNode(room.getName()));
-				//roomE.appendChild(roomName);
+				Element roomEl = createElement("room",room.getName(),room.getId(), flat);
+				
 				
 				//now I need to extract all sensors for this room and backup it
 				Set<Sensor> sensorB = new HashSet<>();
@@ -86,49 +85,15 @@ public class BackupImpl implements Backup {
 				
 				for(Sensor sensor : sensorB){
 					//creation of element sensor and set his ID
-					Element sensorE = document.createElement("sensor");
-					roomE.appendChild(sensorE);
-					sensorE.setAttribute("Id",Integer.toString(sensor.getId()));
-					
-					//now I put all the information of this sensor
-					//Sensor Name
-					if(sensor.getName()!=null){
-						Element sensorName = document.createElement("name");
-						Text sensNameText = document.createTextNode(sensor.getName());
-						sensorName.appendChild(sensNameText);
-						sensorE.appendChild(sensorName);
+					try{
+					Element sensorE = createElement("sensor",sensor.getName(),sensor.getId(), roomEl);
+					sensorE.appendChild(addArg("image", sensor.getImagePath()));
+					sensorE.appendChild(addArg("location", sensor.getLocation().toString()));
+					sensorE.appendChild(addArg("size", sensor.getSize().toString()));
+					sensorE.appendChild(addArg("typology", sensor.getType().toString()));
 					}
-					
-					//Sensor Image
-					if(sensor.getImagePath()!=null){
-						Element sensorImage = document.createElement("image");
-						Text sensImageText =document.createTextNode(sensor.getImagePath());
-						sensorImage.appendChild(sensImageText);
-						sensorE.appendChild(sensorImage);
-					}
-				
-					//Sensor Location
-					if(sensor.getLocation()!=null){
-						Element sensorLocation = document.createElement("location");
-						Text sensLocText=document.createTextNode(sensor.getLocation().toString());
-						sensorLocation.appendChild(sensLocText);
-						sensorE.appendChild(sensorLocation);
-					}
-					
-					//Sensor Size
-					if(sensor.getSize()!=null){
-						Element sensorSize = document.createElement("size");
-						Text sensSizeText = document.createTextNode(sensor.getSize().toString());
-						sensorSize.appendChild(sensSizeText);
-						sensorE.appendChild(sensorSize);
-					}
-					
-					//Sensor Typology
-					if(sensor.getType()!=null){
-						Element sensorTypology = document.createElement("typology");
-						Text sensTypeText = document.createTextNode(sensor.getType().toString());
-						sensorTypology.appendChild(sensTypeText);
-						sensorE.appendChild(sensorTypology);
+					catch (NullPointerException e){
+						
 					}
 				}
 				
@@ -156,5 +121,22 @@ public class BackupImpl implements Backup {
 			return false;
 		}
 		
+	}
+	
+	private Element addArg (String arg,String val){
+		if(arg != null && val != null){
+		Element eleArg = document.createElement(arg);
+		eleArg.appendChild(document.createTextNode(val));
+		return eleArg;
+		}
+		return null;
+		
+	}
+	private Element createElement (String type,String name,int id,Element ele){
+		Element elRet = document.createElement(type);
+		elRet.setAttribute("Id", Integer.toString(id));
+		elRet.appendChild(addArg("name", name));
+		ele.appendChild(elRet);
+		return elRet;
 	}
 }
