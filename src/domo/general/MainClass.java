@@ -69,6 +69,7 @@ public class MainClass {
 					room.addSensor(new MotionSensor());
 				}
 			}
+			roomId = fl.addRoom(new RoomImpl("Salotto"));
 			System.out.println("Il Nome Dell'appartamento è "+fl.getName());
 			System.out.println("Il Nome di una stanza è " +nowRoom.getName());
 			System.out.println("Avvio il backup");

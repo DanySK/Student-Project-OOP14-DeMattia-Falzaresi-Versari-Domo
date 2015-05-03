@@ -76,7 +76,6 @@ public class BackupImpl implements Backup {
 				Text roomNameTxt = document.createTextNode(room.getName());
 				roomName.appendChild(roomNameTxt);
 				flat.appendChild(roomE);
-				
 				//room configuration
 				//roomName.appendChild(document.createTextNode(room.getName()));
 				//roomE.appendChild(roomName);
