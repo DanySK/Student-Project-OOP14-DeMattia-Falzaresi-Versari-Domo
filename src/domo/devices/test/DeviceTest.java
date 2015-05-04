@@ -24,8 +24,8 @@ public class DeviceTest {
 	 */
 	@Test
 	public void test() {		
-		final String classPath = System.getProperty("user.home") + File.separator + "SensorUpgrade";
-		
+		final String classPath = "res" + File.separator + "SensorUpgrade";//System.getProperty("user.home") + File.separator + "SensorUpgrade";
+		System.out.println(classPath);
 		final DynamicLoader<Sensor> instance = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");			
 		
 		instance.setModulePath(classPath);

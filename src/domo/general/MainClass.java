@@ -26,7 +26,7 @@ public class MainClass {
 		Flat fl;
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		//GUIFlatImpl t = new GUIFlatImpl("Domo");
+		GUIFlatImpl t = new GUIFlatImpl("Domo");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Scegli se vuoi creare un nuovo appartamento o se vuoi caricare da file");
 		System.out.println("Digita N per nuovo appartamento o C per caricare");
