@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -61,9 +63,13 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 	
 	private final List<?> roomContainer = new ArrayList<>();
 	
-	private final double xScale = 0.7;
-	private final double yScale = 0.7;
-	private final String USER_HOME_FOLDER = System.getProperty("user.home").toString();
+	private final double wScreenMaxScale = 0.7;
+	private final double hScreenMaxScale = 0.7;
+	private final double wScreenMinScale = 0.1;
+	private final double hScreenMinScale = 0.18;
+	
+	
+	//private final String USER_HOME_FOLDER = System.getProperty("user.home").toString();
 	private final String SYSTEM_SEPARATOR = System.getProperty("file.separator").toString();
 	
 	public GUIFlatImpl(final String title) {	
@@ -71,12 +77,16 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 		mainFrame.setTitle(title);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		double width 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * xScale;
-		double height 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * yScale;
-		double x = (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - width) / 2; 
-		double y = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - height) / 2; 
-		mainFrame.setSize(new Dimension((int) width, (int) height));
-		mainFrame.setBounds((int) x, (int) y, (int) width, (int) height);
+		double maxWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * wScreenMaxScale;
+		double maxHeight 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * hScreenMaxScale;
+		double minWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * wScreenMinScale;
+		double minHeight 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * hScreenMinScale;
+		
+		double x = (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - maxWidth) / 2; 
+		double y = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - maxHeight) / 2; 
+		mainFrame.setSize(new Dimension((int) maxWidth, (int) maxHeight));
+		mainFrame.setMinimumSize(new Dimension((int) minWidth, (int) minHeight));
+		mainFrame.setBounds((int) x, (int) y, (int) maxWidth, (int) maxHeight);
 		
 		mainPanel = new JPanel(new BorderLayout());
 		//mainPanel.setBackground(Color.darkGray);
@@ -90,15 +100,28 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
             }
         });
 		
+		KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
+			@Override
+			public boolean dispatchKeyEvent(final KeyEvent e) {
+				if (e.getID() == KeyEvent.KEY_PRESSED) {
+					System.out.println(e.getKeyCode());
+					if (e.getKeyCode() == 127) {
+						GUIFlatImpl.this.workingArea.removeSelectSensor();
+						GUIFlatImpl.this.mainFrame.repaint();
+					}
+					if (e.getKeyCode() == KeyEvent.VK_S) {
+						GUIFlatImpl.this.workingArea.addSensor("res" + SYSTEM_SEPARATOR + "addSensor.png");
+						GUIFlatImpl.this.mainFrame.repaint();
+					}
+				}
+				return false;
+			}
+		};
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
+		
+		mainPanel.add(workingArea, BorderLayout.CENTER);
 		createJMenu();
 		createNorthMenu();
-		
-		JPanel leftPanel = new JPanel(new GridLayout(5, 1));
-		mainPanel.add(leftPanel, BorderLayout.WEST);
-		
-		//mainPanel.add(centerPane, BorderLayout.CENTER);
-		mainPanel.add(workingArea, BorderLayout.CENTER);
-		
 		mainFrame.setVisible(true);
 	}
 	
@@ -176,7 +199,7 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
 	
 	private void createNorthMenu() {
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
-		
+		northPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
 		//ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		//System.out.println(GUIFlatImpl.class.getResource("/"));
 		ImageIcon imgNew = new ImageIcon("res" + SYSTEM_SEPARATOR + "new.png");

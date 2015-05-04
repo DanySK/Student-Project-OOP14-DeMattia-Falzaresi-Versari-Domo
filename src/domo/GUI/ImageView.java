@@ -116,7 +116,14 @@ public class ImageView extends JLabel {
 	}
 	
 	public void rotate90() {
-		this.rotate(90);
+		double radians = 90 * Math.PI / 180;
+		AffineTransform transform = new AffineTransform();
+	    transform.rotate(radians, this.getWidth() / 2, this.getHeight() / 2);
+	    AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+	    this.currentImage = op.filter(this.currentImage, null);
+	    this.setImage(this.currentImage);
+	    this.totalRotationDegree = (this.totalRotationDegree + 90) % 360;
+	    
 		if (this.totalRotationDegree % 180 != 0) {
 			Dimension t = this.getSize();
 			this.setSize(t.height, t.width);
@@ -178,9 +185,7 @@ public class ImageView extends JLabel {
 		Point middlePoint = new Point((int) parentBound.getCenterX(), (int) parentBound.getCenterY());
 		middlePoint.x = middlePoint.x - (this.getWidth() / 2);
 		middlePoint.y = middlePoint.y - (this.getHeight() / 2);
-//		middlePoint.x =(int) ((double) this.getX() * factorToUse);
-//		middlePoint.y =(int) ((double) this.getY() * factorToUse);
-
+		
 		this.setLocation(middlePoint);
 	}
 	
@@ -208,10 +213,6 @@ public class ImageView extends JLabel {
 		this.setImage(this.currentImage);
 		
 		this.rotate();
-//		int deltaX = (int) (this.getX() + (old.getWidth() - retImg.getWidth()));
-//		int deltaY = (int) (this.getY() + (old.getHeight() - retImg.getHeight()));
-//		
-//		this.setLocation(new Point(deltaX, deltaY));
 	}
 
 	public boolean containsPoint(Point point) {

@@ -1,8 +1,11 @@
 package domo.GUI;
 
 import java.awt.Color;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +24,6 @@ public class GUIWorkingArea extends JLayeredPane {
 	
 	public GUIWorkingArea() {
 		super();
-		setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	
 	public void setImage(String imagePath) {
@@ -65,7 +67,6 @@ public class GUIWorkingArea extends JLayeredPane {
 				t = new GUISensorImpl(imgPath, this.bgImage);
 				t.setScale(this.bgImage.getScale());
 				sensorList.add(t);
-				t.setLocation(this.bgImage.getWidth() / 2, this.bgImage.getHeight() / 2);
 				this.add(t, 0);
 				this.moveToFront(t);
 			} catch (IOException e) {
