@@ -100,24 +100,24 @@ public class GUIFlatImpl implements GUIFlat, ActionListener {
             }
         });
 		
-		KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
-			@Override
-			public boolean dispatchKeyEvent(final KeyEvent e) {
-				if (e.getID() == KeyEvent.KEY_PRESSED) {
-					System.out.println(e.getKeyCode());
-					if (e.getKeyCode() == 127) {
-						GUIFlatImpl.this.workingArea.removeSelectSensor();
-						GUIFlatImpl.this.mainFrame.repaint();
-					}
-					if (e.getKeyCode() == KeyEvent.VK_S) {
-						GUIFlatImpl.this.workingArea.addSensor("res" + SYSTEM_SEPARATOR + "addSensor.png");
-						GUIFlatImpl.this.mainFrame.repaint();
-					}
-				}
-				return false;
-			}
-		};
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
+//		KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
+//			@Override
+//			public boolean dispatchKeyEvent(final KeyEvent e) {
+//				if (e.getID() == KeyEvent.KEY_PRESSED) {
+//					System.out.println(e.getKeyCode());
+//					if (e.getKeyCode() == 127) {
+//						GUIFlatImpl.this.workingArea.removeSelectSensor();
+//						GUIFlatImpl.this.mainFrame.repaint();
+//					}
+//					if (e.getKeyCode() == KeyEvent.VK_S) {
+//						GUIFlatImpl.this.workingArea.addSensor("res" + SYSTEM_SEPARATOR + "addSensor.png");
+//						GUIFlatImpl.this.mainFrame.repaint();
+//					}
+//				}
+//				return false;
+//			}
+//		};
+//		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 		
 		mainPanel.add(workingArea, BorderLayout.CENTER);
 		createJMenu();
