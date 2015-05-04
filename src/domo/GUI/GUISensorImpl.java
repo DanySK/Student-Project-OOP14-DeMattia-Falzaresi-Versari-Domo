@@ -22,7 +22,7 @@ public class GUISensorImpl extends ImageView{
 	private boolean isMouseEnabled = false;
 	private MouseEvent pressed;
 	private Point pPoint;
-	private boolean isSelect = false;
+	private boolean isSelect = true;
 	
 	public GUISensorImpl (String imagePath, ImageView parentBounds) throws IOException {
 		super(imagePath);
@@ -30,30 +30,26 @@ public class GUISensorImpl extends ImageView{
 		this.parent = parentBounds;
 		this.setLocation(10, 10);
 		this.updateFactors();
+		this.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+		
 		if (this.getMouseListeners().length == 0) {
 			this.addMouseListener(
 					new MouseAdapter() {
 						public void mouseClicked(final MouseEvent e) {
-							System.out.println("image click" + e.getButton());
 							if ((e.getButton() == MouseEvent.BUTTON3 || e.getButton() == MouseEvent.BUTTON2) && isSelect && isMouseEnabled) {
 								GUISensorImpl.this.rotate90();
 							}
 							if (e.getButton() == MouseEvent.BUTTON1 && isMouseEnabled) {
 								isSelect = !isSelect;
 								if (isSelect) {
-									//ImageView.this.setColorFilter(ColorFilter.COLOR_FILTER_RED);
 									GUISensorImpl.this.setBorder(BorderFactory.createLineBorder(Color.red, 1));
 								} else {
-									//ImageView.this.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
 									GUISensorImpl.this.setBorder(null);
-
 								}
 							}
 						}
 
 						public void mousePressed(final MouseEvent e) {
-							//ImageView.this.setScale(0.90);
-							//System.out.println("scala: " + ImageView.this.totalScaleFactor);
 							if (e.getSource() == GUISensorImpl.this && isMouseEnabled) {
 								pressed = e;
 								pPoint = GUISensorImpl.this.getLocation();
@@ -61,15 +57,13 @@ public class GUISensorImpl extends ImageView{
 							}
 						}
 					}
-					);
+				);
 
 			this.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(final MouseWheelEvent e) {
-
 					if (e.getSource() == GUISensorImpl.this && isMouseEnabled && isSelect) {
 						double rotationAngle = e.getPreciseWheelRotation() > 0 ? 90 : -90;
-						System.out.println("wheel: " + e.getPreciseWheelRotation() + "\nAngolo: " + rotationAngle);
 						GUISensorImpl.this.rotate(rotationAngle);
 					}
 				}
@@ -117,21 +111,13 @@ public class GUISensorImpl extends ImageView{
 	public void setScale(final double imgScale) {
 		super.setScale(imgScale);
 		
-		System.out.println("xFactor: " + xScaleFactorPos);
-		System.out.println("yFactor: " + yScaleFactorPos);
-		
 		int newX = (int) ((double) this.parent.getWidth() * xScaleFactorPos);
 		int newY = (int) ((double) this.parent.getHeight() * yScaleFactorPos);
-		
-		System.out.println("newX: " + newX);
-		System.out.println("newY: " + newY);
+	
 		newX += this.parent.getX();
 		newY += this.parent.getY();
 		
-		System.out.println("newX: " + newX);
-		System.out.println("newY: " + newY + "\n");
 		this.setLocation(newX, newY);
-
 	}
 	
 	public void setMouseEnabled(final boolean enableMouse) {
