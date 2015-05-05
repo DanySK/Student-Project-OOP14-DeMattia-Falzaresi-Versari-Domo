@@ -228,7 +228,10 @@ public class GUIFlatImpl implements GUIFlat {
 		btnNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				GUIFlatImpl.this.newFile();
+				if (controller != null) {
+					GUIFlatImpl.this.newFile();
+					controller.newProject();
+				}
 			}
 		});
 

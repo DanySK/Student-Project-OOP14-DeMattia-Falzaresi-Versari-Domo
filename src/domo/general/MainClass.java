@@ -68,10 +68,14 @@ public class MainClass {
 			System.out.println("Hai scelto di caricare");
 			try {
 				fl = res.restoreNow("tmp.dom");
+				System.out.println("Restore Terminato!");
+				System.out.println("Nome Appartamento: "+fl.getName());
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
 		}
 		else if (s.equals("N")) {
 			int roomId;
@@ -81,6 +85,7 @@ public class MainClass {
 			fl = new FlatImpl("appartamento");
 			
 			roomId = fl.addRoom(new RoomImpl("Cucina"));
+			roomId = fl.addRoom(new RoomImpl("Salotto"));
 			sRoom = fl.getRooms();
 			Room nowRoom = null;
 			for (Room room : sRoom) {
@@ -98,6 +103,7 @@ public class MainClass {
 					room.addSensor(new MotionSensor());
 				}
 			}
+			
 			System.out.println("Il Nome Dell'appartamento è "+fl.getName());
 			System.out.println("Il Nome di una stanza è " +nowRoom.getName());
 			System.out.println("Avvio il backup");
