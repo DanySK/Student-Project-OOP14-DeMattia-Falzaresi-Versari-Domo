@@ -9,5 +9,6 @@ public enum SensorTypology {
 	/**
 	 * The device type.
 	 */
+
 	MOTION;
 }

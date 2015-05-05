@@ -1,8 +1,12 @@
 package domo.GUI;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.List;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -10,10 +14,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
+import javax.swing.border.Border;
 
 import domo.devices.Sensor;
 
@@ -24,6 +31,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	
 	public GUIWorkingArea() {
 		super();
+		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 	}
 	
 	public void setImage(String imagePath) {
@@ -60,7 +68,8 @@ public class GUIWorkingArea extends JLayeredPane {
 		}
 	}
 	
-	public void addSensor(String imgPath) {
+	public void addSensor(String imgPath) {//(Sensor sensor) {
+		//String imgPath = sensor.getImagePath();
 		if(this.bgImage != null) {
 			GUISensorImpl t;
 			try {
@@ -76,7 +85,17 @@ public class GUIWorkingArea extends JLayeredPane {
 		}
 	}
 	
-	public boolean isBackgroundExist() {
+	public Set<Sensor> getSelectedSensor(){
+		Set<Sensor> sel = new HashSet<>();
+		for (GUISensorImpl sens : sensorList) {
+			if (sens.isSelect()) {
+				sel.add(sens.getSensor());
+			}
+		}
+		return sel;
+	}
+	
+	public boolean isSetBackground() {
 		return (this.bgImage != null);
 	}
 }

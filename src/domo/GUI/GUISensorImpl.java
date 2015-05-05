@@ -12,13 +12,17 @@ import java.io.IOException;
 
 import javax.swing.BorderFactory;
 
+import domo.devices.Sensor;
+
 public class GUISensorImpl extends ImageView{
 	
 	double xScaleFactorPos;
 	double yScaleFactorPos;
 	ImageView parent;
-	private final double MIN_FACTOR_SCALE = 0.0001;
+	private static final double MIN_FACTOR_SCALE = 0.0001;
 
+	private Sensor sensor;
+	
 	private boolean isMouseEnabled = false;
 	private MouseEvent pressed;
 	private Point pPoint;
@@ -37,7 +41,7 @@ public class GUISensorImpl extends ImageView{
 					new MouseAdapter() {
 						public void mouseClicked(final MouseEvent e) {
 							if ((e.getButton() == MouseEvent.BUTTON3 || e.getButton() == MouseEvent.BUTTON2) && isSelect && isMouseEnabled) {
-								GUISensorImpl.this.rotate90();
+								GUISensorImpl.this.rotate90(true);
 							}
 							if (e.getButton() == MouseEvent.BUTTON1 && isMouseEnabled) {
 								isSelect = !isSelect;
@@ -53,7 +57,6 @@ public class GUISensorImpl extends ImageView{
 							if (e.getSource() == GUISensorImpl.this && isMouseEnabled) {
 								pressed = e;
 								pPoint = GUISensorImpl.this.getLocation();
-								System.out.println("image press");
 							}
 						}
 					}
@@ -63,8 +66,11 @@ public class GUISensorImpl extends ImageView{
 				@Override
 				public void mouseWheelMoved(final MouseWheelEvent e) {
 					if (e.getSource() == GUISensorImpl.this && isMouseEnabled && isSelect) {
-						double rotationAngle = e.getPreciseWheelRotation() > 0 ? 90 : -90;
-						GUISensorImpl.this.rotate(rotationAngle);
+						if (e.getPreciseWheelRotation() > 0) {
+							GUISensorImpl.this.rotate90(true);
+						} else {
+							GUISensorImpl.this.rotate90(false);
+						}
 					}
 				}
 			});
@@ -89,6 +95,10 @@ public class GUISensorImpl extends ImageView{
 	private void updateFactors() {
 		this.xScaleFactorPos = Math.max(((double) this.getX() - (double) parent.getX()) / (double) parent.getWidth(), MIN_FACTOR_SCALE);
 		this.yScaleFactorPos = Math.max(((double) this.getY() - (double) parent.getY()) / (double) parent.getHeight(), MIN_FACTOR_SCALE);
+		if(sensor != null) {
+			sensor.setLocation(xScaleFactorPos, yScaleFactorPos);
+		}
+		
 	}
 	
 	public void setLocation(int x, int y) {
@@ -131,5 +141,12 @@ public class GUISensorImpl extends ImageView{
 	public boolean isSelect() {
 		return this.isSelect;
 	}
+
+	public Sensor getSensor() {
+		return this.sensor;
+	}
 	
+	public void setSensor(Sensor sens) {
+		this.sensor = sens;
+	}
 }

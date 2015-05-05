@@ -1,9 +1,15 @@
 package domo.general;
 
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,15 +24,42 @@ import domo.devices.sensor.MotionSensor;
 
 public class MainClass {
 
+	
+	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
+		
 		System.out.println("Welcome!");
 		Restore res = new RestoreImpl();
 		Backup bac = new BackupImpl("domo.xml");
 		Flat fl;
 		//usato per OSX (barra menu a schermo)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		GUIFlatImpl t = new GUIFlatImpl("Domo");
+		
+		final String classPath = "classi";
+		System.out.println(classPath);
+		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");			
+		listaClassiSensori.setModulePath(classPath);
+		final Set<String> resLoader = listaClassiSensori.updateModuleList();
+		ArrayList <Map <String, String>> sensorTypeList = new ArrayList<>();
+		resLoader.forEach(x -> {
+			try {
+				HashMap <String, String> t = new HashMap<>();
+				t.put("name", listaClassiSensori.createClassInstance(x).getName());
+				t.put("image", listaClassiSensori.createClassInstance(x).getImagePath());
+				t.put("type", listaClassiSensori.createClassInstance(x).getType().toString());
+				sensorTypeList.add(t);
+				
+			} catch (Exception e) {
+				fail(e.toString());
+			}
+		});
+		
+		GUIFlatImpl t = new GUIFlatImpl("Domo", sensorTypeList);
+		
+		new TheController(t);
+		
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Scegli se vuoi creare un nuovo appartamento o se vuoi caricare da file");
 		System.out.println("Digita N per nuovo appartamento o C per caricare");
@@ -78,5 +111,6 @@ public class MainClass {
 		}
 
 	}
+
 
 }

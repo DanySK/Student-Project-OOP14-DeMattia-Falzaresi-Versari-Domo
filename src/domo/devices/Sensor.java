@@ -36,7 +36,7 @@ public interface Sensor  {
 	
 	/**
 	 * 
-	 * @return the device image size
+	 * @return the device image size --??--
 	 */
 	Dimension getSize();
 	
@@ -45,7 +45,8 @@ public interface Sensor  {
 	 * @return the device image point
 	 */
 	Point getLocation();
-	
+	double getXPosition();
+	double getYPosition();
 	/**
 	 * 
 	 * @return if the device is in alert
@@ -56,7 +57,8 @@ public interface Sensor  {
 	 * 
 	 * @param destination set the device image point
 	 */
-	void setLocation(Point destination);
+	void setLocation(double x, double y);
+	void setLocation(Point point);
 	
 	/**
 	 * 

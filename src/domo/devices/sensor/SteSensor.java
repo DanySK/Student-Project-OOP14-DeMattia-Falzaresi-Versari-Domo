@@ -16,7 +16,7 @@ import domo.devices.SensorTypology;
  *
  */
 
-public class MotionSensor extends Observable implements Sensor  {
+public class SteSensor extends Observable implements Sensor  {
 	
 	private SensorStatus status;
 	private Point position;
@@ -26,9 +26,9 @@ public class MotionSensor extends Observable implements Sensor  {
 	private boolean alert;
 	
 	private static final Integer ID 			= 1234;
-	private static final String NAME 			= "DOMO STANDARD MOTION SENSOR";
+	private static final String NAME 			= "STEZSTAZ SENSOR";
 	private static final SensorTypology TYPE 	= SensorTypology.MOTION;	
-	private static final String IMAGE 			= "res" + System.getProperty("file.separator").toString() + "addSensor.png";	
+	private static final String IMAGE 			= "res" + System.getProperty("file.separator").toString() + "stestaz.jpg";	
 	
 	@Override
 	public int getId() {
@@ -120,10 +120,10 @@ public class MotionSensor extends Observable implements Sensor  {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof MotionSensor)) {
+		if (!(obj instanceof SteSensor)) {
 			return false;
 		}
-		MotionSensor other = (MotionSensor) obj;
+		SteSensor other = (SteSensor) obj;
 		if (alert != other.alert) {
 			return false;
 		}

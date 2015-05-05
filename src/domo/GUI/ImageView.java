@@ -115,8 +115,8 @@ public class ImageView extends JLabel {
 	    this.rotate();
 	}
 	
-	public void rotate90() {
-		double radians = 90 * Math.PI / 180;
+	public void rotate90(boolean clockwise) {
+		double radians = clockwise ? 90 * Math.PI / 180 : -90 * Math.PI / 180;
 		AffineTransform transform = new AffineTransform();
 	    transform.rotate(radians, this.getWidth() / 2, this.getHeight() / 2);
 	    AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
