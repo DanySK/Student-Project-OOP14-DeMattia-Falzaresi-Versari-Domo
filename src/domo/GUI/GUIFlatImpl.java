@@ -143,7 +143,7 @@ public class GUIFlatImpl implements GUIFlat {
 				System.out.println("Premuto Open");
 				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj", "dprj"));
 				if (controller != null) {
-					controller.load(pathFile);
+					//controller.load(pathFile);
 				}
 			}
 		});

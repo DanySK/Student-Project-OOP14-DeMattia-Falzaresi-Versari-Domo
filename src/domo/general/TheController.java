@@ -8,13 +8,13 @@ import domo.GUI.GUIFlatImpl;
 import domo.devices.Sensor;
 
 public class TheController extends GUIAbstractObserver{
+	
 	private GUIFlatImpl graphicInterface;
 	
 	public TheController(GUIFlatImpl GI) {
 		this.graphicInterface = GI;
 		this.graphicInterface.setController(this);
 	}
-	
 
 	@Override
 	public void addRoomWithNameAndSensors(final String name, final Set<Sensor> sensors) {
@@ -35,20 +35,17 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
-		// TODO Auto-generated method stub
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
 	}
 
 	@Override
 	public void newProject() {
 		System.out.println("controller: newProject");
-		
 	}
 
 	@Override
 	public void closeProgram() {
 		System.out.println("controller: closeProgram");
-		
 	}
 
 	@Override
@@ -58,14 +55,12 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void load(final String filePath) {
+	public void load(final String filePath, Flat flat) {
 		System.out.println("controller: load filename: " + filePath);
-		
 	}
 
 	@Override
 	public void refreshSensorList() {
 		System.out.println("controller: refreshSensorList");
-		
 	}
 }

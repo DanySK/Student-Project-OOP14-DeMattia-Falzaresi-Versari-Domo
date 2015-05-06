@@ -25,7 +25,6 @@ import domo.devices.sensor.MotionSensor;
 public class MainClass {
 
 	
-	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -41,6 +40,7 @@ public class MainClass {
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");			
 		listaClassiSensori.setModulePath(classPath);
 		final Set<String> resLoader = listaClassiSensori.updateModuleList();
+		
 		ArrayList <Map <String, String>> sensorTypeList = new ArrayList<>();
 		resLoader.forEach(x -> {
 			try {
@@ -74,8 +74,6 @@ public class MainClass {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
 		}
 		else if (s.equals("N")) {
 			int roomId;

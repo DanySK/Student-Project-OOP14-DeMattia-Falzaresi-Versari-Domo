@@ -68,7 +68,8 @@ public class GUIWorkingArea extends JLayeredPane {
 		}
 	}
 	
-	public void addSensor(String imgPath) {//(Sensor sensor) {
+	public void addSensor(String imgPath) {
+		//(Sensor sensor) {
 		//String imgPath = sensor.getImagePath();
 		if(this.bgImage != null) {
 			GUISensorImpl t;

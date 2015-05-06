@@ -4,6 +4,7 @@ package domo.GUI;
 import java.util.Set;
 
 import domo.devices.Sensor;
+import domo.general.Flat;
 import domo.general.Room;
 
 public abstract class GUIAbstractObserver {
@@ -26,7 +27,7 @@ public abstract class GUIAbstractObserver {
 	
 	public abstract void save(String filePathWithName);
 
-	public abstract void load(String filePath);
+	public abstract void load(String filePath, Flat flat);
 	
 	public abstract void refreshSensorList();	
 
