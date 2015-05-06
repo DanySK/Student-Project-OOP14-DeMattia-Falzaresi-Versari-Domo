@@ -12,7 +12,6 @@ import domo.devices.Sensor;
  * 
  */
 public class TheController extends GUIAbstractObserver{
-	
 	private GUIFlatImpl graphicInterface;
 	private Set<Room> roomList;
 	private Set<Sensor> sensorList;
@@ -27,6 +26,7 @@ public class TheController extends GUIAbstractObserver{
 		this.roomList = new HashSet<>();
 		this.sensorList = new HashSet<>();
 	}
+	
 
 	@Override
 	public void addRoomWithNameAndSensors(final String name, final Set<Sensor> sensors) {
@@ -54,6 +54,7 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
+		// TODO Auto-generated method stub
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
 		for (Sensor sensor : this.sensorList) {
 			this.roomList.stream().filter(s->s!=null).filter(s->s.equals(room)).findFirst().get().addSensor(sensor);
@@ -66,15 +67,14 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public Flat newProject() {
+	public void newProject() {
 		System.out.println("controller: newProject");
-		return null;
+		//potremmo mettere il metodo che fa partire l'agent di controllo sensori
 	}
 
 	@Override
 	public void closeProgram() {
 		System.out.println("controller: closeProgram");
-
 		//qui si puo mettere il modo per stoppare l'agent
 	}
 
@@ -85,12 +85,15 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void load(final String filePath, Flat flat) {
-		System.out.println("controller: load filename: " + filePath);
-	}
-
-	@Override
 	public void refreshSensorList() {
 		System.out.println("controller: refreshSensorList");
+		
+	}
+
+
+	@Override
+	public void load(String filePath, Flat flat) {
+		// TODO Auto-generated method stub
+		
 	}
 }
