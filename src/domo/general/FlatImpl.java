@@ -8,11 +8,11 @@ import java.util.Set;
 import domo.devices.util.counter.Counter;
 import domo.devices.util.counter.CounterImpl;
 
-/**
- * 
- * @author Marco Versari
- *  
- */
+	/**
+	 * 
+	 * @author Marco Versari
+	 *  
+	 */
 public class FlatImpl implements Flat {
 	
 	private final String name;
