@@ -39,6 +39,7 @@ public class GUISensorImpl extends ImageView{
 		if (this.getMouseListeners().length == 0) {
 			this.addMouseListener(
 					new MouseAdapter() {
+						
 						public void mouseClicked(final MouseEvent e) {
 							if ((e.getButton() == MouseEvent.BUTTON3 || e.getButton() == MouseEvent.BUTTON2) && isSelect && isMouseEnabled) {
 								GUISensorImpl.this.rotate90(true);

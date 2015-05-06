@@ -1,5 +1,6 @@
 package domo.general;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import domo.GUI.GUIAbstractObserver;
@@ -7,21 +8,21 @@ import domo.GUI.GUIFlatImpl;
 import domo.devices.Sensor;
 
 public class TheController extends GUIAbstractObserver{
-	private GUIFlatImpl GraphicInterface;
+	private GUIFlatImpl graphicInterface;
 	
 	public TheController(GUIFlatImpl GI) {
-		this.GraphicInterface = GI;
-		this.GraphicInterface.setController(this);
+		this.graphicInterface = GI;
+		this.graphicInterface.setController(this);
 	}
 	
 
 	@Override
-	public void addRoomWithNameAndSensors(String name, Set<Sensor> sensors) {
-		System.out.println("controller: addRoomWithNameAndSensors  number of select sensor: " + sensors.size());
+	public void addRoomWithNameAndSensors(final String name, final Set<Sensor> sensors) {
+		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + "room name: " + name);
 	}
 
 	@Override
-	public Sensor addSensorWithName(String name) {
+	public Sensor addSensorWithName(final String name) {
 		System.out.println("controller: addSensorWithName    sensorNaem: " + name);
 		return null;
 	}
@@ -33,9 +34,9 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void addSensorToRoom(Set<Sensor> sensors, Room room) {
+	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
 		// TODO Auto-generated method stub
-		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size());
+		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
 	}
 
 	@Override
@@ -51,13 +52,13 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void save(String filePathWithName) {
+	public void save(final String filePathWithName) {
 		System.out.println("controller: save  file name: " + filePathWithName);
 		
 	}
 
 	@Override
-	public void load(String filePath) {
+	public void load(final String filePath) {
 		System.out.println("controller: load filename: " + filePath);
 		
 	}

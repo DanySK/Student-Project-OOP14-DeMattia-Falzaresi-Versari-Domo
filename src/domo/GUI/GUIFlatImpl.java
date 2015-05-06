@@ -101,8 +101,10 @@ public class GUIFlatImpl implements GUIFlat {
 
 		mainPanel.add(workingArea, BorderLayout.CENTER);
 		this.sensorTypeList = sensorsTypes;
-		if (controller != null) {
+		if (controller != null && controller.getRoomList() != null) {
 			this.roomList = new ArrayList<>(controller.getRoomList());
+		} else {
+			this.roomList = new ArrayList<>();
 		}
 		createJMenu();
 		createNorthMenu();
@@ -436,20 +438,20 @@ public class GUIFlatImpl implements GUIFlat {
 		addRoomFrame.setLocation(new Point(this.mainFrame.getX() + 10, this.mainFrame.getY() + 10));
 		//JTextField txtname = new JTextField(10);
 
-		HashMap <String, Integer> roomsNames = new HashMap<>();
-		if (controller != null) {
+		JComboBox <String> cmbRoomName;
+		
+		if (controller != null && controller.getRoomList() != null) {
+			HashMap <String, Integer> roomsNames = new HashMap<>();
 			roomList = new ArrayList<>(controller.getRoomList());
 			for (Room t : roomList) {
 				roomsNames.put(t.getName(), t.getId());
 			}
-		}
-
-		JComboBox <String> cmbRoomName;
-		if (roomsNames.size() > 0) {
 			cmbRoomName = new JComboBox<>((String[]) (roomsNames.keySet().toArray()));
-		} else {
-			cmbRoomName = new JComboBox<String>(new String[] {"", "First", "Second", "..." });
+		}else {
+			//cmbRoomName = new JComboBox<String>(new String[] {"", "First", "Second", "Marco", "Stefano" });
+			cmbRoomName = new JComboBox<String>();
 		}
+		
 		cmbRoomName.setEditable(true);
 
 
@@ -467,7 +469,8 @@ public class GUIFlatImpl implements GUIFlat {
 		cmbRoomName.addItemListener(new ItemListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(final ItemEvent e) {
+				System.out.println(e.getStateChange());
 				if (cmbRoomName.getSelectedIndex() == 0) {
 					cmbRoomName.setEditable(true);
 				} else {
@@ -475,19 +478,25 @@ public class GUIFlatImpl implements GUIFlat {
 				}
 			}
 		});
-		//		cmbRoomName.addActionListener(new ActionListener() {
-		//			
-		//			@Override
-		//			public void actionPerformed(final ActionEvent e) {
-		//				System.out.println(cmbRoomName.getSelectedIndex());
-		//				if (roomsNames.containsKey(cmbRoomName.getSelectedItem())) {
-		//					//controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex() - 1));
-		//				} else {
-		//					//controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor() - 1);
-		//					//roomList = new ArrayList<>(controller.getRoomList());
-		//				}
-		//			}
-		//		});
+				cmbRoomName.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(final ActionEvent e) {
+//						if (controller != null) {
+//							System.out.println("\n action combo: " + cmbRoomName.getSelectedIndex());
+//							if (cmbRoomName.getSelectedIndex() <= 0) {
+//								controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
+//								if (controller.getRoomList() != null) {
+//									roomList = new ArrayList<>(controller.getRoomList());
+//								}
+//							} else {
+//
+//								controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex()));
+//							}
+//						}
+//						addRoomFrame.dispose();
+					}
+				});
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
@@ -499,9 +508,12 @@ public class GUIFlatImpl implements GUIFlat {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (controller != null) {
-					if(cmbRoomName.getSelectedIndex() == 0) {
+					System.out.println(cmbRoomName.getSelectedIndex());
+					if (cmbRoomName.getSelectedIndex() <= 0) {
 						controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
-						roomList = new ArrayList<>(controller.getRoomList());
+						if (controller.getRoomList() != null) {
+							roomList = new ArrayList<>(controller.getRoomList());
+						}
 					} else {
 
 						controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex()));
