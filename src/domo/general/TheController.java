@@ -85,14 +85,15 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void load(final String filePath) {
-		System.out.println("controller: load filename: " + filePath);
+	public void refreshSensorList() {
+		System.out.println("controller: refreshSensorList");
 		
 	}
 
+
 	@Override
-	public void refreshSensorList() {
-		System.out.println("controller: refreshSensorList");
+	public void load(String filePath, Flat flat) {
+		// TODO Auto-generated method stub
 		
 	}
 }
