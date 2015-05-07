@@ -37,6 +37,7 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import domo.devices.Sensor;
+import domo.general.Flat;
 import domo.general.Room;
 
 
@@ -123,9 +124,7 @@ public class GUIFlatImpl implements GUIFlat {
 				System.out.println("premuto New");
 
 				newFile();
-				if (controller != null) {
-					controller.newProject();
-				}
+				
 			}
 		});
 		menuFile.add(menuNew);
@@ -177,7 +176,7 @@ public class GUIFlatImpl implements GUIFlat {
 		menuBar.add(menuEdit);
 
 		JMenu menuInsert = new JMenu("Insert");
-		JMenuItem menuAddRoom = new JMenuItem("Insert New Room", KeyEvent.VK_R);
+		JMenuItem menuAddRoom = new JMenuItem("Add sensor to a room", KeyEvent.VK_R);
 		menuAddRoom.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
 		menuAddRoom.addActionListener(new ActionListener() {
 			@Override
@@ -227,10 +226,7 @@ public class GUIFlatImpl implements GUIFlat {
 		btnNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				if (controller != null) {
-					GUIFlatImpl.this.newFile();
-					controller.newProject();
-				}
+				GUIFlatImpl.this.newFile();
 			}
 		});
 
@@ -250,7 +246,7 @@ public class GUIFlatImpl implements GUIFlat {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {			
-				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj"));				
+				GUIFlatImpl.this.openFile();
 			}
 		});
 
@@ -270,15 +266,7 @@ public class GUIFlatImpl implements GUIFlat {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				if (controller != null) {
-					JFileChooser openFile = new JFileChooser();
-					openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dprj"));
-					openFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					int returnVal = openFile.showSaveDialog(mainFrame);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						controller.save(openFile.getSelectedFile().getPath() + ".dprj");
-					}
-				}
+				GUIFlatImpl.this.saveFile();
 			}
 		});
 
@@ -417,7 +405,10 @@ public class GUIFlatImpl implements GUIFlat {
 				if (imgAddress != null) {
 					workingArea.setImage(imgAddress);
 					mainFrame.repaint();
-
+					if (controller != null) {
+						
+						Flat prj = controller.newProject();
+					}
 				}
 			}
 		} else {
@@ -425,6 +416,30 @@ public class GUIFlatImpl implements GUIFlat {
 			if (imgAddress != null) {
 				workingArea.setImage(imgAddress);
 				mainFrame.repaint();
+			}
+		}
+	}
+	
+	private void openFile() {	
+		if (controller != null) {
+			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj"));
+			Flat proj = controller.load(pathFile);
+			if (proj != null) {
+				
+			} else {
+				JOptionPane.showConfirmDialog(null, "Same error occur during open project...", "OPS...", JOptionPane.CANCEL_OPTION);
+			}
+		}
+	}
+	
+	private void saveFile() {
+		if (controller != null) {
+			JFileChooser openFile = new JFileChooser();
+			openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dprj"));
+			//openFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int returnVal = openFile.showSaveDialog(mainFrame);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				controller.save(openFile.getSelectedFile().getPath() + ".dprj");
 			}
 		}
 	}
@@ -528,25 +543,6 @@ public class GUIFlatImpl implements GUIFlat {
 		addRoomFrame.setMaximumSize(new Dimension(addRoomFrame.getPreferredSize().width, addRoomFrame.getPreferredSize().height));
 	}
 
-	
-
-	@Override
-	public void addRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addFlat() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addSensor() {
-		// TODO Auto-generated method stub
-
-	}
 
 	public void setController(GUIAbstractObserver observer){
 	      controller = observer;		

@@ -25,7 +25,7 @@ public abstract class GUIAbstractObserver {
 	
 	public abstract void save(String filePathWithName);
 
-	public abstract void load(String filePath, Flat flat);
+	public abstract Flat load(String filePath);
 	
 	public abstract void refreshSensorList();	
 
