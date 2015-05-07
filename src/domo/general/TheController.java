@@ -85,8 +85,9 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void load(final String filePath, Flat flat) {
+	public Flat load(final String filePath) {
 		System.out.println("controller: load filename: " + filePath);
+		return null;
 	}
 
 	@Override
