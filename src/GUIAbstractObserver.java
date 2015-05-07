@@ -1,4 +1,4 @@
-package domo.GUI;
+
 
 
 import java.util.Set;
@@ -10,8 +10,6 @@ import domo.general.Room;
 public abstract class GUIAbstractObserver {
 	
 	protected GUIFlat guiFlat;
-	
-	//public abstract void flatAdded(Room room);
 	
 	public abstract void addRoomWithNameAndSensors(String name, Set<Sensor> sensors);
 	
