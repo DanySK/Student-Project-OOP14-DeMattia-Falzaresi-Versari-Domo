@@ -343,7 +343,7 @@ public class GUIFlatImpl implements GUIFlat {
 					@Override
 					public void actionPerformed(final ActionEvent e) {
 						if (controller != null) {
-							Sensor newSensor = controller.addSensorWithName(map.get("name"));
+							Sensor newSensor = controller.addSensorWithName(map.get("rif"));
 							//workingArea.addSensor(newSensor);
 							workingArea.addSensor(map.get("image"));
 							workingArea.repaint();
@@ -408,6 +408,7 @@ public class GUIFlatImpl implements GUIFlat {
 					if (controller != null) {
 						
 						Flat prj = controller.newProject();
+						prj = null;
 					}
 				}
 			}
