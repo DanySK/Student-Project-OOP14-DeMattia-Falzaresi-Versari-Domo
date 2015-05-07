@@ -1,6 +1,5 @@
 package domo.general;
 
-import java.awt.Point;
 import java.util.Set;
 
 import domo.devices.Sensor;
@@ -52,8 +51,9 @@ public interface Room {
 	
 	/**
 	 * Move a sensor.
-	 * @param id the sensor id to move
-	 * @param to the point to move the sensor.
+	 * @param id the sensor id.
+	 * @param x the sensor x position.
+	 * @param y the sensor y position.
 	 */
-	void moveSensor(int id, Point to);
+	void moveSensor(int id, double x, double y);
 }

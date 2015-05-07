@@ -22,9 +22,18 @@ import domo.devices.loader.DynamicLoader;
 import domo.devices.loader.DynamicLoaderImpl;
 import domo.devices.sensor.MotionSensor;
 
+/**
+ * 
+ * @author Marco Versari
+ *
+ */
 public class MainClass {
 
-	
+	/**
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -37,7 +46,7 @@ public class MainClass {
 		
 		final String classPath = "classi";
 		System.out.println(classPath);
-		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");			
+		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 		listaClassiSensori.setModulePath(classPath);
 		final Set<String> resLoader = listaClassiSensori.updateModuleList();
 		
@@ -89,7 +98,7 @@ public class MainClass {
 			for (Room room : sRoom) {
 				if (room.getId() == roomId) {
 					//creation of a new dynamic loader
-					DynamicLoader<Sensor> instance = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");
+					DynamicLoader<Sensor> instance = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");
 					System.out.println("Stampo l'elenco delle classi");
 					Set<String> setString = new HashSet<>();
 					setString = instance.updateModuleList();

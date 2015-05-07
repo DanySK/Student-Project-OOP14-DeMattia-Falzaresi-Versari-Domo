@@ -24,6 +24,7 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 	
 	private final String interfacePath;
 	private final String interfaceName;	
+	private final String superClass;
 	
 	private File modulePath;
 	private final Map<String, Class<?>> moduleList;
@@ -32,11 +33,13 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 	 * Create a module loader instance.
 	 * @param pInterfacePath the interface path.
 	 * @param pInterfaceName the interface name.
+	 * @param pSuperClass the super class name.
 	 */
-	public DynamicLoaderImpl(final String pInterfacePath, final String pInterfaceName) { 
+	public DynamicLoaderImpl(final String pInterfacePath, final String pInterfaceName, final String pSuperClass) { 
 		moduleList = new HashMap<>();
 		this.interfacePath = pInterfacePath;
 		this.interfaceName = pInterfaceName;
+		this.superClass = pSuperClass;
 	}
 
 	@Override
@@ -75,26 +78,28 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 			try {					
 				final ClassLoader classLoader = new URLClassLoader(new URL[]{modulePath.toURI().toURL()});						
 				for (final String module : a) {					
-					try {						
-						final Class<?> c2 = classLoader.loadClass(module);									
-						for (final Class<?> interfaces : c2.getInterfaces()) {							
-							if (interfaces.getName().endsWith(interfaceName)) {										
-								moduleList.put(c2.getName(), c2);								
-								if (Array.getLength(c2.getConstructors()) == 1) {
-									for (final Method met : Class.forName(interfacePath + "." + interfaceName).getMethods()) {
-										try {								
-											interfaces.getDeclaredMethod(met.getName(), met.getParameterTypes());											
-										} catch (NoSuchMethodException e) {
-											moduleList.remove(c2.getName());
-											break;
-										} catch (SecurityException e) {
-											System.out.println("Error: " + e.getMessage());
-										}	
+					try {												
+						final Class<?> c2 = classLoader.loadClass(module);												
+						if (c2.getSuperclass().getName().endsWith(superClass)) {							
+							for (final Class<?> interfaces : c2.getSuperclass().getInterfaces()) {		
+								//System.out.println(interfaces);		
+								if (interfaces.getName().endsWith(interfaceName)) {										
+									moduleList.put(c2.getName(), c2);										
+									if (Array.getLength(c2.getConstructors()) == 1) {									
+										for (final Method met : Class.forName(interfacePath + "." + interfaceName).getMethods()) {										
+											try {										
+												interfaces.getDeclaredMethod(met.getName(), met.getParameterTypes());											
+											} catch (NoSuchMethodException e) {											
+												moduleList.remove(c2.getName());
+												break;
+											} catch (SecurityException e) {
+												System.out.println("Error: " + e.getMessage());
+											}	
+										}
 									}
 								}
-							}
-						}
-							
+							}							
+						}							
 					} catch (ClassNotFoundException e) {
 						System.out.println("updateModuleList -> listAllModule: " + e);
 					}						

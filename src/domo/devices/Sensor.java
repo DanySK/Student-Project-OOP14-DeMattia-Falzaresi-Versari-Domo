@@ -1,7 +1,6 @@
 package domo.devices;
 
 import java.awt.Dimension;
-import java.awt.Point;
 
 /**
  * 
@@ -15,6 +14,12 @@ public interface Sensor  {
 	 * @return the device id
 	 */
 	int getId();
+	
+	/**
+	 * Set the device id.
+	 * @param id the device id.
+	 */
+	void setId(int id);
 	
 	/**
 	 * 
@@ -40,38 +45,53 @@ public interface Sensor  {
 	 */
 	Dimension getSize();
 	
+	
 	/**
-	 * 
+	 * Query the x position.
 	 * @return the device image point
 	 */
-	Point getLocation();
 	double getXPosition();
-	double getYPosition();
+	
 	/**
-	 * 
-	 * @return if the device is in alert
+	 * Query the y position.
+	 * @return the device image point
+	 */
+	double getYPosition();
+	
+	/**
+	 * Get the sensor alert status.
+	 * @return if the device is in alert.
 	 */
 	boolean isInAlert();
 	
 	/**
-	 * 
-	 * @param destination set the device image point
+	 * set the device image point.
+	 * @param x The x position.
+	 * @param y The y Position.
 	 */
 	void setLocation(double x, double y);
-	void setLocation(Point point);
 	
 	/**
-	 * 
+	 * Set the status the alert status.
+	 * @param pAlert status parameter.
+	 */
+	 void setAlert(boolean pAlert);
+
+	/**
+	 * Set the the alert status.
+	 * @param pStatus the status to set.
+	 */
+	void setStatus(SensorStatus pStatus);
+	
+	/**
+	 * Set the Size of the sensor.
 	 * @param size set the device dimension
 	 */
 	void setSize(Dimension size);
 	
 	/**
-	 * 
+	 * Get the image path.
 	 * @return the device image path
 	 */
 	String getImagePath();
-	
-	void setAlert(final boolean pAlert);	
-	void setStatus(final SensorStatus pStatus);
 }

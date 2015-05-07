@@ -1,6 +1,5 @@
 package domo.general;
 
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -61,6 +60,7 @@ public class RoomImpl implements Room {
 	@Override
 	public int addSensor(final Sensor sensor) {
 		final int ret = counter.incCounter();
+		sensor.setId(ret);
 		listSensor.put(ret, sensor);
 		return ret;
 	}
@@ -73,9 +73,9 @@ public class RoomImpl implements Room {
 	}
 
 	@Override
-	public void moveSensor(final int pId, final Point to) {
+	public void moveSensor(final int pId, final double x, final double y) {
 		if (listSensor.containsKey(pId)) {
-			listSensor.get(pId).setLocation(to);
+			listSensor.get(pId).setLocation(x, y);
 		}
 	}
 

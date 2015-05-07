@@ -31,7 +31,6 @@ public class CounterImpl implements Counter {
 
 	@Override
 	public int getCounter() {
-		// TODO Auto-generated method stub
 		return counter;
 	}
 

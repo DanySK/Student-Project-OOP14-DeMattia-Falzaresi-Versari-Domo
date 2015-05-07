@@ -24,14 +24,14 @@ public class DeviceTest {
 	 */
 	@Test
 	public void test() {		
-		final String classPath = "classi";//System.getProperty("user.home") + File.separator + "Desktop"+File.separator+"classi";
+		final String classPath = "classi";
 		System.out.println(classPath);
-		final DynamicLoader<Sensor> instance = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor");			
+		final DynamicLoader<Sensor> instance = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 		
 		instance.setModulePath(classPath);
 		final Set<String> res = instance.updateModuleList();
 		
-		assertSame(res.size(), 1);
+		assertSame(res.size(), 2);
 		
 		res.forEach(x -> {
 			try {
