@@ -157,4 +157,16 @@ public class MotionSensor extends Observable implements Sensor  {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setAlert(boolean pAlert) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setStatus(SensorStatus pStatus) {
+		// TODO Auto-generated method stub
+		
+	}
 }

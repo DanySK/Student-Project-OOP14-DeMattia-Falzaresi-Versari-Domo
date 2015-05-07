@@ -71,4 +71,7 @@ public interface Sensor  {
 	 * @return the device image path
 	 */
 	String getImagePath();
+	
+	void setAlert(final boolean pAlert);	
+	void setStatus(final SensorStatus pStatus);
 }
