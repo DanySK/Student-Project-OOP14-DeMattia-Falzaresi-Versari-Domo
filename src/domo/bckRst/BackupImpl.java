@@ -88,7 +88,8 @@ public class BackupImpl implements Backup {
 					try{
 					Element sensorE = createElement("sensor",sensor.getName(),sensor.getId(), roomEl);
 					sensorE.appendChild(addArg("image", sensor.getImagePath()));
-					//sensorE.appendChild(addArg("location", sensor.getLocation().toString()));
+					sensorE.appendChild(addArg("XPosition", Double.toString(sensor.getXPosition())));
+					sensorE.appendChild(addArg("YPosition", Double.toString(sensor.getYPosition())));
 					sensorE.appendChild(addArg("size", sensor.getSize().toString()));
 					sensorE.appendChild(addArg("typology", sensor.getType().toString()));
 					}
