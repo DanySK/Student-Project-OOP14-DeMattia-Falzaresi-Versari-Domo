@@ -54,6 +54,7 @@ public class TheController extends GUIAbstractObserver{
 		Room tmpRoom = new RoomImpl(name);
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
+			getSensorFromRoom("Default Room").remove(sensor);
 		}
 		flat.addRoom(tmpRoom);
 	}

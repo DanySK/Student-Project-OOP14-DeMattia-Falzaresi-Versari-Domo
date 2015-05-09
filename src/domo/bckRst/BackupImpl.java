@@ -172,7 +172,6 @@ public class BackupImpl implements Backup {
 		            	buf = new byte[1024];
 		            }
 		            while ((len = in.read(buf)) > 0) {
-		                //out.write(buf, 0, len);
 		            	out.write(buf);
 		            }
 		            out.closeEntry();
