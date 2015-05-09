@@ -1,11 +1,18 @@
 package domo.general;
 
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import domo.GUI.GUIAbstractObserver;
 import domo.GUI.GUIFlatImpl;
 import domo.devices.Sensor;
+import domo.devices.loader.DynamicLoader;
+import domo.devices.loader.DynamicLoaderImpl;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
@@ -40,7 +47,22 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public Sensor addSensorWithName(final String name) {
-		System.out.println("controller: addSensorWithName    sensorNaem: " + name);
+		System.out.println("controller: addSensorWithName    sensorName: " + name);
+		final String classPath = "classi";
+		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
+		listaClassiSensori.setModulePath(classPath);
+		final Set<String> resLoader = listaClassiSensori.updateModuleList();
+		for (String x : resLoader) {
+			try {
+				if(listaClassiSensori.createClassInstance(x).getName().equals(name)) {
+					return listaClassiSensori.createClassInstance(x);
+				}
+				
+			} catch (Exception e) {
+				fail(e.toString());
+			}
+		}
+	
 		//qui simone mi da il nome del sensore e io lo istanzio e poi glielo restituisco
 		return null;
 	}

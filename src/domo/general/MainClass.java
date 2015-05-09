@@ -57,6 +57,7 @@ public class MainClass {
 				t.put("name", listaClassiSensori.createClassInstance(x).getName());
 				t.put("image", listaClassiSensori.createClassInstance(x).getImagePath());
 				t.put("type", listaClassiSensori.createClassInstance(x).getType().toString());
+				t.put("rif", x);
 				sensorTypeList.add(t);
 				
 			} catch (Exception e) {

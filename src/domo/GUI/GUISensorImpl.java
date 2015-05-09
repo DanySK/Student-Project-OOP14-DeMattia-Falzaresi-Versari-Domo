@@ -28,8 +28,9 @@ public class GUISensorImpl extends ImageView{
 	private Point pPoint;
 	private boolean isSelect = true;
 	
-	public GUISensorImpl (String imagePath, ImageView parentBounds) throws IOException {
+	public GUISensorImpl (String imagePath, ImageView parentBounds, Sensor sens) throws IOException {
 		super(imagePath);
+		this.sensor = sens;
 		this.setMouseEnabled(true);
 		this.parent = parentBounds;
 		this.setLocation(10, 10);
