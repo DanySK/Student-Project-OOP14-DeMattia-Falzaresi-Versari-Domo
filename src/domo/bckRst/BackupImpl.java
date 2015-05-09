@@ -159,15 +159,19 @@ public class BackupImpl implements Backup {
 			itemToAdd.add(flatB.getImagePath());
 			for(String s : itemToAdd){
 				if(s != null){
-					System.out.println("The file is "+s);
+					
 					FileInputStream in = new FileInputStream(s);
-					out.putNextEntry(new ZipEntry(s));
+					File ft = new File(s);
+					out.putNextEntry(new ZipEntry(ft.getName()));
 					int len;
 		            while ((len = in.read(buf)) > 0) {
 		                out.write(buf, 0, len);
 		            }
 		            out.closeEntry();
 		            in.close();
+		            if(ft.getName().equals(flatB.getName()+".dom"));{
+		            	ft.delete();
+		            }
 				}
 				else {
 					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
