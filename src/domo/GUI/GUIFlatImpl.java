@@ -66,9 +66,8 @@ public class GUIFlatImpl implements GUIFlat {
 	private final JLabel helpLabel = new JLabel();
 
 	private WestPanel westPanel;
-	/**
-	 * 
-	 */
+	private String projectImagePath;
+	
 	private static final double W_SCREEN_MAX_SCALE = 0.7;
 	private static final double H_SCREEN_MAX_SCALE = 0.7;
 	private static final double W_SCREEN_MIN_SCALE = 0.1;
@@ -437,6 +436,7 @@ public class GUIFlatImpl implements GUIFlat {
 				String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
 				if (imgAddress != null) {
 					workingArea.setImage(imgAddress);
+					this.projectImagePath = imgAddress;
 					mainFrame.repaint();
 					if (controller != null) {
 						controller.newProject();
@@ -457,12 +457,13 @@ public class GUIFlatImpl implements GUIFlat {
 	private void openFile() {	
 		if (controller != null) {
 			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj"));
-			Flat proj = controller.load(pathFile);
-			if (proj != null) {
-				
+			if(pathFile != null) {
+				controller.load(pathFile);
 			} else {
 				JOptionPane.showConfirmDialog(null, "Same error occur during open project...", "OPS...", JOptionPane.CANCEL_OPTION);
 			}
+			
+		
 		}
 	}
 	
@@ -473,7 +474,7 @@ public class GUIFlatImpl implements GUIFlat {
 			//openFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int returnVal = openFile.showSaveDialog(mainFrame);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				controller.save(openFile.getSelectedFile().getPath() + ".dprj");
+				controller.save(openFile.getSelectedFile().getPath() + ".dprj", this.projectImagePath);
 			}
 		}
 	}

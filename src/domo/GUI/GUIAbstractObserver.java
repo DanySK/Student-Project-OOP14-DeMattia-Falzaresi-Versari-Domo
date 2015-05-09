@@ -25,7 +25,7 @@ public abstract class GUIAbstractObserver {
 	
 	public abstract void closeProgram();
 	
-	public abstract void save(String filePathWithName);
+	public abstract void save(String filePathWithName, final String imageFilePath);
 
 	public abstract Flat load(String filePath);
 	

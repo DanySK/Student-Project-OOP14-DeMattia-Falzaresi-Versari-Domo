@@ -117,7 +117,7 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void save(final String filePathWithName) {
+	public void save(final String filePathWithName, final String imageFilePath) {
 		System.out.println("controller: save  file name: " + filePathWithName);
 		try{
 			Backup bac = new BackupImpl(filePathWithName);
