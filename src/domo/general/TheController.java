@@ -93,7 +93,7 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
-		Set<Sensor> ss = getSensorFromRoom("Defaul Room");
+		Set<Sensor> ss = getSensorFromRoom("Default Room");
 		for (Sensor sensor : ss) {
 			getRoomfromName(room.getName()).addSensor(sensor);
 			if(sensors.contains(sensor)){
