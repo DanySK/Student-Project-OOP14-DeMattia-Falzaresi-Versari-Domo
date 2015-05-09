@@ -52,6 +52,9 @@ public class BackupImpl implements Backup {
 	 *  @return True if no error occurred False if something wrong is happened
 	 */
 	public void backupNow(Flat flatB) throws BackupDomoConfException{
+		if (flatB == null){
+			throw new BackupDomoConfException("No Flat has been submitted to the backup procedure");
+		}
 		try {
 		
 			//Creation of a new root element and add it to the document
