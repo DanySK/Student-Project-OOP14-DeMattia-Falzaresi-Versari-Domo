@@ -19,14 +19,26 @@ public class FlatImpl implements Flat {
 	private final Map<Integer, Room> listRoom;
 	private final Counter counter;
 	
+	private String imagePath;
+	
+	/**
+	 * initialize the flat class.
+	 * @param pName The flat name.
+	 * @param pImagePath The flat Image.
+	 */	
+	public FlatImpl(final String pName, final String pImagePath) {
+		imagePath = pImagePath;
+		name = pName;
+		listRoom = new HashMap<Integer, Room>();
+		counter = new CounterImpl(0);
+	}
+	
 	/**
 	 * initialize the flat class.
 	 * @param pName The flat name.
 	 */
 	public FlatImpl(final String pName) {
-		name = pName;
-		listRoom = new HashMap<Integer, Room>();
-		counter = new CounterImpl(0);
+		this(pName, null);
 	}
 
 	@Override
@@ -50,5 +62,15 @@ public class FlatImpl implements Flat {
 	@Override
 	public void removeRoom(final int id) {		
 		listRoom.remove(id);
+	}
+
+	@Override
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	@Override
+	public void setImagePath(final String path) {
+		imagePath = path;		
 	}
 }

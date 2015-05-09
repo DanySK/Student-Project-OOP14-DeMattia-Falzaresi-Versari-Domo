@@ -34,4 +34,16 @@ public interface Flat {
 	 * @param id room to remove.
 	 */
 	void removeRoom(int id);
+	
+	/**
+	 * Get the image path.
+	 * @return the image path,
+	 */
+	String getImagePath();
+	
+	/**
+	 * Set the image path.
+	 * @param path The image path to set.
+	 */
+	void setImagePath(String path);
 }
