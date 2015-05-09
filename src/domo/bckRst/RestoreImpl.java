@@ -32,8 +32,16 @@ public class RestoreImpl implements Restore {
 		}
 
 		@Override
-		public Flat restoreNow(String fileName) {
-			File tmpFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + fileName);
+		public Flat restoreNow(String fileName) throws RestoreDomoConfException{			
+			try {
+				CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"tmp.dom", fileName);
+				de.doDecryption();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			File tmpFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom");
 			
 			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuild;
@@ -72,13 +80,12 @@ public class RestoreImpl implements Restore {
 				}
 				*/
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RestoreDomoConfException(e.toString());
 			}
 
 			
 			
-			
+			tmpFile.delete();
 			return fl;
 		}
 		

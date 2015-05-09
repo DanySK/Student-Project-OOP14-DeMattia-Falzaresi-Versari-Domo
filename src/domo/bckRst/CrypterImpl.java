@@ -42,8 +42,8 @@ public class CrypterImpl implements Crypter {
 	}
 	public void doEncryption() throws Exception{
 		crypt.init(Cipher.ENCRYPT_MODE, secretKey);
-		fis = new FileInputStream(new File(System.getProperty("user.home") + System.getProperty("file.separator") + decFileName));
-		File dataFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + enFileName);
+		fis = new FileInputStream(new File(decFileName));
+		File dataFile = new File(enFileName);
 	    if (!dataFile.exists()) {
 	        cis = new CipherInputStream(fis, crypt);  
 	        try {
@@ -71,8 +71,8 @@ public class CrypterImpl implements Crypter {
 	
 	public void doDecryption() throws Exception {
 			crypt.init(Cipher.DECRYPT_MODE, secretKey);
-			File dataFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + enFileName);
-			File newDataFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + decFileName);
+			File dataFile = new File(enFileName);
+			File newDataFile = new File(decFileName);
 
 		    try {         
 		       fis = new FileInputStream(dataFile);

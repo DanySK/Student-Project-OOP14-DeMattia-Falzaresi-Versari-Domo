@@ -51,7 +51,7 @@ public class BackupImpl implements Backup {
 	 *  
 	 *  @return True if no error occurred False if something wrong is happened
 	 */
-	public boolean backupNow(Flat flatB) {
+	public void backupNow(Flat flatB) throws BackupDomoConfException{
 		try {
 		
 			//Creation of a new root element and add it to the document
@@ -112,14 +112,12 @@ public class BackupImpl implements Backup {
 			CrypterImpl en = new CrypterImpl(tmpFile.getName(), fileName);
 			en.doEncryption();
 			//togliere il commento dalla riga sotto
-			//tmpFile.delete();
-			CrypterImpl de = new CrypterImpl("output.xml", fileName);
-			de.doDecryption();
-			return true; 
+			tmpFile.delete();
+			//CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"output.xml", fileName);
+			//de.doDecryption();
 		}
 		catch (Exception exc) {
-			System.out.print(exc.toString());
-			return false;
+			throw new BackupDomoConfException(exc.toString());
 		}
 		
 	}
