@@ -28,7 +28,6 @@ import domo.devices.loader.DynamicLoaderImpl;
 public class TheController extends GUIAbstractObserver{
 	
 	private GUIFlatImpl graphicInterface;
-	private ArrayList<Room> roomList;
 	private Set<Sensor> sensorList;
 	private Flat flat;
 	
@@ -40,7 +39,6 @@ public class TheController extends GUIAbstractObserver{
 		
 		
 		this.graphicInterface = GI;
-		this.roomList = new ArrayList<>();
 		this.sensorList = new HashSet<>();
 		/*
 		for (int i = 0; i < 4; i++) {
@@ -59,7 +57,7 @@ public class TheController extends GUIAbstractObserver{
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
 		}
-		this.roomList.add(tmpRoom);
+		flat.addRoom(tmpRoom);
 	}
 
 	@Override
@@ -88,14 +86,14 @@ public class TheController extends GUIAbstractObserver{
 	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
-		return this.roomList.size()>0 ? this.roomList : null;
+		return this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
 	}
 
 	@Override
 	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
 		for (Sensor sensor : this.sensorList) {
-			this.roomList.stream().filter(s->s!=null).filter(s->s.equals(room)).findFirst().get().addSensor(sensor);
+			this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.equals(room)).findFirst().get().addSensor(sensor);
 			if(sensors.contains(sensor)){
 				this.sensorList.remove(sensor);
 			}
