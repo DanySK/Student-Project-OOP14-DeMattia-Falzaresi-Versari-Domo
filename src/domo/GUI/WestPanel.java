@@ -72,8 +72,8 @@ public class WestPanel extends JPanel{
 			super(new GridLayout(1,2));
 			this.sensorId = id;
 			//textLabel.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-			textLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-			imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+//			textLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+//			imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 			//imageLabel.setBorder(BorderFactory.createEmptyBorder(5,2,2,2));
 			imageLabel.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 			textLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);

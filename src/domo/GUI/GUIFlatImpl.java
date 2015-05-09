@@ -408,7 +408,7 @@ public class GUIFlatImpl implements GUIFlat {
 				WestPanel westPanel = new WestPanel(controller.getRoomList());
 				
 				mainFrame.add(westPanel, BorderLayout.WEST);
-				westPanel.setMinimumSize(new Dimension(600, westPanel.getHeight()));
+				//westPanel.setMinimumSize(new Dimension(600, westPanel.getHeight()));
 				
 			}
 		}
