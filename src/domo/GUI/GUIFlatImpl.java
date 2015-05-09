@@ -65,6 +65,7 @@ public class GUIFlatImpl implements GUIFlat {
 
 	private final JLabel helpLabel = new JLabel();
 
+	private WestPanel westPanel;
 	/**
 	 * 
 	 */
@@ -405,10 +406,8 @@ public class GUIFlatImpl implements GUIFlat {
 		
 		if (controller != null) {
 			if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
-				WestPanel westPanel = new WestPanel(controller.getRoomList());
-				
+				westPanel = new WestPanel(controller.getRoomList());
 				mainFrame.add(westPanel, BorderLayout.WEST);
-				//westPanel.setMinimumSize(new Dimension(600, westPanel.getHeight()));
 				
 			}
 		}
@@ -440,9 +439,7 @@ public class GUIFlatImpl implements GUIFlat {
 					workingArea.setImage(imgAddress);
 					mainFrame.repaint();
 					if (controller != null) {
-						
-						Flat prj = controller.newProject();
-						prj = null;
+						controller.newProject();
 					}
 				}
 			}
@@ -548,16 +545,21 @@ public class GUIFlatImpl implements GUIFlat {
 					if (cmbRoomName.getSelectedIndex() <= 0) {
 						if(cmbRoomName.getSelectedItem() != null) {
 							controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
+							westPanel.refreschWestPane(controller.getRoomList());
+							workingArea.resize();
 						}
 						if (controller.getRoomList() != null) {
 							roomList = new ArrayList<>(controller.getRoomList());
+							workingArea.resize();
 						}
 					} else {
 						controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex()));
 					}
 				}
 				addRoomFrame.dispose();
+
 			}
+			
 		});
 
 		addRoomFrame.setContentPane(panel);
@@ -571,8 +573,6 @@ public class GUIFlatImpl implements GUIFlat {
 
 	public void setController(GUIAbstractObserver observer){
 		controller = observer;	
-		this.createWestMenu();
-		mainFrame.repaint();
 	}
 
 
