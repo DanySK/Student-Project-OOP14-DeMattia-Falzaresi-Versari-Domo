@@ -133,12 +133,12 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: load filename: " + filePath);
 		try{
 			Restore res = new RestoreImpl();
-			return res.restoreNow(filePath);
+			this.flat = res.restoreNow(filePath);
 		}
 		catch(RestoreDomoConfException e){
 			System.out.println(e);
 		}
-		return null;
+		return this.flat==null ? null : this.flat;
 	}
 
 	@Override
