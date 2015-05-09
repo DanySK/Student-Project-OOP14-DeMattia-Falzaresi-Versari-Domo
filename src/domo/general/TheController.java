@@ -52,7 +52,7 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public void addRoomWithNameAndSensors(final String name, final Set<Sensor> sensors) {
-		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + "room name: " + name);
+		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
 		Room tmpRoom = new RoomImpl(name);
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
@@ -62,7 +62,7 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public Sensor addSensorWithName(final String name) {
-		System.out.println("controller: addSensorWithName    sensorName: " + name);
+		System.out.println("controller: addSensorWithName: " + name);
 		final String classPath = "classi";
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 		listaClassiSensori.setModulePath(classPath);
@@ -86,6 +86,7 @@ public class TheController extends GUIAbstractObserver{
 	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
+		System.out.println(flat.getRooms());
 		return  this.flat != null && this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
 	}
 
