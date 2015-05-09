@@ -33,10 +33,10 @@ public class WestPanel extends JPanel{
 		super(new BorderLayout(10,10));
 		this.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 
-		this.refreschWestPane(roomList);
+		this.refreshWestPane(roomList);
 	}
 	
-	public void refreschWestPane(ArrayList<Room> roomList) {
+	public void refreshWestPane(ArrayList<Room> roomList) {
 		
 		if(griglia != null) {
 			this.remove(griglia);
