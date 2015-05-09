@@ -6,6 +6,7 @@ package domo.GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.List;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class WestPanel extends JPanel{
 		private final ImageIcon greenLedImage = new ImageIcon("res" + System.getProperty("file.separator").toString() + "greenLed.png");
 		
 		public ItemForWestPanel(String textForSensor, int id) {
-			super(new GridLayout(1,2));
+			super(new FlowLayout(FlowLayout.LEADING, 5, 5));
 			this.sensorId = id;
 			//textLabel.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 //			textLabel.setBorder(BorderFactory.createLineBorder(Color.black));
