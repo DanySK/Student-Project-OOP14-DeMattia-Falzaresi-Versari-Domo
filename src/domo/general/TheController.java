@@ -16,6 +16,7 @@ import domo.devices.loader.DynamicLoaderImpl;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  */
 public class TheController extends GUIAbstractObserver{
