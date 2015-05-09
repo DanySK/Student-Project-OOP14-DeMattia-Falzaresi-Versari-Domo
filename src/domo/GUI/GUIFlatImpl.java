@@ -440,8 +440,7 @@ public class GUIFlatImpl implements GUIFlat {
 					mainFrame.repaint();
 					if (controller != null) {
 						
-						Flat prj = controller.newProject();
-						prj = null;
+						controller.newProject();
 					}
 				}
 			}
@@ -548,16 +547,17 @@ public class GUIFlatImpl implements GUIFlat {
 						if(cmbRoomName.getSelectedItem() != null) {
 							controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
 							westPanel.refreschWestPane(controller.getRoomList());
+							workingArea.resize();
 						}
 						if (controller.getRoomList() != null) {
 							roomList = new ArrayList<>(controller.getRoomList());
+							workingArea.resize();
 						}
 					} else {
 						controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex()));
 					}
 				}
 				addRoomFrame.dispose();
-				workingArea.resize();
 
 			}
 			
