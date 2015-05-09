@@ -120,7 +120,8 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public void save(final String filePathWithName, final String imageFilePath) {
-		System.out.println("controller: save  file name: " + filePathWithName);
+		System.out.println("controller: save  file name: " + filePathWithName + " Image file: "+imageFilePath);
+		this.flat.setImagePath(imageFilePath);
 		try{
 			Backup bac = new BackupImpl(filePathWithName);
 			bac.backupNow(this.flat);
