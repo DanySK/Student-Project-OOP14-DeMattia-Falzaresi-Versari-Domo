@@ -29,6 +29,7 @@ public class TheController extends GUIAbstractObserver{
 	private GUIFlatImpl graphicInterface;
 	private ArrayList<Room> roomList;
 	private Set<Sensor> sensorList;
+	private Flat flat;
 	
 	/**
 	 * Constructor.
@@ -104,7 +105,8 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public Flat newProject() {
 		System.out.println("controller: newProject");
-		return null;
+		this.flat = new FlatImpl("New Flat");
+		return this.flat;
 	}
 
 	@Override
