@@ -18,5 +18,5 @@ public interface Backup {
 	 * @throws BackupDomoConfException 
 	 * @return True if backup is correctly done,False if an error occur
 	 */
-	boolean backupNow(Flat flatB) throws BackupDomoConfException;
+	void backupNow(Flat flatB) throws BackupDomoConfException;
 }
