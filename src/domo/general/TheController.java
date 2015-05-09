@@ -10,6 +10,12 @@ import java.util.Set;
 
 import domo.GUI.GUIAbstractObserver;
 import domo.GUI.GUIFlatImpl;
+import domo.bckRst.Backup;
+import domo.bckRst.BackupDomoConfException;
+import domo.bckRst.BackupImpl;
+import domo.bckRst.Restore;
+import domo.bckRst.RestoreDomoConfException;
+import domo.bckRst.RestoreImpl;
 import domo.devices.Sensor;
 import domo.devices.loader.DynamicLoader;
 import domo.devices.loader.DynamicLoaderImpl;
@@ -111,12 +117,26 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void save(final String filePathWithName) {
 		System.out.println("controller: save  file name: " + filePathWithName);
-		
+		try{
+			Backup bac = new BackupImpl(filePathWithName);
+			bac.backupNow(null);
+		}
+		catch (BackupDomoConfException e){
+			System.out.println(e);
+		}
+
 	}
 
 	@Override
 	public Flat load(final String filePath) {
 		System.out.println("controller: load filename: " + filePath);
+		try{
+			Restore res = new RestoreImpl();
+			return res.restoreNow("tmp.dom");
+		}
+		catch(RestoreDomoConfException e){
+			System.out.println(e);
+		}
 		return null;
 	}
 

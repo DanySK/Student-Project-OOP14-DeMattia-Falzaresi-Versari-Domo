@@ -22,7 +22,7 @@ public interface Restore {
 	 * Restore from a specific file.
 	 * @param fileName the name of the file to restore
 	 * @return a flat element
-	 * @throws ParserConfigurationException 
+	 * @throws RestoreDomoConfException 
 	 */
-	Flat restoreNow(String fileName) throws ParserConfigurationException;
+	Flat restoreNow(String fileName) throws RestoreDomoConfException;
 }
