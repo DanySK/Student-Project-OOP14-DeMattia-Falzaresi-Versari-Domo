@@ -112,7 +112,7 @@ public class BackupImpl implements Backup {
 			
 			//save the file
 			trans.transform(dom, strOut);
-			CrypterImpl en = new CrypterImpl(tmpFile.getName(), fileName);
+			CrypterImpl en = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom", fileName);
 			en.doEncryption();
 			//togliere il commento dalla riga sotto
 			tmpFile.delete();
