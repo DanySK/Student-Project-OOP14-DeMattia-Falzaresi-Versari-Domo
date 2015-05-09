@@ -405,22 +405,10 @@ public class GUIFlatImpl implements GUIFlat {
 		
 		if (controller != null) {
 			if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
-				JPanel westPanel = new JPanel(new BorderLayout(10,10));
-				westPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+				WestPanel westPanel = new WestPanel(controller.getRoomList());
 				
-				JPanel griglia = new JPanel(new GridLayout(controller.getRoomList().size(), 1));
-				for (Room room : controller.getRoomList()) {
-					JPanel viewPanel = new JPanel(new GridLayout(room.getSensor().size(), 1));
-					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
-					for (Sensor sensor : room.getSensor()) {
-						JLabel sensorLabel = new JLabel(sensor.getName());
-						viewPanel.add(sensorLabel);
-					}
-					griglia.add(viewPanel);
-				}
-				
-				westPanel.add(griglia);
 				mainFrame.add(westPanel, BorderLayout.WEST);
+				westPanel.setMinimumSize(new Dimension(600, westPanel.getHeight()));
 				
 			}
 		}
@@ -501,10 +489,15 @@ public class GUIFlatImpl implements GUIFlat {
 			if (controller.getRoomList() != null && controller.getRoomList().size() > 0) {
 				HashMap<String, Integer> roomsNames = new HashMap<>();
 				roomList = new ArrayList<>(controller.getRoomList());
-				for (Room t : roomList) {
-					roomsNames.put(t.getName(), t.getId());
+				String[] t = new String[controller.getRoomList().size() + 1];
+				t[0] = " ";
+				int index = 1;
+				for (Room r : roomList) {
+					roomsNames.put(r.getName(), r.getId());
+					t[index] = r.getName();
+					index++;
 				}
-				cmbRoomName = new JComboBox<>((String[]) (roomsNames.keySet().toArray()));
+				cmbRoomName = new JComboBox<>(t);
 			}else {
 				cmbRoomName = new JComboBox<String>();
 			}
@@ -577,7 +570,9 @@ public class GUIFlatImpl implements GUIFlat {
 
 
 	public void setController(GUIAbstractObserver observer){
-		controller = observer;		
+		controller = observer;	
+		this.createWestMenu();
+		mainFrame.repaint();
 	}
 
 

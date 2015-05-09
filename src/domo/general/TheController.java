@@ -21,7 +21,7 @@ import domo.devices.loader.DynamicLoaderImpl;
 public class TheController extends GUIAbstractObserver{
 	
 	private GUIFlatImpl graphicInterface;
-	private Set<Room> roomList;
+	private ArrayList<Room> roomList;
 	private Set<Sensor> sensorList;
 	
 	/**
@@ -29,10 +29,18 @@ public class TheController extends GUIAbstractObserver{
 	 * @param GI a GUIFlatImpl object to start with the controller 
 	 */
 	public TheController(GUIFlatImpl GI) {
+		
+		
 		this.graphicInterface = GI;
-		this.graphicInterface.setController(this);
-		this.roomList = new HashSet<>();
+		this.roomList = new ArrayList<>();
 		this.sensorList = new HashSet<>();
+		
+		for (int i = 0; i < 4; i++) {
+			Room t = new RoomImpl("Romm n. " + (i + 1));
+			roomList.add(t);
+		}
+		this.graphicInterface.setController(this);
+
 	}
 
 	@Override
@@ -68,7 +76,7 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public Set<Room> getRoomList() {
+	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
 		return this.roomList.size()>0 ? this.roomList : null;

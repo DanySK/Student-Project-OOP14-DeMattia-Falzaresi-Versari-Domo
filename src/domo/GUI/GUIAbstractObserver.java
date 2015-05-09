@@ -1,6 +1,8 @@
 package domo.GUI;
 
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Set;
 
 import domo.devices.Sensor;
@@ -15,7 +17,7 @@ public abstract class GUIAbstractObserver {
 	
 	public abstract Sensor addSensorWithName(String name);
 	
-	public abstract Set<Room> getRoomList();
+	public abstract ArrayList<Room> getRoomList();
 	
 	public abstract void addSensorToRoom(Set <Sensor> sensors, Room room);
 	
