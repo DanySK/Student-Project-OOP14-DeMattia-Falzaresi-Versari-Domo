@@ -547,7 +547,13 @@ public class GUIFlatImpl implements GUIFlat {
 					if (cmbRoomName.getSelectedIndex() <= 0) {
 						if(cmbRoomName.getSelectedItem() != null) {
 							controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
-							westPanel.refreschWestPane(controller.getRoomList());
+							if(controller.getRoomList().size() > 0) {
+								if (westPanel == null) {
+									createWestMenu();
+								}
+								westPanel.refreschWestPane(controller.getRoomList());
+							}
+							
 							workingArea.resize();
 						}
 						if (controller.getRoomList() != null) {
