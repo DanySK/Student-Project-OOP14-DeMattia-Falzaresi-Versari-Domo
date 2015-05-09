@@ -446,8 +446,10 @@ public class GUIFlatImpl implements GUIFlat {
 		} else {
 			String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
 			if (imgAddress != null) {
+				
 				workingArea.setImage(imgAddress);
 				mainFrame.repaint();
+				controller.newProject();
 			}
 		}
 	}
