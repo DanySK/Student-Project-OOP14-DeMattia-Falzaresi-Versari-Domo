@@ -112,9 +112,9 @@ public class BackupImpl implements Backup {
 			CrypterImpl en = new CrypterImpl(tmpFile.getName(), fileName);
 			en.doEncryption();
 			//togliere il commento dalla riga sotto
-			//tmpFile.delete();
-			CrypterImpl de = new CrypterImpl("output.xml", fileName);
-			de.doDecryption();
+			tmpFile.delete();
+			//CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"output.xml", fileName);
+			//de.doDecryption();
 			return true; 
 		}
 		catch (Exception exc) {
