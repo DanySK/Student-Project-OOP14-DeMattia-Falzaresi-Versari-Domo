@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,7 +32,8 @@ import domo.general.RoomImpl;
 	 */
 public class RestoreImpl implements Restore {
 
-		Flat fl;
+		private Flat fl;
+		private String flatImageName;
 		public boolean checkFilePresence() {
 			return false;
 		}
@@ -59,6 +61,7 @@ public class RestoreImpl implements Restore {
 				//Use the createElement function to search elements in the xml and add everything to the environment
 				//Start with Flat
 				if(createElement("flat",rootEle,Flat.class)){
+					this.fl.setImagePath(flatImageName);
 					System.out.println("Flat Created!");
 				}
 				else{
@@ -156,6 +159,9 @@ public class RestoreImpl implements Restore {
 					}
 					else{
 						bos= new byte[1024];
+					}
+					if(ImageIO.read(new File(dir+System.getProperty("file.separator")+zEntry.getName()))!=null){
+						this.flatImageName= dir+System.getProperty("file.separator")+zEntry.getName();
 					}
 					int len;
 			        while ((len=zIn.read(bos))>0)
