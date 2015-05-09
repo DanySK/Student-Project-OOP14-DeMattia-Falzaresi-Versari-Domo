@@ -26,13 +26,24 @@ import domo.general.Room;
  */
 public class WestPanel extends JPanel{
 
-	final HashMap <Room, ArrayList<ItemForWestPanel>> labelForRoom = new HashMap<>();
+	private final HashMap <Room, ArrayList<ItemForWestPanel>> labelForRoom = new HashMap<>();
+	private JPanel griglia;
 	
 	public WestPanel(ArrayList<Room> roomList) {
 		super(new BorderLayout(10,10));
 		this.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+
+		this.refreschWestPane(roomList);
+	}
+	
+	public void refreschWestPane(ArrayList<Room> roomList) {
 		
-		JPanel griglia = new JPanel(new GridLayout(roomList.size(), 1));
+		if(griglia != null) {
+			this.remove(griglia);
+		}
+		griglia = null;
+		
+		griglia = new JPanel(new GridLayout(roomList.size(), 1));
 		griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "Rooms List"));
 		for (Room room : roomList) {
 			
@@ -48,15 +59,16 @@ public class WestPanel extends JPanel{
 				labelForRoom.get(room).add(sensorItem);
 			}
 			
-			ItemForWestPanel sensorItem = new ItemForWestPanel("Prova aaa aaa aaa", 20);
-			viewPanel.add(sensorItem);
+			//ItemForWestPanel sensorItem = new ItemForWestPanel("Prova aaa aaa aaa", 20);
+			//viewPanel.add(sensorItem);
 
-			viewPanel.add(sensorItem);
+			//viewPanel.add(sensorItem);
 			
 			griglia.add(viewPanel);
 		}
 		
 		this.add(griglia);
+		this.repaint();
 	}
 	
 	private class ItemForWestPanel extends JPanel {
