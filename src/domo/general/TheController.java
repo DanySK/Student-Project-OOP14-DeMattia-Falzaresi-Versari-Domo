@@ -86,7 +86,7 @@ public class TheController extends GUIAbstractObserver{
 	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
-		return this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
+		return  this.flat != null && this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
 	}
 
 	@Override
