@@ -86,7 +86,7 @@ public class TheController extends GUIAbstractObserver{
 	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
-		return this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
+		return  this.flat != null && this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
 	}
 
 	@Override
@@ -133,12 +133,12 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: load filename: " + filePath);
 		try{
 			Restore res = new RestoreImpl();
-			return res.restoreNow(filePath);
+			this.flat = res.restoreNow(filePath);
 		}
 		catch(RestoreDomoConfException e){
 			System.out.println(e);
 		}
-		return null;
+		return this.flat==null ? null : this.flat;
 	}
 
 	@Override
