@@ -1,5 +1,10 @@
 package domo.bckRst;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -32,9 +37,10 @@ public class RestoreImpl implements Restore {
 		}
 
 		@Override
-		public Flat restoreNow(String fileName) throws RestoreDomoConfException{			
+		public Flat restoreNow(String fileName) throws RestoreDomoConfException{
+			String fileToRestore = UnzipEveryThing(fileName);
 			try {
-				CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"tmp.dom", fileName);
+				CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"tmp.dom", fileToRestore);
 				de.doDecryption();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -122,6 +128,36 @@ public class RestoreImpl implements Restore {
 			return false;
 		}
 	
+		private String UnzipEveryThing(String file) throws RestoreDomoConfException{
+			FileInputStream fIn;
+			String fileName;
+			byte[] bos = new byte[1024];
+			if(file == null){
+				throw new RestoreDomoConfException("Restore File Cannot Be Null");
+			}
+			try {
+				File fl = new File(file);
+				ZipInputStream zIn = new ZipInputStream(new FileInputStream(file));
+				ZipEntry zEntry;
+				while ((zEntry = zIn.getNextEntry()) != null){
+					FileOutputStream fos = new FileOutputStream(fl.getPath()+zEntry.getName());
+					int len;
+					if(zEntry.getName().contains(".dom")){
+						fileName = fl.getPath()+zEntry.getName();
+					}
+			        while ((len=zIn.read(bos))>0)
+			        {
+			            fos.write(bos);
+			        }
+			        fos.flush();
+			        fos.close();
+
+				}
+			} catch (Exception e) {
+				throw new RestoreDomoConfException(e.toString());
+			}
+			return null;
+		}
 	
 
 }

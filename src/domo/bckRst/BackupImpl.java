@@ -169,9 +169,11 @@ public class BackupImpl implements Backup {
 		            }
 		            out.closeEntry();
 		            in.close();
-		            if(ft.getName().equals(flatB.getName()+".dom"));{
+		            if(ft.getName().equals(flatB.getName()+".dom")){
+		            	System.out.println("Trovato");
 		            	ft.delete();
 		            }
+
 				}
 				else {
 					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
