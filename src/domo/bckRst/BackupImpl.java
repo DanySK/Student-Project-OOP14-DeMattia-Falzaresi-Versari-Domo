@@ -151,7 +151,7 @@ public class BackupImpl implements Backup {
 	 * Make a Zip with Backup an others resources (Like Images) 
 	 */
 	private void ZipEveryThing(Flat flatB) throws BackupDomoConfException {
-		byte[] buf = new byte[1024];
+		byte[] buf ;
 		try {
 			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(this.fileName));
 			ArrayList<String> itemToAdd = new ArrayList<>();
@@ -160,18 +160,23 @@ public class BackupImpl implements Backup {
 			for(String s : itemToAdd){
 				if(s != null){
 					
+					
 					FileInputStream in = new FileInputStream(s);
 					File ft = new File(s);
 					out.putNextEntry(new ZipEntry(ft.getName()));
 					int len;
+					if(ft.getName().equals(flatB.getName()+".dom")){
+						buf = new byte[1];
+		            	ft.delete();
+		            }else{
+		            	buf = new byte[1024];
+		            }
 		            while ((len = in.read(buf)) > 0) {
-		                out.write(buf, 0, len);
+		                //out.write(buf, 0, len);
+		            	out.write(buf);
 		            }
 		            out.closeEntry();
 		            in.close();
-		            if(ft.getName().equals(flatB.getName()+".dom")){
-		            	ft.delete();
-		            }
 
 				}
 				else {

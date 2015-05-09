@@ -130,7 +130,7 @@ public class RestoreImpl implements Restore {
 	
 		private String UnzipEveryThing(String file) throws RestoreDomoConfException{
 			FileInputStream fIn;
-			String fileName;
+			String fileName=null;
 			
 			if(file == null){
 				throw new RestoreDomoConfException("Restore File Cannot Be Null");
@@ -138,28 +138,38 @@ public class RestoreImpl implements Restore {
 			try {
 				File fl = new File(file);
 				ZipInputStream zIn = new ZipInputStream(new FileInputStream(file));
-				
+				File dir = new File(fl.getParent()+System.getProperty("file.separator")+"Domo"+System.getProperty("file.separator"));
+				if(!dir.exists()){
+						if(!dir.mkdir()){
+							throw new RestoreDomoConfException("Unable to Create Restore Folder");
+						}
+				}
+				byte[] bos;
 				ZipEntry zEntry;
 				
 				while ((zEntry = zIn.getNextEntry()) != null){
-					byte[] bos = new byte[(int) zEntry.getSize()];
-					FileOutputStream fos = new FileOutputStream(fl.getParent()+System.getProperty("file.separator")+"Domo"+System.getProperty("file.separator")+zEntry.getName());
-					int len;
+					FileOutputStream fos = new FileOutputStream(dir+System.getProperty("file.separator")+zEntry.getName());
+					
 					if(zEntry.getName().contains(".dom")){
-						fileName = fl.getParent()+System.getProperty("file.separator")+"Domo"+System.getProperty("file.separator")+zEntry.getName();
+						fileName = dir+System.getProperty("file.separator")+zEntry.getName();
+						 bos = new byte[1];
 					}
+					else{
+						bos= new byte[1024];
+					}
+					int len;
 			        while ((len=zIn.read(bos))>0)
 			        {
 			            fos.write(bos);
 			        }
 			        fos.flush();
 			        fos.close();
-
+			        
 				}
 			} catch (Exception e) {
 				throw new RestoreDomoConfException(e.toString());
 			}
-			return null;
+			return fileName;
 		}
 	
 
