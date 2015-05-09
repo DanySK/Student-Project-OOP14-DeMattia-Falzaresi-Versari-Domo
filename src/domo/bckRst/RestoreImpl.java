@@ -32,7 +32,7 @@ public class RestoreImpl implements Restore {
 		}
 
 		@Override
-		public Flat restoreNow(String fileName) {			
+		public Flat restoreNow(String fileName) throws RestoreDomoConfException{			
 			try {
 				CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"tmp.dom", fileName);
 				de.doDecryption();
@@ -80,8 +80,7 @@ public class RestoreImpl implements Restore {
 				}
 				*/
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RestoreDomoConfException(e.toString());
 			}
 
 			
