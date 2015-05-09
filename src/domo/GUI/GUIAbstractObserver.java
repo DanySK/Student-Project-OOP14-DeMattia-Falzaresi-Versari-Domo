@@ -21,7 +21,7 @@ public abstract class GUIAbstractObserver {
 	
 	public abstract void addSensorToRoom(Set <Sensor> sensors, Room room);
 	
-	public abstract Flat newProject();
+	public abstract void newProject();
 	
 	public abstract void closeProgram();
 	

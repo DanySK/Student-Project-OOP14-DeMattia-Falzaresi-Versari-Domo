@@ -42,11 +42,12 @@ public class TheController extends GUIAbstractObserver{
 		this.graphicInterface = GI;
 		this.roomList = new ArrayList<>();
 		this.sensorList = new HashSet<>();
-		
+		/*
 		for (int i = 0; i < 4; i++) {
 			Room t = new RoomImpl("Romm n. " + (i + 1));
 			roomList.add(t);
 		}
+		*/
 		this.graphicInterface.setController(this);
 
 	}
@@ -104,10 +105,9 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public Flat newProject() {
+	public void newProject() {
 		System.out.println("controller: newProject");
 		this.flat = new FlatImpl("New Flat");
-		return this.flat;
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: save  file name: " + filePathWithName);
 		try{
 			Backup bac = new BackupImpl(filePathWithName);
-			bac.backupNow(null);
+			bac.backupNow(this.flat);
 		}
 		catch (BackupDomoConfException e){
 			System.out.println(e);
@@ -135,7 +135,7 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: load filename: " + filePath);
 		try{
 			Restore res = new RestoreImpl();
-			return res.restoreNow("tmp.dom");
+			return res.restoreNow(filePath);
 		}
 		catch(RestoreDomoConfException e){
 			System.out.println(e);
