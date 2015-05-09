@@ -131,19 +131,22 @@ public class RestoreImpl implements Restore {
 		private String UnzipEveryThing(String file) throws RestoreDomoConfException{
 			FileInputStream fIn;
 			String fileName;
-			byte[] bos = new byte[1024];
+			
 			if(file == null){
 				throw new RestoreDomoConfException("Restore File Cannot Be Null");
 			}
 			try {
 				File fl = new File(file);
 				ZipInputStream zIn = new ZipInputStream(new FileInputStream(file));
+				
 				ZipEntry zEntry;
+				
 				while ((zEntry = zIn.getNextEntry()) != null){
-					FileOutputStream fos = new FileOutputStream(fl.getPath()+zEntry.getName());
+					byte[] bos = new byte[(int) zEntry.getSize()];
+					FileOutputStream fos = new FileOutputStream(fl.getParent()+System.getProperty("file.separator")+"Domo"+System.getProperty("file.separator")+zEntry.getName());
 					int len;
 					if(zEntry.getName().contains(".dom")){
-						fileName = fl.getPath()+zEntry.getName();
+						fileName = fl.getParent()+System.getProperty("file.separator")+"Domo"+System.getProperty("file.separator")+zEntry.getName();
 					}
 			        while ((len=zIn.read(bos))>0)
 			        {

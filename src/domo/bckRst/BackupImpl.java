@@ -170,7 +170,6 @@ public class BackupImpl implements Backup {
 		            out.closeEntry();
 		            in.close();
 		            if(ft.getName().equals(flatB.getName()+".dom")){
-		            	System.out.println("Trovato");
 		            	ft.delete();
 		            }
 
