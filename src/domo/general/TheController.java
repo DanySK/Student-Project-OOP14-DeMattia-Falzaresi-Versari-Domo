@@ -52,10 +52,12 @@ public class TheController extends GUIAbstractObserver{
 	public void addRoomWithNameAndSensors(final String name, final ArrayList<Sensor> sensors) {
 		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
 		Room tmpRoom = new RoomImpl(name);
+		Set<Sensor> sr = new HashSet<>();
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
-			getSensorFromRoom("Default Room").remove(sensor);
+			sr.add(sensor);
 		}
+		getSensorFromRoom("Default Room").removeAll(sr);
 		flat.addRoom(tmpRoom);
 	}
 
@@ -94,12 +96,14 @@ public class TheController extends GUIAbstractObserver{
 	public void addSensorToRoom(final ArrayList<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
 		Set<Sensor> ss = getSensorFromRoom("Default Room");
-		for (Sensor sensor : ss) {
+		Set<Sensor> sr = new HashSet<>();
+		for (Sensor sensor : sensors) {
 			getRoomfromName(room.getName()).addSensor(sensor);
-			if(sensors.contains(sensor)){
-				getSensorFromRoom("Default Room").remove(sensor);
+			if (ss.contains(sensor)){
+				sr.add(sensor);
 			}
 		}
+		getSensorFromRoom("Default Room").removeAll(sr);
 		
 		
 	}
@@ -150,7 +154,7 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: refreshSensorList");
 	}
 	
-	private Set getSensorFromRoom(String roomName){
+	private Set<Sensor> getSensorFromRoom(String roomName){
 		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
 	}
 	private Room getRoomfromName(String roomName){
