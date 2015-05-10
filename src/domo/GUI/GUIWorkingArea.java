@@ -87,14 +87,56 @@ public class GUIWorkingArea extends JLayeredPane {
 		}
 	}
 	
-	public Set<Sensor> getSelectedSensor(){
-		Set<Sensor> sel = new HashSet<>();
+	public ArrayList<Sensor> getSelectedSensor(){
+		ArrayList<Sensor> sel = new ArrayList<>();
 		for (GUISensorImpl sens : sensorList) {
 			if (sens.isSelect()) {
 				sel.add(sens.getSensor());
 			}
 		}
 		return sel;
+	}
+
+	/**
+	 * 
+	 * @param sens   		the sensor to change color
+	 * @param lightIndex 	index that rappresent the color:	0 - IN ALLARM
+	 * 														1 - NOT IN ALLARM
+	 */
+	private void setLightToSensor(Sensor sens, int lightIndex) {
+		switch (lightIndex) {
+		case 0:
+			for (GUISensorImpl tSens : sensorList) {
+				if(tSens.getSensor().equals(sens)) {
+					tSens.setRedColorFilter();
+					return;
+				}
+			}
+			break;
+		case 1:
+			for (GUISensorImpl tSens : sensorList) {
+				if(tSens.getSensor().equals(sens)) {
+					tSens.setResetFilter();
+					return;
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	public void setInAllarmToSensor(ArrayList<Sensor> sens) {
+		for (Sensor sensor: sens) {
+			this.setLightToSensor(sensor, 0);
+		}
+	}
+	
+	public void resetAllarmToSensor(ArrayList<Sensor> sens) {
+		for (Sensor sensor: sens) {
+			this.setLightToSensor(sensor, 1);
+		}
 	}
 	
 	public boolean isSetBackground() {
