@@ -116,7 +116,7 @@ public class GUIWorkingArea extends JLayeredPane {
 		case 1:
 			for (GUISensorImpl tSens : sensorList) {
 				if(tSens.getSensor().equals(sens)) {
-					tSens.setResetFilter();
+					tSens.setRedColorFilter();
 					return;
 				}
 			}
