@@ -183,7 +183,6 @@ public class ImageView extends JLabel {
 	}
 	
 	public void setScale(final double imgScale) {
-		Dimension old = this.getSize(); 
 		BufferedImage imgToResize = copyImage(this.originalImage);
 		this.totalScaleFactor = Math.max(MIN_FACTOR_SCALE, imgScale);
 	
