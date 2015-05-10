@@ -57,6 +57,7 @@ public class GUIWorkingArea extends JLayeredPane {
 		for (GUISensorImpl t : sensorList) {
 			if (t.isSelect()) {
 				this.remove(t);
+				t = null;
 			}
 		}
 	}

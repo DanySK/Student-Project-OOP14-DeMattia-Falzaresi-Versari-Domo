@@ -36,12 +36,7 @@ public class TheController extends GUIAbstractObserver{
 		
 		
 		this.graphicInterface = GI;
-		/*
-		for (int i = 0; i < 4; i++) {
-			Room t = new RoomImpl("Romm n. " + (i + 1));
-			roomList.add(t);
-		}
-		*/
+	
 		this.graphicInterface.setController(this);
 
 	}
@@ -160,6 +155,12 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void deleteSensors(ArrayList<Sensor> sensors) {
 		// TODO Auto-generated method stub
-		
+		for (Room room : flat.getRooms()) {
+			for (Sensor sensor : sensors) {
+				if (room.getSensor().contains(sensor)) {
+					room.getSensor().remove(sensor);
+				}
+			}
+		}
 	}
 }

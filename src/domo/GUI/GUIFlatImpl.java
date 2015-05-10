@@ -386,22 +386,17 @@ public class GUIFlatImpl implements GUIFlat {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 
-				//imageViewList.removeAll(toRemove);
-
-				if(controller != null && controller.getRoomList().size() > 0) {
+				if(controller != null) {
 
 					controller.deleteSensors(workingArea.getSelectedSensor());
 
 					workingArea.removeSelectSensor();
 					workingArea.repaint();
-
-					System.out.println("numero Room: " + controller.getRoomList().size());
-					System.out.println("Sensor count: " + controller.getRoomList().get(0).getSensor().size());
-
-					westPanel.refreshWestPane(controller.getRoomList());
+					
+					if (controller.getRoomList() != null && controller.getRoomList().size() > 0) {
+						westPanel.refreshWestPane(controller.getRoomList());
+					}
 				}
-				//old style
-				//centerPane.repaint();
 			}
 		});
 
@@ -625,7 +620,6 @@ public class GUIFlatImpl implements GUIFlat {
 									westPanel = new WestPanel(controller.getRoomList());
 									mainFrame.add(westPanel, BorderLayout.WEST);
 								}
-								westPanel.refreshWestPane(controller.getRoomList());
 							}
 
 							workingArea.resize();
@@ -638,6 +632,7 @@ public class GUIFlatImpl implements GUIFlat {
 						controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex() - 1));
 					}
 				}
+				westPanel.refreshWestPane(controller.getRoomList());
 				addRoomFrame.dispose();
 
 			}
@@ -660,11 +655,11 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set in allarm
 	 */
 	public void setSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-		
-			westPanel.refreshWestPane(controller.getRoomList());
-			
-			workingArea.setInAllarmToSensor(sensors);
-		
+
+		westPanel.refreshWestPane(controller.getRoomList());
+
+		workingArea.setInAllarmToSensor(sensors);
+
 	}
 
 	/**
