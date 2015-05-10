@@ -102,7 +102,7 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 		int result = 1;
 		result = prime * result + id;
 		return result;
-	}
+	} 
 
 	@Override
 	public boolean equals(final Object obj) {
