@@ -655,11 +655,8 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set in allarm
 	 */
 	public void setSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-
 		westPanel.refreshWestPane(controller.getRoomList());
-
 		workingArea.setInAllarmToSensor(sensors);
-
 	}
 
 	/**
@@ -670,10 +667,8 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set 'not in allarm'
 	 */
 	public void resetSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-
 		workingArea.resetAllarmToSensor(sensors);
 		westPanel.refreshWestPane(controller.getRoomList());
-
 	}
 
 	/**

@@ -158,7 +158,7 @@ public class TheController extends GUIAbstractObserver{
 		for (Room room : flat.getRooms()) {
 			for (Sensor sensor : sensors) {
 				if (room.getSensor().contains(sensor)) {
-					room.getSensor().remove(sensor);
+					room.removeSensor(sensor.getId());
 				}
 			}
 		}

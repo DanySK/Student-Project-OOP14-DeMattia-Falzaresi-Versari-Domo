@@ -44,37 +44,40 @@ public class WestPanel extends JPanel{
 		if(griglia != null) {
 			this.remove(griglia);
 		}
-		griglia = null;
-		griglia = new JPanel();
-		griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
-		griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "Rooms List"));
-		for (Room room : roomList) {
-			if(room.getSensor() != null && room.getSensor().size() > 0) {
-				//JPanel viewPanel = new JPanel(new GridLayout(room.getSensor().size(), 1));
-				JPanel viewPanel = new JPanel();
-				viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
-				viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
+		if (roomList != null && roomList.size() > 0) {
+			griglia = null;
+			griglia = new JPanel();
+			griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
+			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "Rooms List"));
+			for (Room room : roomList) {
+				if(room.getSensor() != null && room.getSensor().size() > 0) {
+					//JPanel viewPanel = new JPanel(new GridLayout(room.getSensor().size(), 1));
+					JPanel viewPanel = new JPanel();
+					viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
+					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
 
-				for (Sensor sensor : room.getSensor()) {
-					if(!labelForRoom.containsKey(room)) {
-						labelForRoom.put(room, new ArrayList<ItemForWestPanel>());
+					for (Sensor sensor : room.getSensor()) {
+						if(!labelForRoom.containsKey(room)) {
+							labelForRoom.put(room, new ArrayList<ItemForWestPanel>());
+						}
+						ItemForWestPanel sensorItem;
+						if(sensor.isInAlert()) {
+							sensorItem = new ItemForWestPanel(sensor.getName(), sensor.getId(), true);
+						} else {
+							sensorItem = new ItemForWestPanel(sensor.getName(), sensor.getId(), false);
+						}
+						viewPanel.add(sensorItem);
+						labelForRoom.get(room).add(sensorItem);
 					}
-					ItemForWestPanel sensorItem;
-					if(sensor.isInAlert()) {
-						sensorItem = new ItemForWestPanel(sensor.getName(), sensor.getId(), true);
-					} else {
-						sensorItem = new ItemForWestPanel(sensor.getName(), sensor.getId(), false);
-					}
-					viewPanel.add(sensorItem);
-					labelForRoom.get(room).add(sensorItem);
+
+					griglia.add(viewPanel);
 				}
-
-				griglia.add(viewPanel);
 			}
-		}
 
-		this.add(griglia);
+			this.add(griglia);
+		}
 		this.repaint();
+
 	}
 
 	public void setGreenLightToSensor(Room room, int sensorId) {
