@@ -167,7 +167,6 @@ public class BackupImpl implements Backup {
 					int len;
 					if(ft.getName().equals(flatB.getName()+".dom")){
 						buf = new byte[1];
-		            	ft.delete();
 		            }else{
 		            	buf = new byte[1024];
 		            }
@@ -176,7 +175,7 @@ public class BackupImpl implements Backup {
 		            }
 		            out.closeEntry();
 		            in.close();
-
+		            if(ft.getName().equals(flatB.getName()+".dom")) ft.delete();
 				}
 				else {
 					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
