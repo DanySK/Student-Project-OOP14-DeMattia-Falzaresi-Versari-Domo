@@ -1,31 +1,24 @@
 package domo.GUI;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.List;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
-import javax.swing.border.Border;
 
 import domo.devices.Sensor;
 
 public class GUIWorkingArea extends JLayeredPane {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3555881320995216997L;
 	private ImageView bgImage;
 	private final ArrayList <GUISensorImpl> sensorList = new ArrayList<>();
 	

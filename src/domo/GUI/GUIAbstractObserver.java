@@ -1,9 +1,7 @@
 package domo.GUI;
 
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Set;
 
 import domo.devices.Sensor;
 import domo.general.Flat;

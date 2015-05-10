@@ -1,7 +1,6 @@
 package domo.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
@@ -10,6 +9,10 @@ import javax.swing.JPanel;
 
 public class SouthPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4847808262714176820L;
 	private final JLabel helpLabel = new JLabel(); 
 	
 	public SouthPanel() {

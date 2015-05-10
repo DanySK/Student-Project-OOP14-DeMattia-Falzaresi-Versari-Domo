@@ -2,7 +2,6 @@ package domo.GUI;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -16,6 +15,10 @@ import domo.devices.Sensor;
 
 public class GUISensorImpl extends ImageView{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4801241871307624092L;
 	double xScaleFactorPos;
 	double yScaleFactorPos;
 	ImageView parent;

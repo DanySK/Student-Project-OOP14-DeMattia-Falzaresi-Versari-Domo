@@ -37,7 +37,6 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import domo.devices.Sensor;
-import domo.general.Flat;
 import domo.general.Room;
 
 
@@ -68,7 +67,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 * the type sensor list
 	 */
 	private List <Map <String, String>> sensorTypeList;
-	
+
 	/**
 	 * The project room list
 	 */
@@ -82,12 +81,12 @@ public class GUIFlatImpl implements GUIFlat {
 	 * left panel object
 	 */
 	private WestPanel westPanel;
-	
+
 	/**
 	 * background image path
 	 */
 	private String projectImagePath;
-	
+
 	/**
 	 * Factor scale to present the max width frame
 	 */
@@ -158,24 +157,24 @@ public class GUIFlatImpl implements GUIFlat {
 		} else {
 			this.roomList = new ArrayList<>();
 		}
-		
-		
+
+
 		createJMenu();
 		createNorthMenu();
-		
+
 		//create the south menu of main windows (help panel)
 		southPanel = new SouthPanel();
 		mainFrame.add(southPanel, BorderLayout.SOUTH);
-		
+
 		//create the left panel that show rooms and sensors
 		if (controller != null) {
 			if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
 				westPanel = new WestPanel(controller.getRoomList());
 				mainFrame.add(westPanel, BorderLayout.WEST);
-				
+
 			}
 		}
-		
+
 		mainFrame.setVisible(true);
 	}
 
@@ -195,7 +194,7 @@ public class GUIFlatImpl implements GUIFlat {
 				System.out.println("premuto New");
 
 				GUIFlatImpl.this.newFile();
-				
+
 			}
 		});
 		menuFile.add(menuNew);
@@ -388,17 +387,17 @@ public class GUIFlatImpl implements GUIFlat {
 			public void actionPerformed(final ActionEvent e) {
 
 				//imageViewList.removeAll(toRemove);
-				
+
 				if(controller != null && controller.getRoomList().size() > 0) {
-					
+
 					controller.deleteSensors(workingArea.getSelectedSensor());
-					
+
 					workingArea.removeSelectSensor();
 					workingArea.repaint();
-					
+
 					System.out.println("numero Room: " + controller.getRoomList().size());
 					System.out.println("Sensor count: " + controller.getRoomList().get(0).getSensor().size());
-					
+
 					westPanel.refreshWestPane(controller.getRoomList());
 				}
 				//old style
@@ -507,7 +506,7 @@ public class GUIFlatImpl implements GUIFlat {
 		} else {
 			String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
 			if (imgAddress != null) {
-				
+
 				workingArea.setImage(imgAddress);
 				this.projectImagePath = imgAddress;
 				mainFrame.repaint();
@@ -515,7 +514,7 @@ public class GUIFlatImpl implements GUIFlat {
 			}
 		}
 	}
-	
+
 	/**
 	 * Open a project.
 	 * Heandle the controller call too (load(pathFile))
@@ -528,11 +527,11 @@ public class GUIFlatImpl implements GUIFlat {
 			} else {
 				JOptionPane.showConfirmDialog(null, "Same error occur during open project...", "OPS...", JOptionPane.CANCEL_OPTION);
 			}
-			
-		
+
+
 		}
 	}
-	
+
 	/**
 	 * Save the current project 
 	 * Heandle the controller call too (save(pathFile))
@@ -574,12 +573,12 @@ public class GUIFlatImpl implements GUIFlat {
 			}else {
 				cmbRoomName = new JComboBox<String>();
 			}
-			
+
 		}else {
 			cmbRoomName = new JComboBox<String>();
-			
+
 		}
-		
+
 		cmbRoomName.setEditable(true);
 
 		JLabel lblNome = new JLabel("nome stanza:");
@@ -628,7 +627,7 @@ public class GUIFlatImpl implements GUIFlat {
 								}
 								westPanel.refreshWestPane(controller.getRoomList());
 							}
-							
+
 							workingArea.resize();
 						}
 						if (controller.getRoomList() != null) {
@@ -642,7 +641,7 @@ public class GUIFlatImpl implements GUIFlat {
 				addRoomFrame.dispose();
 
 			}
-			
+
 		});
 
 		addRoomFrame.setContentPane(panel);
@@ -661,14 +660,13 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set in allarm
 	 */
 	public void setSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-		for (Sensor sen : sensors) {
-			//left panel update
-			westPanel.setRedLightToSensor(room, sen.getId());
-			//update workingArea??
+		
+			westPanel.refreshWestPane(controller.getRoomList());
+			
 			workingArea.setInAllarmToSensor(sensors);
-		}
+		
 	}
-	
+
 	/**
 	 * Reset a list of sensor from in allarm state to 'not in allarm' state
 	 * (change left panel led color and the color filter in 
@@ -677,14 +675,12 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set 'not in allarm'
 	 */
 	public void resetSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-		for (Sensor sen : sensors) {
-			//left panel update
-			westPanel.setGreenLightToSensor(room, sen.getId());
-			//update workingArea??
-			workingArea.resetAllarmToSensor(sensors);
-		}
+
+		workingArea.resetAllarmToSensor(sensors);
+		westPanel.refreshWestPane(controller.getRoomList());
+
 	}
-	
+
 	/**
 	 * Set the observer for the Graphic Interface
 	 * 
