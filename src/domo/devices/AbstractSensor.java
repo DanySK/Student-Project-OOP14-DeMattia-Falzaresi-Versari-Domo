@@ -96,9 +96,6 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 		notifyObservers(new PairImpl<NotificationsType, SensorStatus>(NotificationsType.STATUS, pStatus));
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,9 +104,6 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -118,13 +112,14 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof MotionSensor)) {
+		if (!(obj instanceof AbstractSensor)) {
 			return false;
 		}
-		MotionSensor other = (MotionSensor) obj;
-		if (id != other.getId()) {
+		AbstractSensor other = (AbstractSensor) obj;
+		if (id != other.id) {
 			return false;
 		}
 		return true;
 	}
+
 }

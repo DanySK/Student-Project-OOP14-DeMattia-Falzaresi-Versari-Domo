@@ -509,6 +509,7 @@ public class GUIFlatImpl implements GUIFlat {
 			if (imgAddress != null) {
 				
 				workingArea.setImage(imgAddress);
+				this.projectImagePath = imgAddress;
 				mainFrame.repaint();
 				controller.newProject();
 			}
