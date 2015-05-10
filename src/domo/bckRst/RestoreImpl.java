@@ -117,6 +117,8 @@ public class RestoreImpl implements Restore {
 						break;
 					case "domo.devices.Sensor":
 						System.out.println("New Sensor: "+ eleName);
+						String eleX = el.getElementsByTagName("XPosition").item(0).getFirstChild().getNodeValue();
+						String eleY = el.getElementsByTagName("YPosition").item(0).getFirstChild().getNodeValue();
 						for (Room r : fl.getRooms()) {
 							if (r.getId() == Integer.parseInt(el.getParentNode().getAttributes().getNamedItem("Id").getTextContent())){
 								final String classPath = "classi";
@@ -126,8 +128,9 @@ public class RestoreImpl implements Restore {
 								for (String x : resLoader) {
 									try {
 										if(listaClassiSensori.createClassInstance(x).getName().equals(eleName)) {
-											r.addSensor(listaClassiSensori.createClassInstance(x));
-											
+											Sensor tmpS = listaClassiSensori.createClassInstance(x);
+											tmpS.setLocation(Double.parseDouble(eleX),Double.parseDouble(eleY));
+											r.addSensor(tmpS);
 										}
 										
 									} catch (Exception e) {
