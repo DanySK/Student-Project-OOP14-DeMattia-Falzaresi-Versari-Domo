@@ -50,12 +50,10 @@ public class WestPanel extends JPanel{
 			griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
 			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "Rooms List"));
 			for (Room room : roomList) {
+				JPanel viewPanel = new JPanel();
+				viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 				if(room.getSensor() != null && room.getSensor().size() > 0) {
-					//JPanel viewPanel = new JPanel(new GridLayout(room.getSensor().size(), 1));
-					JPanel viewPanel = new JPanel();
-					viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
-
 					for (Sensor sensor : room.getSensor()) {
 						if(!labelForRoom.containsKey(room)) {
 							labelForRoom.put(room, new ArrayList<ItemForWestPanel>());
@@ -69,13 +67,26 @@ public class WestPanel extends JPanel{
 						viewPanel.add(sensorItem);
 						labelForRoom.get(room).add(sensorItem);
 					}
-
-					griglia.add(viewPanel);
+					
+				}else {
+					//if (!room.getName().equals("Default Room")) {
+						viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
+						viewPanel.add(new JLabel("No Sensors :("));
+					//}
 				}
+				griglia.add(viewPanel);
 			}
 
-			this.add(griglia);
+
+		} else {
+			griglia = null;
+			griglia = new JPanel();
+			griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
+			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "No Room :("));
+			griglia.add(new JLabel("                      "));
 		}
+
+		this.add(griglia);
 		this.repaint();
 
 	}

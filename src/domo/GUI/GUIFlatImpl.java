@@ -167,13 +167,13 @@ public class GUIFlatImpl implements GUIFlat {
 		mainFrame.add(southPanel, BorderLayout.SOUTH);
 
 		//create the left panel that show rooms and sensors
-		if (controller != null) {
-			if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
-				westPanel = new WestPanel(controller.getRoomList());
+//		if (controller != null) {
+//			if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
+				westPanel = new WestPanel(null);
 				mainFrame.add(westPanel, BorderLayout.WEST);
 
-			}
-		}
+//			}
+//		}
 
 		mainFrame.setVisible(true);
 	}
@@ -395,7 +395,9 @@ public class GUIFlatImpl implements GUIFlat {
 					
 					if (controller.getRoomList() != null && controller.getRoomList().size() > 0) {
 						westPanel.refreshWestPane(controller.getRoomList());
+						westPanel.repaint();
 					}
+					mainFrame.repaint();
 				}
 			}
 		});
@@ -427,14 +429,16 @@ public class GUIFlatImpl implements GUIFlat {
 
 					@Override
 					public void actionPerformed(final ActionEvent e) {
-						if (controller != null) {
+						if (controller != null && workingArea.isSetBackground()) {
 							Sensor newSensor = controller.addSensorWithName(map.get("name"));
 							workingArea.addSensor(newSensor);
 							//workingArea.addSensor(map.get("image"));
 							if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
-								//westPanel.refreshWestPane(controller.getRoomList());
+								westPanel.refreshWestPane(controller.getRoomList());
 							}
 							workingArea.repaint();
+							westPanel.repaint();
+							//mainPanel.repaint();
 						}
 					}
 				});
