@@ -122,14 +122,19 @@ public class GUISensorImpl extends ImageView{
 	
 	public void setScale(final double imgScale) {
 		super.setScale(imgScale);
-		
 		int newX = (int) ((double) this.parent.getWidth() * xScaleFactorPos);
 		int newY = (int) ((double) this.parent.getHeight() * yScaleFactorPos);
-	
 		newX += this.parent.getX();
 		newY += this.parent.getY();
-		
 		this.setLocation(newX, newY);
+	}
+	
+	public void setRedColorFilter() {
+		this.parent.setColorFilter(ColorFilter.COLOR_FILTER_RED);
+	}
+	
+	public void setResetFilter() {
+		this.parent.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
 	}
 	
 	public void setMouseEnabled(final boolean enableMouse) {

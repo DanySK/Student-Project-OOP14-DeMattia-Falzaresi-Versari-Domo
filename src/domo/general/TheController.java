@@ -28,7 +28,6 @@ import domo.devices.loader.DynamicLoaderImpl;
 public class TheController extends GUIAbstractObserver{
 	
 	private GUIFlatImpl graphicInterface;
-	private Set<Sensor> sensorList;
 	private Flat flat;
 	
 	/**
@@ -39,7 +38,6 @@ public class TheController extends GUIAbstractObserver{
 		
 		
 		this.graphicInterface = GI;
-		this.sensorList = new HashSet<>();
 		/*
 		for (int i = 0; i < 4; i++) {
 			Room t = new RoomImpl("Romm n. " + (i + 1));
@@ -51,12 +49,15 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void addRoomWithNameAndSensors(final String name, final Set<Sensor> sensors) {
+	public void addRoomWithNameAndSensors(final String name, final ArrayList<Sensor> sensors) {
 		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
 		Room tmpRoom = new RoomImpl(name);
+		Set<Sensor> sr = new HashSet<>();
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
+			sr.add(sensor);
 		}
+		getSensorFromRoom("Default Room").removeAll(sr);
 		flat.addRoom(tmpRoom);
 	}
 
@@ -70,7 +71,9 @@ public class TheController extends GUIAbstractObserver{
 		for (String x : resLoader) {
 			try {
 				if(listaClassiSensori.createClassInstance(x).getName().equals(name)) {
-					return listaClassiSensori.createClassInstance(x);
+					Sensor tmp = listaClassiSensori.createClassInstance(x);
+					getRoomfromName("Default Room").addSensor(tmp);
+					return tmp;
 				}
 				
 			} catch (Exception e) {
@@ -86,19 +89,21 @@ public class TheController extends GUIAbstractObserver{
 	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
-		System.out.println(flat.getRooms());
 		return  this.flat != null && this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
 	}
 
 	@Override
-	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
+	public void addSensorToRoom(final ArrayList<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
-		for (Sensor sensor : this.sensorList) {
-			this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.equals(room)).findFirst().get().addSensor(sensor);
-			if(sensors.contains(sensor)){
-				this.sensorList.remove(sensor);
+		Set<Sensor> ss = getSensorFromRoom("Default Room");
+		Set<Sensor> sr = new HashSet<>();
+		for (Sensor sensor : sensors) {
+			getRoomfromName(room.getName()).addSensor(sensor);
+			if (ss.contains(sensor)){
+				sr.add(sensor);
 			}
 		}
+		getSensorFromRoom("Default Room").removeAll(sr);
 		
 		
 	}
@@ -107,6 +112,7 @@ public class TheController extends GUIAbstractObserver{
 	public void newProject() {
 		System.out.println("controller: newProject");
 		this.flat = new FlatImpl("New Flat");
+		this.flat.addRoom(new RoomImpl("Default Room"));
 	}
 
 	@Override
@@ -118,7 +124,8 @@ public class TheController extends GUIAbstractObserver{
 
 	@Override
 	public void save(final String filePathWithName, final String imageFilePath) {
-		System.out.println("controller: save  file name: " + filePathWithName);
+		System.out.println("controller: save  file name: " + filePathWithName + " Image file: "+imageFilePath);
+		this.flat.setImagePath(imageFilePath);
 		try{
 			Backup bac = new BackupImpl(filePathWithName);
 			bac.backupNow(this.flat);
@@ -145,5 +152,17 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void refreshSensorList() {
 		System.out.println("controller: refreshSensorList");
+	}
+	
+	private Set<Sensor> getSensorFromRoom(String roomName){
+		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
+	}
+	private Room getRoomfromName(String roomName){
+		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get();
+	}
+	@Override
+	public void deleteSensors(ArrayList<Sensor> sensors) {
+		// TODO Auto-generated method stub
+		
 	}
 }

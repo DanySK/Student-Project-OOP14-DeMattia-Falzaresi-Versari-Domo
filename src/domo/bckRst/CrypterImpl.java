@@ -62,7 +62,7 @@ public class CrypterImpl implements Crypter {
 	                 cis.close();  
 	                 fis.close(); 
 	            } catch (IOException e) {
-	            	System.out.println("Errore: " + e);
+	            	System.out.println("Error: " + e);
 	            }
 	        }
 	    }              
@@ -99,7 +99,7 @@ public class CrypterImpl implements Crypter {
 		                 cis.close();  
 		                 fis.close(); 
 		            } catch (IOException e) {
-		                System.out.println("Errore: " + e);
+		                System.out.println("Error: " + e);
 		            }
 		        }
 		    }

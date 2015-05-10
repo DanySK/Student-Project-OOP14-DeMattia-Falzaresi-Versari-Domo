@@ -1,7 +1,13 @@
 package domo.bckRst;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -112,12 +118,11 @@ public class BackupImpl implements Backup {
 			
 			//save the file
 			trans.transform(dom, strOut);
-			CrypterImpl en = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom", fileName);
+			CrypterImpl en = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom", System.getProperty("user.home") + System.getProperty("file.separator") + flatB.getName() + ".dom");
 			en.doEncryption();
-			//togliere il commento dalla riga sotto
 			tmpFile.delete();
-			//CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"output.xml", fileName);
-			//de.doDecryption();
+			ZipEveryThing(flatB);
+			
 		}
 		catch (Exception exc) {
 			throw new BackupDomoConfException(exc.toString());
@@ -141,4 +146,48 @@ public class BackupImpl implements Backup {
 		ele.appendChild(elRet);
 		return elRet;
 	}
+	
+	/**
+	 * Make a Zip with Backup an others resources (Like Images) 
+	 */
+	private void ZipEveryThing(Flat flatB) throws BackupDomoConfException {
+		byte[] buf ;
+		try {
+			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(this.fileName));
+			ArrayList<String> itemToAdd = new ArrayList<>();
+			itemToAdd.add(System.getProperty("user.home") + System.getProperty("file.separator") + flatB.getName() + ".dom");
+			itemToAdd.add(flatB.getImagePath());
+			for(String s : itemToAdd){
+				if(s != null){
+					
+					
+					FileInputStream in = new FileInputStream(s);
+					File ft = new File(s);
+					out.putNextEntry(new ZipEntry(ft.getName()));
+					int len;
+					if(ft.getName().equals(flatB.getName()+".dom")){
+						buf = new byte[1];
+		            }else{
+		            	buf = new byte[1024];
+		            }
+		            while ((len = in.read(buf)) > 0) {
+		            	out.write(buf);
+		            }
+		            out.closeEntry();
+		            in.close();
+		            if(ft.getName().equals(flatB.getName()+".dom")) ft.delete();
+				}
+				else {
+					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
+				}
+			}
+			out.close();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	 
 }

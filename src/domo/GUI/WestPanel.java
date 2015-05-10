@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,10 @@ import domo.general.Room;
  */
 public class WestPanel extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1185955850039860687L;
 	private final HashMap <Room, ArrayList<ItemForWestPanel>> labelForRoom = new HashMap<>();
 	private JPanel griglia;
 	
@@ -42,12 +47,14 @@ public class WestPanel extends JPanel{
 			this.remove(griglia);
 		}
 		griglia = null;
-		
-		griglia = new JPanel(new GridLayout(roomList.size(), 1));
+		griglia = new JPanel();
+		griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
 		griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "Rooms List"));
 		for (Room room : roomList) {
 			
-			JPanel viewPanel = new JPanel(new GridLayout(room.getSensor().size(), 1));
+			//JPanel viewPanel = new JPanel(new GridLayout(room.getSensor().size(), 1));
+			JPanel viewPanel = new JPanel();
+			viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 			viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
 			
 			for (Sensor sensor : room.getSensor()) {
@@ -59,11 +66,6 @@ public class WestPanel extends JPanel{
 				labelForRoom.get(room).add(sensorItem);
 			}
 			
-			//ItemForWestPanel sensorItem = new ItemForWestPanel("Prova aaa aaa aaa", 20);
-			//viewPanel.add(sensorItem);
-
-			//viewPanel.add(sensorItem);
-			
 			griglia.add(viewPanel);
 		}
 		
@@ -71,23 +73,40 @@ public class WestPanel extends JPanel{
 		this.repaint();
 	}
 	
+	public void setGreenLightToSensor(Room room, int sensorId) {
+		ArrayList<ItemForWestPanel> t = labelForRoom.get(room);
+		for (ItemForWestPanel i : t) {
+			if (i.getSensorId() == sensorId) {
+				i.setGreenLed();
+			}
+		}
+	}
+	
+	public void setRedLightToSensor(Room room, int sensorId) {
+		ArrayList<ItemForWestPanel> t = labelForRoom.get(room);
+		for (ItemForWestPanel i : t) {
+			if (i.getSensorId() == sensorId) {
+				i.setRedLed();
+			}
+		}
+	}
+	
 	private class ItemForWestPanel extends JPanel {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3811536795951095239L;
 		private final JLabel imageLabel = new JLabel();
 		private final JLabel textLabel = new JLabel();
 		private int sensorId;
 		
-	
 		private final ImageIcon redLedImage = new ImageIcon("res" + System.getProperty("file.separator").toString() + "redLed.png");
 		private final ImageIcon greenLedImage = new ImageIcon("res" + System.getProperty("file.separator").toString() + "greenLed.png");
 		
 		public ItemForWestPanel(String textForSensor, int id) {
 			super(new FlowLayout(FlowLayout.LEADING, 5, 5));
 			this.sensorId = id;
-			//textLabel.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-//			textLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-//			imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-			//imageLabel.setBorder(BorderFactory.createEmptyBorder(5,2,2,2));
 			imageLabel.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 			textLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 			imageLabel.setIcon(redLedImage);
@@ -96,6 +115,7 @@ public class WestPanel extends JPanel{
 			textLabel.setText(textForSensor);
 			this.add(imageLabel);
 			this.add(textLabel);
+			this.setGreenLed();
 		}
 		
 		public void setGreenLed() {

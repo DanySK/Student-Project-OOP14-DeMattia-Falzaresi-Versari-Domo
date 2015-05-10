@@ -13,13 +13,13 @@ public abstract class GUIAbstractObserver {
 	
 	protected GUIFlat guiFlat;
 	
-	public abstract void addRoomWithNameAndSensors(String name, Set<Sensor> sensors);
+	public abstract void addRoomWithNameAndSensors(String name, ArrayList<Sensor> arrayList);
 	
 	public abstract Sensor addSensorWithName(String name);
 	
 	public abstract ArrayList<Room> getRoomList();
 	
-	public abstract void addSensorToRoom(Set <Sensor> sensors, Room room);
+	public abstract void addSensorToRoom(ArrayList<Sensor> arrayList, Room room);
 	
 	public abstract void newProject();
 	
@@ -30,5 +30,7 @@ public abstract class GUIAbstractObserver {
 	public abstract Flat load(String filePath);
 	
 	public abstract void refreshSensorList();	
+	
+	public abstract void deleteSensors(ArrayList<Sensor> sensors);
 
 }
