@@ -49,13 +49,11 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E createClassInstance(final String module) throws IllegalAccessException, InvocationTargetException {
-		try {
-			return (E) moduleList.get(module).getConstructors()[0].newInstance();			
-		} catch (InstantiationException | IllegalArgumentException
-				| SecurityException e) {
-			System.out.println("createClassInstance: " + e);
-			return null;
+	public E createClassInstance(final String module) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+		if (moduleList.containsKey(module)) {
+			return (E) moduleList.get(module).getConstructors()[0].newInstance();		
+		} else {
+			throw new IllegalArgumentException("Invalid module name.");
 		}
 	}
 	

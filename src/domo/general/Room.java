@@ -1,5 +1,6 @@
 package domo.general;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import domo.devices.Sensor;
@@ -41,7 +42,19 @@ public interface Room {
 	 * @param sensor sensor to add.
 	 * @return room id.
 	 */
+	@Deprecated
 	int addSensor(Sensor sensor);
+	
+	/**
+	 * Add sensor to room.
+	 * @param classPath where to find the sensor class.
+	 * @param module the module name to load.
+	 * @return sensor id.
+	 * @throws IllegalAccessException if the updateModuleList fail to check the module compatibility.
+	 * @throws InvocationTargetException if something go wrong on the constructor of the module.
+	 * @throws InstantiationException the specified class object cannot be instantiated.
+	 */
+	int addSensor(String classPath, String module) throws IllegalAccessException, InvocationTargetException, InstantiationException;
 	
 	/**
 	 * Remove a sensor from room.

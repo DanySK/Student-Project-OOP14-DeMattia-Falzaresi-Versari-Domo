@@ -35,6 +35,7 @@ public interface DynamicLoader<E> {
 	 * @return the instance of the selected module.
 	 * @throws IllegalAccessException if the updateModuleList fail to check the module compatibility.
 	 * @throws InvocationTargetException if something go wrong on the constructor of the module.
+	 * @throws InstantiationException the specified class object cannot be instantiated.
 	 */
-	E createClassInstance(final String module) throws IllegalAccessException, InvocationTargetException;
+	E createClassInstance(final String module) throws IllegalAccessException, InvocationTargetException, InstantiationException;
 }

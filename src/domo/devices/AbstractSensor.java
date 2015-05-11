@@ -3,7 +3,6 @@ package domo.devices;
 import java.awt.Dimension;
 import java.util.Observable;
 
-import domo.devices.sensor.MotionSensor;
 import domo.devices.util.pair.PairImpl;
 
 /**

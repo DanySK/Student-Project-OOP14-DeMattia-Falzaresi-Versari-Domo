@@ -11,7 +11,7 @@ public class CounterImpl implements Counter {
 	
 	/**
 	 * Initialize the counter class.
-	 * @param counterStart the point where to start the counter
+	 * @param counterStart the point where start the counter
 	 */
 	public CounterImpl(final int counterStart) {
 		this.counter = counterStart;
