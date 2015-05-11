@@ -53,7 +53,13 @@ public class GUIFlatImpl implements GUIFlat {
 	 */
 	private GUIAbstractObserver controller;
 
-	private JFrame mainFrame = new JFrame();
+	/**
+	 * The Graphic Main Frame
+	 */
+	private final JFrame mainFrame = new JFrame();
+	/**
+	 * The main Panel with BorderLayout layout
+	 */
 	private JPanel mainPanel;
 
 	/**
@@ -62,6 +68,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 */
 	private GUIWorkingArea workingArea;
 
+	/**
+	 * The top menu
+	 */
 	private final JMenuBar menuBar = new JMenuBar();
 
 	/**
@@ -124,7 +133,6 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensorsTypes Sensor type list. This need to create top menu button
 	 */
 	public GUIFlatImpl(final String title, List<Map <String, String>> sensorsTypes) {	
-		mainFrame = new JFrame();
 		mainFrame.setTitle(title);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -208,7 +216,7 @@ public class GUIFlatImpl implements GUIFlat {
 			public void actionPerformed(final ActionEvent e) {
 
 				System.out.println("Premuto Open");
-				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dom", "dom"));
+				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj", "dprj"));
 				if (GUIFlatImpl.this.controller != null) {
 					GUIFlatImpl.this.openFile();
 					controller.load(pathFile);
@@ -521,7 +529,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 */
 	private void openFile() {	
 		if (controller != null) {
-			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dom"));
+			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj"));
 			if(pathFile != null) {
 				Flat file = controller.load(pathFile);
 				workingArea.setImage(file.getImagePath());
@@ -549,11 +557,11 @@ public class GUIFlatImpl implements GUIFlat {
 	private void saveFile() {
 		if (controller != null) {
 			JFileChooser openFile = new JFileChooser();
-			openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dom"));
+			openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dprj"));
 			//openFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int returnVal = openFile.showSaveDialog(mainFrame);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				controller.save(openFile.getSelectedFile().getPath() + ".dom", this.projectImagePath);
+				controller.save(openFile.getSelectedFile().getPath() + ".dprj", this.projectImagePath);
 			}
 		}
 	}
