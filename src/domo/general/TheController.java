@@ -44,18 +44,14 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void addRoomWithNameAndSensors(final String name, final ArrayList<Sensor> sensors) {
 		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
-		Room tmpRoom = new RoomImpl(name);
+		int idR = flat.addRoom(name);
+		Room roomToAdd = flat.getRoom(idR);
 		for (Sensor sensor : sensors) {
 			for (Room rooms : flat.getRooms()) {
-				if(!rooms.getName().equals(name)){
-					getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
-				}
+				getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
 			}
-			tmpRoom.addSensor(sensor);
+			flat.addSensorToRoom(roomToAdd, sensor);
 		}
-
-		
-		flat.addRoom(tmpRoom);
 	}
 
 	@Override
@@ -69,7 +65,7 @@ public class TheController extends GUIAbstractObserver{
 			try {
 				if(listaClassiSensori.createClassInstance(x).getName().equals(name)) {
 					Sensor tmp = listaClassiSensori.createClassInstance(x);
-					getRoomfromName("Default Room").addSensor(tmp);
+					flat.addSensorToRoom(getRoomfromName("Default Room"),tmp);
 					return tmp;
 				}
 				
@@ -94,11 +90,9 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
 		for (Sensor sensor : sensors) {
 			for (Room rooms : flat.getRooms()) {
-				if(!rooms.getName().equals(room.getName())){
-					getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
-				}
+				getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
 			}
-			getRoomfromName(room.getName()).addSensor(sensor);
+			flat.addSensorToRoom(room, sensor);
 		}
 	}
 	
@@ -107,7 +101,7 @@ public class TheController extends GUIAbstractObserver{
 	public void newProject() {
 		System.out.println("controller: newProject");
 		this.flat = new FlatImpl("New Flat");
-		this.flat.addRoom(new RoomImpl("Default Room"));
+		this.flat.addRoom("Default Room");
 	}
 
 	@Override
