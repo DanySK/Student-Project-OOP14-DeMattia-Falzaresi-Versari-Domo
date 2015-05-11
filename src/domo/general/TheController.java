@@ -47,8 +47,11 @@ public class TheController extends GUIAbstractObserver{
 		Room tmpRoom = new RoomImpl(name);
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
-			getRoomfromName("Default Room").removeSensor(sensor.getId());
+			for (Room rooms : flat.getRooms()) {
+				getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
+			}
 		}
+
 		
 		flat.addRoom(tmpRoom);
 	}
@@ -87,18 +90,17 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void addSensorToRoom(final ArrayList<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
-		Set<Sensor> ss = getSensorFromRoom("Default Room");
 		Set<Sensor> sr = new HashSet<>();
 		for (Sensor sensor : sensors) {
 			getRoomfromName(room.getName()).addSensor(sensor);
-			if (ss.contains(sensor)){
-				getRoomfromName("Default Room").removeSensor(sensor.getId());
+				for (Room rooms : flat.getRooms()) {
+					getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
+				}				
 			}
-		}
-		
-		
-		
 	}
+		
+		
+	
 
 	@Override
 	public void newProject() {
