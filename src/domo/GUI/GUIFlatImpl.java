@@ -53,7 +53,13 @@ public class GUIFlatImpl implements GUIFlat {
 	 */
 	private GUIAbstractObserver controller;
 
-	private JFrame mainFrame = new JFrame();
+	/**
+	 * The Graphic Main Frame
+	 */
+	private final JFrame mainFrame = new JFrame();
+	/**
+	 * The main Panel with BorderLayout layout
+	 */
 	private JPanel mainPanel;
 
 	/**
@@ -62,6 +68,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 */
 	private GUIWorkingArea workingArea;
 
+	/**
+	 * The top menu
+	 */
 	private final JMenuBar menuBar = new JMenuBar();
 
 	/**
