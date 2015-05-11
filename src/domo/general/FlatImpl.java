@@ -20,10 +20,8 @@ public class FlatImpl implements Flat {
 	
 	private final String name;
 	private final Map<Integer, Room> listRoom;
-	private final Map<Integer, Pair<Room, Sensor>> listSensor;
-	
-	private final Counter roomCounter;
-	private final Counter sensorCounter;
+
+	private final Counter generalCounter;
 	
 	private String imagePath;
 	
@@ -37,10 +35,8 @@ public class FlatImpl implements Flat {
 		name = pName;
 		
 		listRoom = new HashMap<Integer, Room>();		
-		listSensor = new HashMap<Integer, Pair<Room, Sensor>>();
-		
-		roomCounter = new CounterImpl(0);
-		sensorCounter = new CounterImpl(0);
+
+		generalCounter = new CounterImpl(0);
 	}
 	
 	/**
@@ -57,9 +53,9 @@ public class FlatImpl implements Flat {
 	}
 
 	@Override
-	public int addRoom(final Room room) {
-		final int ret = roomCounter.incCounter();
-		room.setId(ret);
+	public int addRoom(final String name){
+		final int ret = generalCounter.incCounter();		
+		Room room = new RoomImpl(ret, name);
 		listRoom.put(ret, room);
 		return ret;
 	}
@@ -67,6 +63,14 @@ public class FlatImpl implements Flat {
 	@Override
 	public Set<Room> getRooms() {		
 		return new HashSet<>(listRoom.values());
+	}
+	
+	@Override
+	public Room getRoom(final int id) {		
+		if (!listRoom.containsKey(id)) {
+			throw new IllegalArgumentException("Id not exist!");
+		}		
+		return listRoom.get(id);
 	}
 
 	@Override
@@ -86,9 +90,6 @@ public class FlatImpl implements Flat {
 
 	@Override
 	public Pair<Integer, Integer> addSensorToRoom(final Room room, final Sensor sensor) {
-		final int ret = sensorCounter.incCounter();
-		listSensor.put(ret, new PairImpl<>(room, sensor));
-		room.addSensor(sensor);
-		return new PairImpl<>(ret, sensor.getId());
+		return new PairImpl<>(room.getId(), room.addSensor(generalCounter.incCounter(), sensor));
 	}
 }

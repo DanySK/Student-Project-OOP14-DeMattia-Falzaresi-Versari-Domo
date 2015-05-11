@@ -21,10 +21,10 @@ public interface Flat {
 	
 	/**
 	 * Add a room in the list by id.
-	 * @param room the room to add.
+	 * @param name the room name.
 	 * @return The room id
 	 */
-	int addRoom(Room room);
+	int addRoom(String name);
 	
 	/**
 	 * Add a sensor to the flat.
@@ -39,6 +39,13 @@ public interface Flat {
 	 * @return all rooms in the flat.
 	 */
 	Set<Room> getRooms();
+	
+	/**
+	 * get room by id.
+	 * @param id the room id.
+	 * @return the room object.
+	 */
+	Room getRoom(int id);
 	
 	/**
 	 * Remove room in the list by id.
