@@ -437,7 +437,7 @@ public class GUIFlatImpl implements GUIFlat {
 								westPanel.refreshWestPane(controller.getRoomList());
 							}
 							workingArea.repaint();
-							westPanel.repaint();
+							
 							//mainPanel.repaint();
 						}
 					}
@@ -623,6 +623,7 @@ public class GUIFlatImpl implements GUIFlat {
 								if (westPanel == null) {
 									westPanel = new WestPanel(controller.getRoomList());
 									mainFrame.add(westPanel, BorderLayout.WEST);
+									mainPanel.repaint();
 								}
 							}
 

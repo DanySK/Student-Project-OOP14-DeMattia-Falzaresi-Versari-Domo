@@ -71,7 +71,9 @@ public class WestPanel extends JPanel{
 				}else {
 					//if (!room.getName().equals("Default Room")) {
 						viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
-						viewPanel.add(new JLabel("No Sensors :("));
+						JPanel t = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+						viewPanel.add(new JLabel("                 "));
+						viewPanel.add(new JLabel("No Sensors              :(  "));
 					//}
 				}
 				griglia.add(viewPanel);
@@ -82,13 +84,13 @@ public class WestPanel extends JPanel{
 			griglia = null;
 			griglia = new JPanel();
 			griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
-			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "No Room :("));
-			griglia.add(new JLabel("                      "));
+			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), ""));
+			griglia.add(new JLabel("No Room              :(  "));
 		}
 
 		this.add(griglia);
 		this.repaint();
-
+		this.revalidate();
 	}
 
 	public void setGreenLightToSensor(Room room, int sensorId) {
@@ -123,14 +125,14 @@ public class WestPanel extends JPanel{
 		private final ImageIcon greenLedImage = new ImageIcon("res" + System.getProperty("file.separator").toString() + "greenLed.png");
 
 		public ItemForWestPanel(String textForSensor, int id, boolean isInAlert) {
-			super(new FlowLayout(FlowLayout.LEADING, 5, 5));
+			super(new FlowLayout(FlowLayout.LEFT, 5, 5));
 			this.sensorId = id;
 			imageLabel.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 			textLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 			imageLabel.setIcon(redLedImage);
 			imageLabel.setSize(new Dimension(redLedImage.getIconWidth(), redLedImage.getIconHeight()));
 
-			textLabel.setText(textForSensor);
+			textLabel.setText(id + " " + textForSensor);
 			this.add(imageLabel);
 			this.add(textLabel);
 			if (isInAlert) {
