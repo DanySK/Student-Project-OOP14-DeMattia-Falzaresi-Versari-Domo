@@ -27,6 +27,7 @@ import org.w3c.dom.NodeList;
 import domo.devices.Sensor;
 import domo.devices.loader.DynamicLoader;
 import domo.devices.loader.DynamicLoaderImpl;
+import domo.devices.util.pair.Pair;
 import domo.general.Flat;
 import domo.general.FlatImpl;
 import domo.general.Room;
@@ -133,7 +134,6 @@ public class RestoreImpl implements Restore {
 												if(listaClassiSensori.createClassInstance(x).getName().equals(SensName)) {
 													Sensor tmpS = listaClassiSensori.createClassInstance(x);
 													tmpS.setLocation(Double.parseDouble(posX),Double.parseDouble(posY));
-													System.out.println("Location x:" +posX+" position y:" +posY);
 													fl.addSensorToRoom(r, tmpS);
 												}
 												
