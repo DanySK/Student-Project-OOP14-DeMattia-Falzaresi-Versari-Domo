@@ -199,7 +199,7 @@ public class GUISensorImpl extends ImageView{
 	
 	/**
 	 * Tell if the mouse is enabled or not
-	 * @return true - mouse is enable
+	 * @return 	true - mouse is enable
 	 * 			false - mouse is disabled
 	 */
 	public boolean getMouseEnabled() {
@@ -207,8 +207,8 @@ public class GUISensorImpl extends ImageView{
 	}
 	
 	/**
-	 * tell if a sensor is selected
-	 * @return true - the sensor is selected
+	 * Tell if a sensor is selected
+	 * @return 	true - the sensor is selected
 	 * 			false - the sensor is not selected
 	 */
 	public boolean isSelect() {
