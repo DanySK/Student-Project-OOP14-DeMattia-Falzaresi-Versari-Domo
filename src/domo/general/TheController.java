@@ -23,7 +23,7 @@ import domo.devices.loader.DynamicLoaderImpl;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  */
-public class TheController extends GUIAbstractObserver {
+public class TheController extends GUIAbstractObserver{
 	
 	private GUIFlatImpl graphicInterface;
 	private Flat flat;
