@@ -13,7 +13,7 @@ import domo.devices.util.pair.PairImpl;
 
 	/**
 	 * 
-	 * @author Marco Versari
+	 * @author Marco Versari 
 	 *  
 	 */
 public class FlatImpl implements Flat {
@@ -67,9 +67,6 @@ public class FlatImpl implements Flat {
 	
 	@Override
 	public Room getRoom(final int id) {		
-		if (!listRoom.containsKey(id)) {
-			throw new IllegalArgumentException("Id not exist!");
-		}		
 		return listRoom.get(id);
 	}
 
