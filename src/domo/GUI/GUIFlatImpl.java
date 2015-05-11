@@ -37,6 +37,7 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import domo.devices.Sensor;
+import domo.general.Flat;
 import domo.general.Room;
 
 
@@ -207,7 +208,7 @@ public class GUIFlatImpl implements GUIFlat {
 			public void actionPerformed(final ActionEvent e) {
 
 				System.out.println("Premuto Open");
-				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj", "dprj"));
+				String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dom", "dom"));
 				if (GUIFlatImpl.this.controller != null) {
 					GUIFlatImpl.this.openFile();
 					controller.load(pathFile);
@@ -520,9 +521,19 @@ public class GUIFlatImpl implements GUIFlat {
 	 */
 	private void openFile() {	
 		if (controller != null) {
-			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj"));
+			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dom"));
 			if(pathFile != null) {
-				controller.load(pathFile);
+				Flat file = controller.load(pathFile);
+				workingArea.setImage(file.getImagePath());
+				this.projectImagePath = file.getImagePath();
+				ArrayList <Sensor> sensors = new ArrayList<>();
+				for (Room room : file.getRooms()) {
+					sensors.addAll(room.getSensor());
+				}
+				workingArea.addSensors(sensors);
+				westPanel.refreshWestPane(controller.getRoomList());
+				
+				mainFrame.repaint();
 			} else {
 				JOptionPane.showConfirmDialog(null, "Same error occur during open project...", "OPS...", JOptionPane.CANCEL_OPTION);
 			}
@@ -538,11 +549,11 @@ public class GUIFlatImpl implements GUIFlat {
 	private void saveFile() {
 		if (controller != null) {
 			JFileChooser openFile = new JFileChooser();
-			openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dprj"));
+			openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dom"));
 			//openFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int returnVal = openFile.showSaveDialog(mainFrame);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				controller.save(openFile.getSelectedFile().getPath() + ".dprj", this.projectImagePath);
+				controller.save(openFile.getSelectedFile().getPath() + ".dom", this.projectImagePath);
 			}
 		}
 	}

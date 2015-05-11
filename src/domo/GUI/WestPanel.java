@@ -71,7 +71,6 @@ public class WestPanel extends JPanel{
 				}else {
 					//if (!room.getName().equals("Default Room")) {
 						viewPanel.setBorder(BorderFactory.createTitledBorder(room.getId() + " " +room.getName()));
-						JPanel t = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 						viewPanel.add(new JLabel("                 "));
 						viewPanel.add(new JLabel("No Sensors              :(  "));
 					//}

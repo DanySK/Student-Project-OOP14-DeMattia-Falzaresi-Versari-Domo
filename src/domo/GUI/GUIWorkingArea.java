@@ -81,6 +81,12 @@ public class GUIWorkingArea extends JLayeredPane {
 		}
 	}
 	
+	public void addSensors(ArrayList<Sensor> sensors) {
+		for (Sensor sensor : sensors) {
+			this.addSensor(sensor);
+		}
+	}
+	
 	public ArrayList<Sensor> getSelectedSensor(){
 		ArrayList<Sensor> sel = new ArrayList<>();
 		for (GUISensorImpl sens : sensorList) {
