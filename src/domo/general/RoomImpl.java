@@ -33,6 +33,17 @@ public class RoomImpl implements Room {
 		counter = new CounterImpl(0);
 	}
 	
+	/**
+	 * Initialize Room Class.	 * 
+	 * @param pName The room name;
+	 */
+	public RoomImpl(final String pName) {
+		name = pName;
+		listSensor = new HashMap<Integer, Sensor>();
+		counter = new CounterImpl(0);
+		
+	}
+
 	@Override
 	public int getId() {		
 		return id;
