@@ -67,7 +67,6 @@ public class RestoreImpl implements Restore {
 				//Start with Flat
 				createElement("flat",rootEle,Flat.class);
 				createElement("room",rootEle,Room.class);
-				createElement("sensor",rootEle,Sensor.class);
 				if(this.flatImageName != null){
 					this.fl.setImagePath(flatImageName);
 				}
@@ -113,28 +112,35 @@ public class RestoreImpl implements Restore {
 						fl = new FlatImpl(eleName);
 						break;
 					case "domo.general.Room":
-						fl.addRoom(eleName);
-						break;
-					case "domo.devices.Sensor":
-						System.out.println("New Sensor: "+ eleName);
-						String eleX = el.getElementsByTagName("XPosition").item(0).getFirstChild().getNodeValue();
-						String eleY = el.getElementsByTagName("YPosition").item(0).getFirstChild().getNodeValue();
-						for (Room r : fl.getRooms()) {
-							if (r.getId() == Integer.parseInt(el.getParentNode().getAttributes().getNamedItem("Id").getTextContent())){
+						int roomID = fl.addRoom(eleName);
+						Node sensNode = el.getFirstChild();
+						while (sensNode.getNextSibling() != null){
+							sensNode = sensNode.getNextSibling();
+							if (sensNode.getNodeType() == Node.ELEMENT_NODE) {
+								Element sensEle = (Element) sensNode;
+								String posX = sensEle.getElementsByTagName("XPosition").item(0).getFirstChild().getNodeValue();
+								String posY = sensEle.getElementsByTagName("YPosition").item(0).getFirstChild().getNodeValue();
+								String SensName = sensEle.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
+								
 								final String classPath = "classi";
 								final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 								listaClassiSensori.setModulePath(classPath);
 								final Set<String> resLoader = listaClassiSensori.updateModuleList();
-								for (String x : resLoader) {
-									try {
-										if(listaClassiSensori.createClassInstance(x).getName().equals(eleName)) {
-											Sensor tmpS = listaClassiSensori.createClassInstance(x);
-											tmpS.setLocation(Double.parseDouble(eleX),Double.parseDouble(eleY));
-											fl.addSensorToRoom(r, tmpS);
+								for (Room r : fl.getRooms()) {
+									if (r.getId() == roomID){
+										for (String x : resLoader) {
+											try {
+												if(listaClassiSensori.createClassInstance(x).getName().equals(SensName)) {
+													Sensor tmpS = listaClassiSensori.createClassInstance(x);
+													tmpS.setLocation(Double.parseDouble(posX),Double.parseDouble(posY));
+													System.out.println("Location x:" +posX+" position y:" +posY);
+													fl.addSensorToRoom(r, tmpS);
+												}
+												
+											} catch (Exception e) {
+												throw new RestoreDomoConfException("Error in the adding sensor procedure " + e.toString());
+											}
 										}
-										
-									} catch (Exception e) {
-										throw new RestoreDomoConfException("Error in the adding sensor procedure " + e.toString());
 									}
 								}
 							}
