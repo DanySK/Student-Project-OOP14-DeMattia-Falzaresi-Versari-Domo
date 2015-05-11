@@ -19,12 +19,6 @@ public interface Room {
 	int getId();
 	
 	/**
-	 * Set room id.
-	 * @param pId Set room id.
-	 */
-	void setId(final int pId);
-	
-	/**
 	 * Get room name.
 	 * @return room name.
 	 */
@@ -41,7 +35,7 @@ public interface Room {
 	 * @param sensor sensor to add.
 	 * @return room id.
 	 */
-	int addSensor(Sensor sensor);
+	 int addSensor(int id, Sensor sensor);
 	
 	/**
 	 * Remove a sensor from room.
