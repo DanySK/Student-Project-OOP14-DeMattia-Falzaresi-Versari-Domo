@@ -21,15 +21,7 @@ public interface Flat {
 	 * @param room the room to add.
 	 * @return The room id
 	 */
-	@Deprecated
 	int addRoom(Room room);
-	
-	/**
-	 * Add room to the list.
-	 * @param pName the room name.
-	 * @return the room id.
-	 */
-	int addRoom(final String pName);
 	
 	/**
 	 * Get the room list.
