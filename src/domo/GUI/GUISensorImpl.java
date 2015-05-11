@@ -106,6 +106,20 @@ public class GUISensorImpl extends ImageView{
 		
 	}
 	
+	public void updateLocationFromLoadFile() {
+		double xFactor = sensor.getXPosition();
+		double yFactor = sensor.getYPosition();
+		this.xScaleFactorPos = xFactor;
+		this.yScaleFactorPos = yFactor;
+		System.out.println("Parente dimension: " + parent.getWidth() + "  " + parent.getHeight());
+		double newX = (parent.getWidth() * xFactor) + parent.getX();
+		double newY = (parent.getHeight() * yFactor) + parent.getY();
+		this.setLocation((int) newX, (int) newY);
+		
+		System.out.println("this.position: " + this.getX() + "  " + this.getY());
+
+	}
+	
 	public void setLocation(int x, int y) {
 
 		int xPos = x - this.parent.getX();

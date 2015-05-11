@@ -539,6 +539,14 @@ public class GUIFlatImpl implements GUIFlat {
 					sensors.addAll(room.getSensor());
 				}
 				workingArea.addSensors(sensors);
+				
+				System.out.println("\nFrom Load Function");
+				ArrayList<Sensor> t = workingArea.getSelectedSensor();
+				for (Sensor s : t){
+					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
+				}
+				System.out.println("\n");
+
 				westPanel.refreshWestPane(controller.getRoomList());
 				
 				mainFrame.repaint();
@@ -552,15 +560,22 @@ public class GUIFlatImpl implements GUIFlat {
 
 	/**
 	 * Save the current project 
-	 * Heandle the controller call too (save(pathFile))
+	 * This function call the controller.save(pathFile) abstract method
 	 */
 	private void saveFile() {
 		if (controller != null) {
 			JFileChooser openFile = new JFileChooser();
 			openFile.setFileFilter(new FileNameExtensionFilter("Domo project file", "dprj"));
-			//openFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int returnVal = openFile.showSaveDialog(mainFrame);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				
+				System.out.println("\nFrom Save Function");
+				ArrayList<Sensor> t = workingArea.getSelectedSensor();
+				for (Sensor s : t){
+					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
+				}
+				System.out.println("\n");
+
 				controller.save(openFile.getSelectedFile().getPath() + ".dprj", this.projectImagePath);
 			}
 		}
