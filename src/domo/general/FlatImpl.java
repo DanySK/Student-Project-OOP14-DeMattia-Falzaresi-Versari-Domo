@@ -5,8 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import domo.devices.Sensor;
 import domo.devices.util.counter.Counter;
 import domo.devices.util.counter.CounterImpl;
+import domo.devices.util.pair.Pair;
+import domo.devices.util.pair.PairImpl;
 
 	/**
 	 * 
@@ -17,7 +20,10 @@ public class FlatImpl implements Flat {
 	
 	private final String name;
 	private final Map<Integer, Room> listRoom;
-	private final Counter counter;
+	private final Map<Integer, Pair<Room, Sensor>> listSensor;
+	
+	private final Counter roomCounter;
+	private final Counter sensorCounter;
 	
 	private String imagePath;
 	
@@ -29,8 +35,12 @@ public class FlatImpl implements Flat {
 	public FlatImpl(final String pName, final String pImagePath) {
 		imagePath = pImagePath;
 		name = pName;
-		listRoom = new HashMap<Integer, Room>();
-		counter = new CounterImpl(0);
+		
+		listRoom = new HashMap<Integer, Room>();		
+		listSensor = new HashMap<Integer, Pair<Room, Sensor>>();
+		
+		roomCounter = new CounterImpl(0);
+		sensorCounter = new CounterImpl(0);
 	}
 	
 	/**
@@ -48,7 +58,7 @@ public class FlatImpl implements Flat {
 
 	@Override
 	public int addRoom(final Room room) {
-		final int ret = counter.incCounter();
+		final int ret = roomCounter.incCounter();
 		room.setId(ret);
 		listRoom.put(ret, room);
 		return ret;
@@ -72,5 +82,13 @@ public class FlatImpl implements Flat {
 	@Override
 	public void setImagePath(final String path) {
 		imagePath = path;		
+	}
+
+	@Override
+	public Pair<Integer, Integer> addSensorToRoom(final Room room, final Sensor sensor) {
+		final int ret = sensorCounter.incCounter();
+		listSensor.put(ret, new PairImpl<>(room, sensor));
+		room.addSensor(sensor);
+		return new PairImpl<>(ret, sensor.getId());
 	}
 }

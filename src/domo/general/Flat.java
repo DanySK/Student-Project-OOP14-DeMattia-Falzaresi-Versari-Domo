@@ -2,6 +2,9 @@ package domo.general;
 
 import java.util.Set;
 
+import domo.devices.Sensor;
+import domo.devices.util.pair.Pair;
+
 /**
  * 
  * @author Marco Versari
@@ -22,6 +25,14 @@ public interface Flat {
 	 * @return The room id
 	 */
 	int addRoom(Room room);
+	
+	/**
+	 * Add a sensor to the flat.
+	 * @param room the room sensor.
+	 * @param sensor the sensor to add.
+	 * @return A pair of integer, the first is the unique id on the flat, the second is the unique id on the room.
+	 */
+	Pair<Integer, Integer> addSensorToRoom(Room room, Sensor sensor);
 	
 	/**
 	 * Get the room list.

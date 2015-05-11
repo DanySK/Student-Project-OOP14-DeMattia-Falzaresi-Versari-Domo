@@ -1,6 +1,7 @@
 package domo.devices.loader;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,12 +16,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
+ * Load dynamically a class.
  * @author Marco Versari
  * @param <E> The module instance that want to retrieve.
  *
  */
 public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
+	
+	private static final int SIX = 6;
 	
 	private final String interfacePath;
 	private final String interfaceName;	
@@ -63,7 +66,7 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 	        if (file.isDirectory()) {
 	        	listAllModule(file, files);	           
 	        } else if (file.getName().endsWith(".class")) {
-	        	files.add(file.getPath().substring(modulePath.getPath().length() + 1, file.getPath().length() - 6).replace(File.separator, "."));
+	        	files.add(file.getPath().substring(modulePath.getPath().length() + 1, file.getPath().length() - SIX).replace(File.separator, "."));
 	        }
 	    }
 	}
@@ -74,7 +77,7 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 			final List<String> a = new ArrayList<>();			
 			listAllModule(modulePath, a);			
 			try {					
-				final ClassLoader classLoader = new URLClassLoader(new URL[]{modulePath.toURI().toURL()});						
+				final URLClassLoader classLoader = new URLClassLoader(new URL[]{modulePath.toURI().toURL()});						
 				for (final String module : a) {					
 					try {												
 						final Class<?> c2 = classLoader.loadClass(module);												
@@ -101,6 +104,12 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 					} catch (ClassNotFoundException e) {
 						System.out.println("updateModuleList -> listAllModule: " + e);
 					}						
+				}
+				
+				try {
+					classLoader.close();
+				} catch (IOException e) {
+					System.out.println("classLoader -> close error: " + e);
 				}
 				
 			} catch (MalformedURLException e) {
