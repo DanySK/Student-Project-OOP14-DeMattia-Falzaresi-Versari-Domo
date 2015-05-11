@@ -53,7 +53,7 @@ public class WestPanel extends JPanel{
 				JPanel viewPanel = new JPanel();
 				viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 				if(room.getSensor() != null && room.getSensor().size() > 0) {
-					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
+					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getId() + " " +room.getName()));
 					for (Sensor sensor : room.getSensor()) {
 						if(!labelForRoom.containsKey(room)) {
 							labelForRoom.put(room, new ArrayList<ItemForWestPanel>());
