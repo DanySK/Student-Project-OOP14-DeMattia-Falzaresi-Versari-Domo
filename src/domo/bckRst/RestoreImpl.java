@@ -113,7 +113,7 @@ public class RestoreImpl implements Restore {
 						fl = new FlatImpl(eleName);
 						break;
 					case "domo.general.Room":
-						fl.addRoom(new RoomImpl(eleId, eleName));
+						fl.addRoom(eleName);
 						break;
 					case "domo.devices.Sensor":
 						System.out.println("New Sensor: "+ eleName);
@@ -129,8 +129,8 @@ public class RestoreImpl implements Restore {
 									try {
 										if(listaClassiSensori.createClassInstance(x).getName().equals(eleName)) {
 											Sensor tmpS = listaClassiSensori.createClassInstance(x);
-											int ids = r.addSensor(tmpS);
-											r.getSensor().stream().filter(s->s!=null).filter(s->s.getId()==ids).findFirst().get().setLocation(Double.parseDouble(eleX),Double.parseDouble(eleY));
+											tmpS.setLocation(Double.parseDouble(eleX),Double.parseDouble(eleY));
+											fl.addSensorToRoom(r, tmpS);
 										}
 										
 									} catch (Exception e) {
