@@ -129,8 +129,8 @@ public class RestoreImpl implements Restore {
 									try {
 										if(listaClassiSensori.createClassInstance(x).getName().equals(eleName)) {
 											Sensor tmpS = listaClassiSensori.createClassInstance(x);
-											tmpS.setLocation(Double.parseDouble(eleX),Double.parseDouble(eleY));
-											r.addSensor(tmpS);
+											int ids = r.addSensor(tmpS);
+											r.getSensor().stream().filter(s->s!=null).filter(s->s.getId()==ids).findFirst().get().setLocation(Double.parseDouble(eleX),Double.parseDouble(eleY));
 										}
 										
 									} catch (Exception e) {
