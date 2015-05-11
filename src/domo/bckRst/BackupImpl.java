@@ -113,12 +113,12 @@ public class BackupImpl implements Backup {
 			TransformerFactory transFact = TransformerFactory.newInstance();
 			Transformer trans = transFact.newTransformer();
 			DOMSource dom = new DOMSource(document);
-			File tmpFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom");
+			File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + "tmp.dom");
 			StreamResult strOut = new StreamResult(tmpFile);
 			
 			//save the file
 			trans.transform(dom, strOut);
-			CrypterImpl en = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom", System.getProperty("user.home") + System.getProperty("file.separator") + flatB.getName() + ".dom");
+			CrypterImpl en = new CrypterImpl(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + "tmp.dom", System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + flatB.getName() + ".dom");
 			en.doEncryption();
 			tmpFile.delete();
 			ZipEveryThing(flatB);
@@ -155,7 +155,7 @@ public class BackupImpl implements Backup {
 		try {
 			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(this.fileName));
 			ArrayList<String> itemToAdd = new ArrayList<>();
-			itemToAdd.add(System.getProperty("user.home") + System.getProperty("file.separator") + flatB.getName() + ".dom");
+			itemToAdd.add(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + flatB.getName() + ".dom");
 			itemToAdd.add(flatB.getImagePath());
 			for(String s : itemToAdd){
 				if(s != null){

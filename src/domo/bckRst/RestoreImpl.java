@@ -48,13 +48,13 @@ public class RestoreImpl implements Restore {
 		public Flat restoreNow(String fileName) throws RestoreDomoConfException{
 			String fileToRestore = UnzipEveryThing(fileName);
 			try {
-				CrypterImpl de = new CrypterImpl(System.getProperty("user.home") + System.getProperty("file.separator")+"tmp.dom", fileToRestore);
+				CrypterImpl de = new CrypterImpl(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator")+"tmp.dom", fileToRestore);
 				de.doDecryption();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			
-			File tmpFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "tmp.dom");
+			File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + "tmp.dom");
 			
 			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuild;
