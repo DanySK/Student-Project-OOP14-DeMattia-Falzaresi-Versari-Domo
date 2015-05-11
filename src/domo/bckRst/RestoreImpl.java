@@ -164,7 +164,7 @@ public class RestoreImpl implements Restore {
 							throw new RestoreDomoConfException("Unable to Create Restore Folder");
 						}
 				}
-				byte[] bos;
+				byte[] bos = new byte[1];;
 				ZipEntry zEntry;
 				
 				while ((zEntry = zIn.getNextEntry()) != null){
@@ -172,10 +172,6 @@ public class RestoreImpl implements Restore {
 					
 					if(zEntry.getName().contains(".dom")){
 						fileName = dir+System.getProperty("file.separator")+zEntry.getName();
-						 bos = new byte[1];
-					}
-					else{
-						bos= new byte[1024];
 					}
 					int len;
 			        while ((len=zIn.read(bos))>0)
