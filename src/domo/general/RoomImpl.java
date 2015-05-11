@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import domo.devices.Sensor;
-import domo.devices.util.counter.Counter;
-import domo.devices.util.counter.CounterImpl;
 
 /**
  * @author Marco Versari
@@ -51,10 +49,10 @@ public class RoomImpl implements Room {
 	}
 
 	@Override
-	public int addSensor(final int id, final Sensor sensor) {
-		sensor.setId(id);
-		listSensor.put(id, sensor);
-		return id;
+	public int addSensor(final int pId, final Sensor sensor) {
+		sensor.setId(pId);
+		listSensor.put(pId, sensor);
+		return pId;
 	}	
 	
 	@Override
