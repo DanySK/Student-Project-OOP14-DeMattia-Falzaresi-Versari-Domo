@@ -58,7 +58,7 @@ public abstract class GUIAbstractObserver {
 	public abstract void closeProgram();
 	
 	/**
-	 * called when the save button is clicked
+	 * Called when the save button is clicked
 	 * @param filePathWithName the path to save the project like home/[\]folder/[\...]/[\]filename.extetion
 	 * @param imageFilePath the background image path like home/[\]folder/[\...]/[\]filename.extetion
 	 */
@@ -72,12 +72,12 @@ public abstract class GUIAbstractObserver {
 	public abstract Flat load(String filePath);
 	
 	/**
-	 * ?? Forgot... :(
+	 * Refresh the sensor type list available 
 	 */
 	public abstract void refreshSensorList();	
 	
 	/**
-	 * call when some sensor are delete from project
+	 * Call when some sensor are delete from project
 	 * @param sensors the sensor list to delete
 	 */
 	public abstract void deleteSensors(ArrayList<Sensor> sensors);
