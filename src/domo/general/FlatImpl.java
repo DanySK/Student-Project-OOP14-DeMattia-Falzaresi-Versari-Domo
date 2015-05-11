@@ -55,13 +55,6 @@ public class FlatImpl implements Flat {
 	}
 	
 	@Override
-	public int addRoom(final String pName) {
-		final Room newRoom = new RoomImpl(counter.incCounter(), pName);
-		listRoom.put(newRoom.getId(), newRoom);
-		return newRoom.getId();
-	}
-	
-	@Override
 	public Set<Room> getRooms() {		
 		return new HashSet<>(listRoom.values());
 	}
