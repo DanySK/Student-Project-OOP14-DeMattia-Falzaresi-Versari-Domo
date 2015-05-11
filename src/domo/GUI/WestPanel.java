@@ -20,7 +20,7 @@ import domo.devices.Sensor;
 import domo.general.Room;
 
 /**
- * @author Simone
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
 public class WestPanel extends JPanel{
