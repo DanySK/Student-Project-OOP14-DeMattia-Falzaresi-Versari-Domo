@@ -53,9 +53,9 @@ public class FlatImpl implements Flat {
 	}
 
 	@Override
-	public int addRoom(final String name){
+	public int addRoom(final String pName) {
 		final int ret = generalCounter.incCounter();		
-		Room room = new RoomImpl(ret, name);
+		Room room = new RoomImpl(ret, pName);
 		listRoom.put(ret, room);
 		return ret;
 	}
