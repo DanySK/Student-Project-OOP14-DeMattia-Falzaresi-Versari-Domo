@@ -11,7 +11,7 @@ import domo.devices.SensorTypology;
 
 public class MotionSensor extends AbstractSensor  {
 	
-	private static final String NAME 			= "DOMO STANDARD MOTION SENSOR";
+	private static final String NAME 			= "MOTION SENSOR";
 	private static final SensorTypology TYPE 	= SensorTypology.MOTION;	
 	private static final String IMAGE 			= "res" + System.getProperty("file.separator").toString() + "addSensor.png";	
 	

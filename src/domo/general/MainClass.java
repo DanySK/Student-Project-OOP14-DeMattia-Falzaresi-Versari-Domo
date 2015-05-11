@@ -1,26 +1,18 @@
 package domo.general;
 
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
 
 import domo.GUI.*;
-import domo.bckRst.*;
 import domo.devices.Sensor;
-import domo.devices.SensorTypology;
 import domo.devices.loader.DynamicLoader;
 import domo.devices.loader.DynamicLoaderImpl;
-import domo.devices.sensor.MotionSensor;
 
 /**
  * 

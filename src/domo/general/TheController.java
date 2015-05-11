@@ -3,9 +3,7 @@ package domo.general;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import domo.GUI.GUIAbstractObserver;
@@ -38,24 +36,23 @@ public class TheController extends GUIAbstractObserver{
 		
 		
 		this.graphicInterface = GI;
-		/*
-		for (int i = 0; i < 4; i++) {
-			Room t = new RoomImpl("Romm n. " + (i + 1));
-			roomList.add(t);
-		}
-		*/
+	
 		this.graphicInterface.setController(this);
 
 	}
 
 	@Override
-	public void addRoomWithNameAndSensors(final String name, final Set<Sensor> sensors) {
+	public void addRoomWithNameAndSensors(final String name, final ArrayList<Sensor> sensors) {
 		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
 		Room tmpRoom = new RoomImpl(name);
 		for (Sensor sensor : sensors) {
 			tmpRoom.addSensor(sensor);
-			getSensorFromRoom("Default Room").remove(sensor);
+			for (Room rooms : flat.getRooms()) {
+				getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
+			}
 		}
+
+		
 		flat.addRoom(tmpRoom);
 	}
 
@@ -91,18 +88,19 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void addSensorToRoom(final Set<Sensor> sensors, final Room room) {
+	public void addSensorToRoom(final ArrayList<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
-		Set<Sensor> ss = getSensorFromRoom("Default Room");
-		for (Sensor sensor : ss) {
+		Set<Sensor> sr = new HashSet<>();
+		for (Sensor sensor : sensors) {
 			getRoomfromName(room.getName()).addSensor(sensor);
-			if(sensors.contains(sensor)){
-				getSensorFromRoom("Default Room").remove(sensor);
+				for (Room rooms : flat.getRooms()) {
+					getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
+				}				
 			}
-		}
-		
-		
 	}
+		
+		
+	
 
 	@Override
 	public void newProject() {
@@ -150,10 +148,21 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: refreshSensorList");
 	}
 	
-	private Set getSensorFromRoom(String roomName){
+	private Set<Sensor> getSensorFromRoom(String roomName){
 		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
 	}
 	private Room getRoomfromName(String roomName){
 		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get();
+	}
+	@Override
+	public void deleteSensors(ArrayList<Sensor> sensors) {
+		// TODO Auto-generated method stub
+		for (Room room : flat.getRooms()) {
+			for (Sensor sensor : sensors) {
+				if (room.getSensor().contains(sensor)) {
+					room.removeSensor(sensor.getId());
+				}
+			}
+		}
 	}
 }

@@ -1,9 +1,6 @@
 package domo.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,12 +8,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -24,14 +16,10 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class ImageView extends JLabel {
 
@@ -195,7 +183,6 @@ public class ImageView extends JLabel {
 	}
 	
 	public void setScale(final double imgScale) {
-		Dimension old = this.getSize(); 
 		BufferedImage imgToResize = copyImage(this.originalImage);
 		this.totalScaleFactor = Math.max(MIN_FACTOR_SCALE, imgScale);
 	

@@ -2,7 +2,6 @@ package domo.GUI;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -16,6 +15,10 @@ import domo.devices.Sensor;
 
 public class GUISensorImpl extends ImageView{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4801241871307624092L;
 	double xScaleFactorPos;
 	double yScaleFactorPos;
 	ImageView parent;
@@ -122,14 +125,19 @@ public class GUISensorImpl extends ImageView{
 	
 	public void setScale(final double imgScale) {
 		super.setScale(imgScale);
-		
 		int newX = (int) ((double) this.parent.getWidth() * xScaleFactorPos);
 		int newY = (int) ((double) this.parent.getHeight() * yScaleFactorPos);
-	
 		newX += this.parent.getX();
 		newY += this.parent.getY();
-		
 		this.setLocation(newX, newY);
+	}
+	
+	public void setRedColorFilter() {
+		this.parent.setColorFilter(ColorFilter.COLOR_FILTER_RED);
+	}
+	
+	public void setResetFilter() {
+		this.parent.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
 	}
 	
 	public void setMouseEnabled(final boolean enableMouse) {

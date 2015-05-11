@@ -1,31 +1,24 @@
 package domo.GUI;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.List;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
-import javax.swing.border.Border;
 
 import domo.devices.Sensor;
 
 public class GUIWorkingArea extends JLayeredPane {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3555881320995216997L;
 	private ImageView bgImage;
 	private final ArrayList <GUISensorImpl> sensorList = new ArrayList<>();
 	
@@ -64,6 +57,7 @@ public class GUIWorkingArea extends JLayeredPane {
 		for (GUISensorImpl t : sensorList) {
 			if (t.isSelect()) {
 				this.remove(t);
+				t = null;
 			}
 		}
 	}
@@ -87,14 +81,56 @@ public class GUIWorkingArea extends JLayeredPane {
 		}
 	}
 	
-	public Set<Sensor> getSelectedSensor(){
-		Set<Sensor> sel = new HashSet<>();
+	public ArrayList<Sensor> getSelectedSensor(){
+		ArrayList<Sensor> sel = new ArrayList<>();
 		for (GUISensorImpl sens : sensorList) {
 			if (sens.isSelect()) {
 				sel.add(sens.getSensor());
 			}
 		}
 		return sel;
+	}
+
+	/**
+	 * 
+	 * @param sens   		the sensor to change color
+	 * @param lightIndex 	index that rappresent the color:	0 - IN ALLARM
+	 * 														1 - NOT IN ALLARM
+	 */
+	private void setLightToSensor(Sensor sens, int lightIndex) {
+		switch (lightIndex) {
+		case 0:
+			for (GUISensorImpl tSens : sensorList) {
+				if(tSens.getSensor().equals(sens)) {
+					tSens.setRedColorFilter();
+					return;
+				}
+			}
+			break;
+		case 1:
+			for (GUISensorImpl tSens : sensorList) {
+				if(tSens.getSensor().equals(sens)) {
+					tSens.setRedColorFilter();
+					return;
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	public void setInAllarmToSensor(ArrayList<Sensor> sens) {
+		for (Sensor sensor: sens) {
+			this.setLightToSensor(sensor, 0);
+		}
+	}
+	
+	public void resetAllarmToSensor(ArrayList<Sensor> sens) {
+		for (Sensor sensor: sens) {
+			this.setLightToSensor(sensor, 1);
+		}
 	}
 	
 	public boolean isSetBackground() {
