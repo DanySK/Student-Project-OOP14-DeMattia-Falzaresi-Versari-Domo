@@ -12,15 +12,31 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 
 import domo.devices.Sensor;
-
+/**
+ * Class that represent a sensor entity graphics representation
+ * 
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
+ *
+ */
 public class GUISensorImpl extends ImageView{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4801241871307624092L;
+	/**
+	 * X position.
+	 * The position is normalized (from 0 to 1) to handle the screen different dimension 
+	 */
 	double xScaleFactorPos;
+	/**
+	 * Y position.
+	 * The position is normalized (from 0 to 1) to handle the screen different dimension 
+	 */
 	double yScaleFactorPos;
+	/**
+	 * ImageView object that represent the 
+	 */
 	ImageView parent;
 	private static final double MIN_FACTOR_SCALE = 0.0001;
 
@@ -97,6 +113,9 @@ public class GUISensorImpl extends ImageView{
 		}
 	}
 
+	/**
+	 * Update the position factor base to mouse drag move
+	 */
 	private void updateFactors() {
 		this.xScaleFactorPos = Math.max(((double) this.getX() - (double) parent.getX()) / (double) parent.getWidth(), MIN_FACTOR_SCALE);
 		this.yScaleFactorPos = Math.max(((double) this.getY() - (double) parent.getY()) / (double) parent.getHeight(), MIN_FACTOR_SCALE);
@@ -105,7 +124,9 @@ public class GUISensorImpl extends ImageView{
 		}
 		
 	}
-	
+	/**
+	 * Update sensor location base to sensors load from file
+	 */
 	public void updateLocationFromLoadFile() {
 		double xFactor = sensor.getXPosition();
 		double yFactor = sensor.getYPosition();
@@ -120,6 +141,10 @@ public class GUISensorImpl extends ImageView{
 
 	}
 	
+	/**
+	 * set location. this set the sensor location and 
+	 * limit the position inside the parent bounds (working area background image)
+	 */
 	public void setLocation(int x, int y) {
 
 		int xPos = x - this.parent.getX();
@@ -137,6 +162,9 @@ public class GUISensorImpl extends ImageView{
 		
 	}
 	
+	/**
+	 * set the image scale. Typically when parent frame resize
+	 */
 	public void setScale(final double imgScale) {
 		super.setScale(imgScale);
 		int newX = (int) ((double) this.parent.getWidth() * xScaleFactorPos);
@@ -146,30 +174,59 @@ public class GUISensorImpl extends ImageView{
 		this.setLocation(newX, newY);
 	}
 	
+	/** 
+	 * set the image color filter to red
+	 */
 	public void setRedColorFilter() {
 		this.parent.setColorFilter(ColorFilter.COLOR_FILTER_RED);
 	}
 	
+	/** 
+	 * set the image color filter to default (no filter color)
+	 */
 	public void setResetFilter() {
 		this.parent.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
 	}
 	
+	/**
+	 * set the mouse enable
+	 * @param enableMouse 	true - mouse enabled 
+	 * 						false - mouse disabled
+	 */
 	public void setMouseEnabled(final boolean enableMouse) {
 		this.isMouseEnabled = enableMouse;
 	}
 	
+	/**
+	 * Tell if the mouse is enabled or not
+	 * @return true - mouse is enable
+	 * 			false - mouse is disabled
+	 */
 	public boolean getMouseEnabled() {
 		return this.isMouseEnabled;
 	}
 	
+	/**
+	 * tell if a sensor is selected
+	 * @return true - the sensor is selected
+	 * 			false - the sensor is not selected
+	 */
 	public boolean isSelect() {
 		return this.isSelect;
 	}
 
+	/**
+	 * 
+	 * @return the specific sensor that the GUISensorImpl class instance represent
+	 */
 	public Sensor getSensor() {
 		return this.sensor;
 	}
 	
+	/**
+	 * 
+	 * @param sens the specific sensor that the GUISensorImpl class instance must be represent
+	 */
 	public void setSensor(Sensor sens) {
 		this.sensor = sens;
 	}

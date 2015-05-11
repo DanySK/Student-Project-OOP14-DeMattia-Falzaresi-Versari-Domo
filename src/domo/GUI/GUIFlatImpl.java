@@ -44,7 +44,7 @@ import domo.general.Room;
 
 /**
  * 
- * @author Simone simone.demattia@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  */
 public class GUIFlatImpl implements GUIFlat {
 
@@ -63,7 +63,7 @@ public class GUIFlatImpl implements GUIFlat {
 	private JPanel mainPanel;
 
 	/**
-	 * Object that heandle the working area 
+	 * Object that handle the working area 
 	 * background image, sensor, move, resize, color ...
 	 */
 	private GUIWorkingArea workingArea;
@@ -115,7 +115,7 @@ public class GUIFlatImpl implements GUIFlat {
 	private static final double H_SCREEN_MIN_SCALE = 0.18;
 
 	/**
-	 * Standard icon squere dimension
+	 * Standard icon square dimension
 	 */
 	private static final int BUTTON_ICON_DIMENSION = 50;
 
@@ -495,7 +495,7 @@ public class GUIFlatImpl implements GUIFlat {
 
 	/**
 	 * Create a new project
-	 * Heandle the controller call too (newProject())
+	 * Handle the controller call too (newProject())
 	 */
 	private void newFile() {
 		if (workingArea.isSetBackground()) {
@@ -525,7 +525,7 @@ public class GUIFlatImpl implements GUIFlat {
 
 	/**
 	 * Open a project.
-	 * Heandle the controller call too (load(pathFile))
+	 * Handle the controller call too (load(pathFile))
 	 */
 	private void openFile() {	
 		if (controller != null) {
@@ -534,14 +534,17 @@ public class GUIFlatImpl implements GUIFlat {
 				Flat file = controller.load(pathFile);
 				workingArea.setImage(file.getImagePath());
 				this.projectImagePath = file.getImagePath();
+				
+				ArrayList<Sensor> t = new ArrayList<>();
+				
 				ArrayList <Sensor> sensors = new ArrayList<>();
 				for (Room room : file.getRooms()) {
 					sensors.addAll(room.getSensor());
+					t.addAll(room.getSensor());
 				}
 				workingArea.addSensors(sensors);
 				
 				System.out.println("\nFrom Load Function");
-				ArrayList<Sensor> t = workingArea.getSelectedSensor();
 				for (Sensor s : t){
 					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
 				}
@@ -687,11 +690,11 @@ public class GUIFlatImpl implements GUIFlat {
 	}
 
 	/**
-	 * Set a list of sensor in allarm state 
+	 * Set a list of sensor in alarm state 
 	 * (change left panel led color and the color filter in 
 	 *  main window)
 	 * @param room the sensor's room
-	 * @param sensors sensors list to set in allarm
+	 * @param sensors sensors list to set in alarm
 	 */
 	public void setSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
 		westPanel.refreshWestPane(controller.getRoomList());
@@ -699,11 +702,11 @@ public class GUIFlatImpl implements GUIFlat {
 	}
 
 	/**
-	 * Reset a list of sensor from in allarm state to 'not in allarm' state
+	 * Reset a list of sensor from in alarm state to 'not in alarm' state
 	 * (change left panel led color and the color filter in 
 	 *  main window)
 	 * @param room the sensor's room
-	 * @param sensors sensors list to set 'not in allarm'
+	 * @param sensors sensors list to set 'not in alarm'
 	 */
 	public void resetSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
 		workingArea.resetAllarmToSensor(sensors);
