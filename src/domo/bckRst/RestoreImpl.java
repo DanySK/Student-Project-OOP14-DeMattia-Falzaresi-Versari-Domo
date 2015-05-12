@@ -75,15 +75,6 @@ public class RestoreImpl implements Restore {
 					throw new RestoreDomoConfException("Flat Image has not been correctly restored");
 				}
 				
-				/*
-				if(flatList != null){
-					for(int i=0;i<flatList.getLength();i++){
-						Element el = (Element)flatList.item(i);
-						System.out.println("il nome è "+el.getElementsByTagName("name").item(0).getFirstChild().getNodeValue());
-						System.out.println("il tipo è "+el.getElementsByTagName("typology").item(0).getFirstChild().getNodeValue());
-					}
-				}
-				*/
 			} catch (Exception e) {
 				throw new RestoreDomoConfException(e.toString());
 			}
