@@ -151,14 +151,11 @@ public class TheController extends GUIAbstractObserver{
 	public void refreshSensorList() {
 		System.out.println("controller: refreshSensorList");
 		for (Room rooms : flat.getRooms()) {
-			
 			for  (Sensor sensor : rooms.getSensor()){
 				if(inallarm) {
 					sensor.setAlert(true);
-					
 				} else  {
 					sensor.setAlert(false);
-					
 				}
 			}
 			if(inallarm) {
@@ -167,10 +164,8 @@ public class TheController extends GUIAbstractObserver{
 				graphicInterface.resetSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
 
 			}
-
-		
+			inallarm = !inallarm;
 		}
-		inallarm = !inallarm;
 	}
 
 	@Override
