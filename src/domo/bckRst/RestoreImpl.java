@@ -122,6 +122,7 @@ public class RestoreImpl implements Restore {
 								String posX = sensEle.getElementsByTagName("XPosition").item(0).getFirstChild().getNodeValue();
 								String posY = sensEle.getElementsByTagName("YPosition").item(0).getFirstChild().getNodeValue();
 								String SensName = sensEle.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
+								String degree = sensEle.getElementsByTagName("degree").item(0).getFirstChild().getNodeValue();
 								
 								final String classPath = "classi";
 								final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
@@ -134,6 +135,7 @@ public class RestoreImpl implements Restore {
 												if(listaClassiSensori.createClassInstance(x).getName().equals(SensName)) {
 													Sensor tmpS = listaClassiSensori.createClassInstance(x);
 													tmpS.setLocation(Double.parseDouble(posX),Double.parseDouble(posY));
+													tmpS.setDegree(Double.parseDouble(degree));
 													fl.addSensorToRoom(r, tmpS);
 												}
 												
