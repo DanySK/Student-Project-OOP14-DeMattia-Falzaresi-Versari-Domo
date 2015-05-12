@@ -1,7 +1,5 @@
 package domo.bckRst;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import domo.general.Flat;
 
 	/**
