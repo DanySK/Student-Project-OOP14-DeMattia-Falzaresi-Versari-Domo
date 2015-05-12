@@ -101,6 +101,7 @@ public class BackupImpl implements Backup {
 					sensorE.appendChild(addArg("YPosition", Double.toString(sensor.getYPosition())));
 					sensorE.appendChild(addArg("size", sensor.getSize().toString()));
 					sensorE.appendChild(addArg("typology", sensor.getType().toString()));
+					sensorE.appendChild(addArg("degree", Double.toString(sensor.getDegree())));
 					}
 					catch (NullPointerException e){
 						
