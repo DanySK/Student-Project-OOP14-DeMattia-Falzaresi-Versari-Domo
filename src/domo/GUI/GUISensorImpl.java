@@ -18,7 +18,7 @@ import domo.devices.Sensor;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
-public class GUISensorImpl extends ImageView{
+public class GUISensorImpl extends ImageViewimpl implements GUISensor {
 	
 	/**
 	 * 
@@ -37,17 +37,43 @@ public class GUISensorImpl extends ImageView{
 	/**
 	 * ImageView object that represent the 
 	 */
-	ImageView parent;
+	ImageViewimpl parent;
+	/**
+	 * set the min scale for position and scale 
+	 */
 	private static final double MIN_FACTOR_SCALE = 0.0001;
 
+	/**
+	 * the sensor object to represent
+	 */
 	private Sensor sensor;
 	
+	/**
+	 * activate or deactivate the mouse interaction
+	 */
 	private boolean isMouseEnabled = false;
+	/**
+	 * the mouse event for take the last arrow mouse position
+	 */
 	private MouseEvent pressed;
+	/**
+	 * the last position 
+	 */
 	private Point pPoint;
+	/**
+	 * if the sensor is select or not
+	 */
 	private boolean isSelect = true;
 	
-	public GUISensorImpl (String imagePath, ImageView parentBounds, Sensor sens) throws IOException {
+	/**
+	 * GUISensorImpl constructor: create an empty graphic sensor representation
+	 * after that must to call 'setSensorAsNew()' or 'updateLocationFromLoad()'
+	 * @param imagePath the sensor image path
+	 * @param parentBounds the parent bound to fit sensor
+	 * @param sens the sensor data structure to represent
+	 * @throws IOException exception when load image file fail
+	 */
+	public GUISensorImpl (String imagePath, ImageViewimpl parentBounds, Sensor sens) throws IOException {
 		super(imagePath);
 		this.sensor = sens;
 		this.setMouseEnabled(true);

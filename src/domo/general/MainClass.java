@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 
+
 import domo.GUI.*;
 import domo.devices.Sensor;
 import domo.devices.loader.DynamicLoader;
@@ -55,7 +56,7 @@ public class MainClass {
 			}
 		});
 		
-		GUIFlatImpl t = new GUIFlatImpl("Domo", sensorTypeList);
+		GUIFlat t = new GUIFlatImpl("Domo", sensorTypeList);
 		
 		new TheController(t);
 		
