@@ -52,8 +52,6 @@ public class GUISensorImpl extends ImageView{
 		this.sensor = sens;
 		this.setMouseEnabled(true);
 		this.parent = parentBounds;
-		this.setLocation(10, 10);
-		this.updateFactors();
 		this.setBorder(BorderFactory.createLineBorder(Color.red, 1));
 		
 		if (this.getMouseListeners().length == 0) {
@@ -122,17 +120,25 @@ public class GUISensorImpl extends ImageView{
 		if(sensor != null) {
 			sensor.setLocation(xScaleFactorPos, yScaleFactorPos);
 		}
-		
 	}
+	
 	/**
-	 * Update sensor location base to sensors load from file
+	 * Set sensor as a new sensor (not from a load file)
 	 */
-	public void updateLocationFromLoadFile() {
+	public void setSensorAsNew() {
+		this.setLocation(10, 10);
+		this.updateFactors();
+	}
+	
+	/**
+	 * Update sensor location base to sensor load from file
+	 */
+	public void updateLocationFromLoad() {
 		double xFactor = sensor.getXPosition();
 		double yFactor = sensor.getYPosition();
 		this.xScaleFactorPos = xFactor;
 		this.yScaleFactorPos = yFactor;
-		System.out.println("Parente dimension: " + parent.getWidth() + "  " + parent.getHeight());
+		System.out.println("Parent dimension: " + parent.getWidth() + "  " + parent.getHeight());
 		double newX = (parent.getWidth() * xFactor) + parent.getX();
 		double newY = (parent.getHeight() * yFactor) + parent.getY();
 		this.setLocation((int) newX, (int) newY);
@@ -199,7 +205,7 @@ public class GUISensorImpl extends ImageView{
 	
 	/**
 	 * Tell if the mouse is enabled or not
-	 * @return true - mouse is enable
+	 * @return 	true - mouse is enable
 	 * 			false - mouse is disabled
 	 */
 	public boolean getMouseEnabled() {
@@ -207,8 +213,8 @@ public class GUISensorImpl extends ImageView{
 	}
 	
 	/**
-	 * tell if a sensor is selected
-	 * @return true - the sensor is selected
+	 * Tell if a sensor is selected
+	 * @return 	true - the sensor is selected
 	 * 			false - the sensor is not selected
 	 */
 	public boolean isSelect() {

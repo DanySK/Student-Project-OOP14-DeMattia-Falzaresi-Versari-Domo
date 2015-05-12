@@ -95,6 +95,7 @@ public class GUIWorkingArea extends JLayeredPane {
 			GUISensorImpl t;
 			try {
 				t = new GUISensorImpl(imgPath, this.bgImage, sensor);
+				t.setSensorAsNew();
 				t.setScale(this.bgImage.getScale());
 				sensorList.add(t);
 				this.add(t, 0);
@@ -120,7 +121,7 @@ public class GUIWorkingArea extends JLayeredPane {
 				this.add(t, 0);
 				this.moveToFront(t);
 				t.setScale(this.bgImage.getScale());
-				t.updateLocationFromLoadFile();
+				t.updateLocationFromLoad();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -41,6 +41,14 @@ public class TheController extends GUIAbstractObserver{
 
 	}
 
+	private Set<Sensor> getSensorFromRoom(String roomName){
+		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
+	}
+	
+	private Room getRoomfromName(String roomName){
+		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get();
+	}
+	
 	@Override
 	public void addRoomWithNameAndSensors(final String name, final ArrayList<Sensor> sensors) {
 		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
@@ -131,6 +139,15 @@ public class TheController extends GUIAbstractObserver{
 		try{
 			Restore res = new RestoreImpl();
 			this.flat = res.restoreNow(filePath);
+			for (Room room : flat.getRooms()) {
+				for (Sensor sensor : room.getSensor()) {
+					System.out.println("s.X: " + sensor.getXPosition() + "   " + sensor.getYPosition());
+
+				}
+System.out.println("");
+			}
+			System.out.println("\n");
+
 		}
 		catch(RestoreDomoConfException e){
 			System.out.println(e);
@@ -143,12 +160,6 @@ public class TheController extends GUIAbstractObserver{
 		System.out.println("controller: refreshSensorList");
 	}
 	
-	private Set<Sensor> getSensorFromRoom(String roomName){
-		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
-	}
-	private Room getRoomfromName(String roomName){
-		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get();
-	}
 	@Override
 	public void deleteSensors(ArrayList<Sensor> sensors) {
 		// TODO Auto-generated method stub
