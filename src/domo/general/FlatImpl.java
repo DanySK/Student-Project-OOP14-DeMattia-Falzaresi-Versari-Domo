@@ -67,9 +67,6 @@ public class FlatImpl implements Flat {
 	
 	@Override
 	public Room getRoom(final int id) {		
-		if (!listRoom.containsKey(id)) {
-			return null;
-		}		
 		return listRoom.get(id);
 	}
 

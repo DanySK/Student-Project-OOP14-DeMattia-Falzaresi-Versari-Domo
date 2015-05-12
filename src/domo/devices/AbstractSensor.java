@@ -18,6 +18,7 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 	private Dimension size;
 	private boolean alert;
 	private int id;
+	private double degree;
 	
 	@Override
 	public abstract String getName();
@@ -51,6 +52,16 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 	@Override
 	public double getYPosition() {
 		return yPosition;
+	}
+	
+	@Override
+	public double getDegree() {
+		return degree;
+	}
+	
+	@Override
+	public void setDegree(final double pDegree) {
+		degree = pDegree;
 	}
 
 	@Override

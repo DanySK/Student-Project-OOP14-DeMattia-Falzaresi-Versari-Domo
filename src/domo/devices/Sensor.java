@@ -59,6 +59,18 @@ public interface Sensor  {
 	double getYPosition();
 	
 	/**
+	 * get the degree of the sensor.
+	 * @return the degree of the sensor.
+	 */
+	double getDegree();
+	
+	/**
+	 * Set the sensor degree.
+	 * @param degree The sensor degree.
+	 */
+	void setDegree(double degree);
+	
+	/**
 	 * Get the sensor alert status.
 	 * @return if the device is in alert.
 	 */
