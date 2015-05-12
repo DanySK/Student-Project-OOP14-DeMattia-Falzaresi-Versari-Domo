@@ -542,11 +542,19 @@ public class GUIFlatImpl implements GUIFlat {
 					sensors.addAll(room.getSensor());
 					t.addAll(room.getSensor());
 				}
+				
+				System.out.println("\nFrom Load Function Before");
+				for (Sensor s : t){
+					System.out.println("s.degree: " + s.getDegree() );
+				}
+				System.out.println("\n");
+
+				
 				workingArea.addSensors(sensors);
 				
-				System.out.println("\nFrom Load Function");
+				System.out.println("\nFrom Load Function After");
 				for (Sensor s : t){
-					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
+					System.out.println("s.degree: " + s.getDegree() );
 				}
 				System.out.println("\n");
 
@@ -575,7 +583,7 @@ public class GUIFlatImpl implements GUIFlat {
 				System.out.println("\nFrom Save Function");
 				ArrayList<Sensor> t = workingArea.getSelectedSensor();
 				for (Sensor s : t){
-					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
+					System.out.println("s.degree: " + s.getDegree() );
 				}
 				System.out.println("\n");
 

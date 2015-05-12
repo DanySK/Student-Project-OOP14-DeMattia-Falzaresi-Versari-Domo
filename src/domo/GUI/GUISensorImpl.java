@@ -61,6 +61,7 @@ public class GUISensorImpl extends ImageView{
 						public void mouseClicked(final MouseEvent e) {
 							if ((e.getButton() == MouseEvent.BUTTON3 || e.getButton() == MouseEvent.BUTTON2) && isSelect && isMouseEnabled) {
 								GUISensorImpl.this.rotate90(true);
+								sensor.setDegree(GUISensorImpl.this.getRotationDegree());
 							}
 							if (e.getButton() == MouseEvent.BUTTON1 && isMouseEnabled) {
 								isSelect = !isSelect;
@@ -87,8 +88,10 @@ public class GUISensorImpl extends ImageView{
 					if (e.getSource() == GUISensorImpl.this && isMouseEnabled && isSelect) {
 						if (e.getPreciseWheelRotation() > 0) {
 							GUISensorImpl.this.rotate90(true);
+							sensor.setDegree(GUISensorImpl.this.getRotationDegree());
 						} else {
 							GUISensorImpl.this.rotate90(false);
+							sensor.setDegree(GUISensorImpl.this.getRotationDegree());
 						}
 					}
 				}
@@ -138,12 +141,10 @@ public class GUISensorImpl extends ImageView{
 		double yFactor = sensor.getYPosition();
 		this.xScaleFactorPos = xFactor;
 		this.yScaleFactorPos = yFactor;
-		System.out.println("Parent dimension: " + parent.getWidth() + "  " + parent.getHeight());
 		double newX = (parent.getWidth() * xFactor) + parent.getX();
 		double newY = (parent.getHeight() * yFactor) + parent.getY();
 		this.setLocation((int) newX, (int) newY);
-		
-		System.out.println("this.position: " + this.getX() + "  " + this.getY());
+		this.rotate(sensor.getDegree());
 
 	}
 	
