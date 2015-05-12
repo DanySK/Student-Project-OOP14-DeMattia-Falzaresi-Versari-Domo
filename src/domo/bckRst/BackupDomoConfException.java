@@ -1,13 +1,26 @@
 package domo.bckRst;
-
+	/**
+	 * 
+	 * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+	 * 
+	 * This is the class for backup related exception
+	 *
+	 */
 public class BackupDomoConfException extends Exception {
-	String err;
 	
-	public BackupDomoConfException(String e) {
-		this.err=e;
+	private static final long serialVersionUID = 5705352020144465859L;
+	private String err;
+	
+	/**
+	 * The constructor of the exception for showing backup related errors. 
+	 * @param e the error message to show
+	 */
+	public BackupDomoConfException(final String e) {
+		this.err = e;
 	}
 	
-	public String toString(){
+	@Override
+	public String toString() {
 		return "Backup Got an Error: " + err;
 	}
 }
