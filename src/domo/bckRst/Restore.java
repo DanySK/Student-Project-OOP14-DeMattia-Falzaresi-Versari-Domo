@@ -11,16 +11,10 @@ import domo.general.Flat;
 public interface Restore {
 
 	/**
-	 * Check if the configuration file is present.
-	 * @return True or False
-	 */
-	boolean checkFilePresence();
-	
-	/**
-	 * Restore from a specific file.
+	 * Restore a flat element from the given file.
 	 * @param fileName the name of the file to restore
-	 * @return a flat element
-	 * @throws RestoreDomoConfException 
+	 * @return a flat element with the complete configuration
+	 * @throws RestoreDomoConfException custom exception related to this procedure
 	 */
 	Flat restoreNow(String fileName) throws RestoreDomoConfException;
 }

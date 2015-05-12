@@ -7,17 +7,24 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.Transformer;
+
 import java.util.zip.ZipOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.util.zip.ZipEntry;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import java.util.ArrayList;
+
 import domo.devices.Sensor;
+
 import java.util.HashSet;
+
 import domo.general.Flat;
 import domo.general.Room;
+
 import java.util.Set;
 import java.io.File;
 
@@ -164,6 +171,7 @@ public class BackupImpl implements Backup {
 	 * @param flatB the flat element to be backupped
 	 * @throws BackupDomoConfException custom exceptions
 	 */
+	@SuppressWarnings("unused")
 	private void zipEveryThing(final Flat flatB) throws BackupDomoConfException {
 		byte[] buf = new byte[1];
 		try {
@@ -186,6 +194,7 @@ public class BackupImpl implements Backup {
 		            	ft.delete();
 		            }
 				} else {
+					out.close();
 					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
 				}
 			}
