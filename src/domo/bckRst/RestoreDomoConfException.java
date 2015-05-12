@@ -1,12 +1,25 @@
 package domo.bckRst;
+/**
+ * 
+ * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * 
+ * This is the class for restore related exception
+ *
+ */
+public class RestoreDomoConfException extends Exception {
 
-public class RestoreDomoConfException extends Exception{
-	String err;
-	public RestoreDomoConfException(String e) {
-		this.err =e;
+	private static final long serialVersionUID = 1L;
+	private String err;
+	/**
+	 * The constructor of the exception for showing backup related errors. 
+	 * @param e the error message to showe 
+	 */
+	public RestoreDomoConfException(final String e) {
+		this.err = e;
 	}
 	
-	public String toString(){
-		return "Error during restore procedure: "+err;
+	@Override
+	public String toString() {
+		return "Error during restore procedure: " + err;
 	}
 }
