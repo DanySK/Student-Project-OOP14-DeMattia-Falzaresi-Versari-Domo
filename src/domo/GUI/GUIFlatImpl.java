@@ -66,7 +66,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 * Object that handle the working area 
 	 * background image, sensor, move, resize, color ...
 	 */
-	private GUIWorkingAreaImpl workingArea;
+	private GUIWorkingArea workingArea;
 
 	/**
 	 * The top menu
@@ -151,7 +151,7 @@ public class GUIFlatImpl implements GUIFlat {
 		//mainPanel.setBackground(Color.darkGray);
 		mainFrame.setContentPane(mainPanel);
 
-		workingArea = new GUIWorkingAreaImpl();
+		workingArea = new GUIWorkingArea();
 
 		mainFrame.getRootPane().addComponentListener(new ComponentAdapter() {
 			public void componentResized(final ComponentEvent e) {
@@ -466,6 +466,18 @@ public class GUIFlatImpl implements GUIFlat {
 			}
 		}
 		northPanel.add(btnTrash);
+		
+		JButton btnAllert = new JButton("allert");
+		btnAllert.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.refreshSensorList();
+				
+			}
+		}) ;
+		northPanel.add(btnAllert);
+		
 		northPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		mainPanel.add(northPanel, BorderLayout.NORTH);
 
@@ -682,6 +694,7 @@ public class GUIFlatImpl implements GUIFlat {
 				}
 				westPanel.refreshWestPane(controller.getRoomList());
 				addRoomFrame.dispose();
+				workingArea.deselectAllSensor();
 
 			}
 
@@ -703,8 +716,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set in alarm
 	 */
 	public void setSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-		westPanel.refreshWestPane(controller.getRoomList());
+		
 		workingArea.setInAllarmToSensor(sensors);
+		westPanel.refreshWestPane(controller.getRoomList());
 	}
 
 	/**
