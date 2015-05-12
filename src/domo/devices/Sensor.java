@@ -1,7 +1,5 @@
 package domo.devices;
 
-import java.awt.Dimension;
-
 /**
  * 
  * @author Marco Versari
@@ -38,13 +36,6 @@ public interface Sensor  {
 	 * @return the device status
 	 */
 	SensorStatus getStatus();
-	
-	/**
-	 * 
-	 * @return the device image size --??--
-	 */
-	Dimension getSize();
-	
 	
 	/**
 	 * Query the x position.
@@ -94,12 +85,6 @@ public interface Sensor  {
 	 * @param pStatus the status to set.
 	 */
 	void setStatus(SensorStatus pStatus);
-	
-	/**
-	 * Set the Size of the sensor.
-	 * @param size set the device dimension
-	 */
-	void setSize(Dimension size);
 	
 	/**
 	 * Get the image path.
