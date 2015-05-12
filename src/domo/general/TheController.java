@@ -3,8 +3,9 @@ package domo.general;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
+
+import org.w3c.dom.views.AbstractView;
 
 import domo.GUI.GUIAbstractObserver;
 import domo.GUI.GUIFlat;
@@ -17,33 +18,36 @@ import domo.bckRst.RestoreImpl;
 import domo.devices.Sensor;
 import domo.devices.loader.DynamicLoader;
 import domo.devices.loader.DynamicLoaderImpl;
+import domo.util.test.*;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  */
-public class TheController extends GUIAbstractObserver{
+public class TheController extends GUIAbstractObserver implements AbstracTestInterface{
 
 	private GUIFlat graphicInterface;
 	private Flat flat;
+	private DomoTest testFrame;
 	private boolean inallarm = false;
 	/**
 	 * Constructor.
 	 * @param GI a GUIFlatImpl object to start with the controller 
 	 */
 	public TheController(GUIFlat GI) {
-
-
 		this.graphicInterface = GI;
-
 		this.graphicInterface.setController(this);
 
 	}
 
-	private Set<Sensor> getSensorFromRoom(String roomName){
-		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
+	public void startTesting(DomoTest test) {
+		this.testFrame = test;
+		this.testFrame.setObserver(this);
 	}
+//	private Set<Sensor> getSensorFromRoom(String roomName){
+//		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
+//	}
 
 	private Room getRoomfromName(String roomName){
 		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get();
@@ -60,6 +64,8 @@ public class TheController extends GUIAbstractObserver{
 			}
 			flat.addSensorToRoom(roomToAdd, sensor);
 		}
+		testFrame.refresh(flat);
+
 	}
 
 	@Override
@@ -74,6 +80,8 @@ public class TheController extends GUIAbstractObserver{
 				if(listaClassiSensori.createClassInstance(x).getName().equals(name)) {
 					Sensor tmp = listaClassiSensori.createClassInstance(x);
 					flat.addSensorToRoom(getRoomfromName("Default Room"),tmp);
+					testFrame.refresh(flat);
+
 					return tmp;
 				}
 
@@ -81,6 +89,7 @@ public class TheController extends GUIAbstractObserver{
 				fail(e.toString());
 			}
 		}
+		testFrame.refresh(flat);
 
 		//qui simone mi da il nome del sensore e io lo istanzio e poi glielo restituisco
 		return null;
@@ -102,6 +111,7 @@ public class TheController extends GUIAbstractObserver{
 			}
 			flat.addSensorToRoom(room, sensor);
 		}
+		testFrame.refresh(flat);
 	}
 
 
@@ -144,33 +154,35 @@ public class TheController extends GUIAbstractObserver{
 		catch(RestoreDomoConfException e){
 			System.out.println(e);
 		}
+		testFrame.refresh(flat);
+
 		return this.flat==null ? null : this.flat;
 	}
 
 	@Override
 	public void refreshSensorList() {
-		System.out.println("controller: refreshSensorList");
-		for (Room rooms : flat.getRooms()) {
-			for  (Sensor sensor : rooms.getSensor()){
-				if(inallarm) {
-					sensor.setAlert(true);
-				} else  {
-					sensor.setAlert(false);
-				}
-			}
-			if(inallarm) {
-				graphicInterface.setSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
-			} else {
-				graphicInterface.resetSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
-
-			}
-			inallarm = !inallarm;
-		}
+//		System.out.println("controller: refreshSensorList");
+//		for (Room rooms : flat.getRooms()) {
+//			for  (Sensor sensor : rooms.getSensor()) {
+//				if (inallarm) {
+//					sensor.setAlert(true);
+//				} else  {
+//					sensor.setAlert(false);
+//				}
+//			}
+//			if (inallarm) {
+//				graphicInterface.setSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
+//			} else {
+//				graphicInterface.resetSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
+//
+//			}
+//			inallarm = !inallarm;
+//		}
 	}
 
 	@Override
-	public void deleteSensors(ArrayList<Sensor> sensors) {
-		// TODO Auto-generated method stub
+	public void deleteSensors(final ArrayList<Sensor> sensors) {
+
 		for (Room room : flat.getRooms()) {
 			for (Sensor sensor : sensors) {
 				if (room.getSensor().contains(sensor)) {
@@ -178,5 +190,30 @@ public class TheController extends GUIAbstractObserver{
 				}
 			}
 		}
+	}
+
+	@Override
+	public void sensorStateChange() {
+		
+	
+		for (Room rooms : flat.getRooms()) {
+			ArrayList<Sensor> tempAllarm = new ArrayList<>();
+			ArrayList<Sensor> tempNotAllarm = new ArrayList<>();
+			for  (Sensor sensor : rooms.getSensor()) {
+				if (sensor.isInAlert()) {
+					tempAllarm.add(sensor);
+				} else {
+					tempNotAllarm.add(sensor);
+				}
+			}
+			graphicInterface.setSensorsInAllarm(rooms, tempAllarm);
+			graphicInterface.resetSensorsInAllarm(rooms, tempNotAllarm);
+
+			
+		}
+	}
+	
+	public Flat getFlat() {
+		return flat;
 	}
 }

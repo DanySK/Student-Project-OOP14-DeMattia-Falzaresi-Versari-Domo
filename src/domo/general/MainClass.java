@@ -10,10 +10,12 @@ import java.util.Set;
 
 
 
+
 import domo.GUI.*;
 import domo.devices.Sensor;
 import domo.devices.loader.DynamicLoader;
 import domo.devices.loader.DynamicLoaderImpl;
+import domo.util.test.DomoTestImpl;
 
 /**
  * 
@@ -58,7 +60,9 @@ public class MainClass {
 		
 		GUIFlat t = new GUIFlatImpl("Domo", sensorTypeList);
 		
-		new TheController(t);
+		TheController controller = new TheController(t);
+		controller.startTesting(new DomoTestImpl());
+		
 		
 		
 
