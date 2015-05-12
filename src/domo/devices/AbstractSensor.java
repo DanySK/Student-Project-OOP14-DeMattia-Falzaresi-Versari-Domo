@@ -76,16 +76,6 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 	}
 	
 	@Override
-	public Dimension getSize() {
-		return size;
-	}
-
-	@Override
-	public void setSize(final Dimension pSize) {
-		size = pSize;		
-	}
-
-	@Override
 	public String toString() {
 		return "SensorImpl [status=" + status + ", position=" + xPosition
 				+ ", size=" + size + ", alert=" + alert + ", id=" + id
