@@ -217,5 +217,9 @@ public class ImageView extends JLabel {
 	    g.dispose();
 	    return b;
 	}
+	
+	public double getRotationDegree() {
+		return this.totalRotationDegree;
+	}
 
 }

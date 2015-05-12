@@ -139,15 +139,7 @@ public class TheController extends GUIAbstractObserver{
 		try{
 			Restore res = new RestoreImpl();
 			this.flat = res.restoreNow(filePath);
-			for (Room room : flat.getRooms()) {
-				for (Sensor sensor : room.getSensor()) {
-					System.out.println("s.X: " + sensor.getXPosition() + "   " + sensor.getYPosition());
-
-				}
-System.out.println("");
-			}
-			System.out.println("\n");
-
+			
 		}
 		catch(RestoreDomoConfException e){
 			System.out.println(e);
