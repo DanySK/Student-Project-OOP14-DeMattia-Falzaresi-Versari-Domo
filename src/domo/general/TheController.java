@@ -1,52 +1,46 @@
 package domo.general;
 
+import domo.devices.loader.DynamicLoaderImpl;
+import domo.bckRst.RestoreDomoConfException;
+import domo.bckRst.BackupDomoConfException;
+import domo.devices.loader.DynamicLoader;
+import domo.GUI.GUIAbstractObserver;
 import static org.junit.Assert.fail;
-
+import domo.bckRst.RestoreImpl;
+import domo.bckRst.BackupImpl;
 import java.util.ArrayList;
-import java.util.HashSet;
+import domo.bckRst.Restore;
+import domo.devices.Sensor;
+import domo.bckRst.Backup;
+import domo.GUI.GUIFlat;
 import java.util.Set;
 
-import domo.GUI.GUIAbstractObserver;
-import domo.GUI.GUIFlat;
-import domo.bckRst.Backup;
-import domo.bckRst.BackupDomoConfException;
-import domo.bckRst.BackupImpl;
-import domo.bckRst.Restore;
-import domo.bckRst.RestoreDomoConfException;
-import domo.bckRst.RestoreImpl;
-import domo.devices.Sensor;
-import domo.devices.loader.DynamicLoader;
-import domo.devices.loader.DynamicLoaderImpl;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  */
-public class TheController extends GUIAbstractObserver{
+public class TheController extends GUIAbstractObserver {
 
 	private GUIFlat graphicInterface;
 	private Flat flat;
 	private boolean inallarm = false;
 	/**
 	 * Constructor.
-	 * @param GI a GUIFlatImpl object to start with the controller 
+	 * @param gI a GUIFlatImpl object to start with the controller 
 	 */
-	public TheController(GUIFlat GI) {
+	public TheController(final GUIFlat gI) {
 
 
-		this.graphicInterface = GI;
+		this.graphicInterface = gI;
 
 		this.graphicInterface.setController(this);
 
 	}
 
-	private Set<Sensor> getSensorFromRoom(String roomName){
-		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get().getSensor();
-	}
-
-	private Room getRoomfromName(String roomName){
-		return this.flat.getRooms().stream().filter(s->s!=null).filter(s->s.getName().equals(roomName)).findFirst().get();
+	private Room getRoomfromName(final String roomName) {
+		return this.flat.getRooms().stream().filter(s->s != null).filter(s->s.getName().equals(roomName)).findFirst().get();
 	}
 
 	@Override
@@ -71,9 +65,9 @@ public class TheController extends GUIAbstractObserver{
 		final Set<String> resLoader = listaClassiSensori.updateModuleList();
 		for (String x : resLoader) {
 			try {
-				if(listaClassiSensori.createClassInstance(x).getName().equals(name)) {
+				if (listaClassiSensori.createClassInstance(x).getName().equals(name)) {
 					Sensor tmp = listaClassiSensori.createClassInstance(x);
-					flat.addSensorToRoom(getRoomfromName("Default Room"),tmp);
+					flat.addSensorToRoom(getRoomfromName("Default Room"), tmp);
 					return tmp;
 				}
 
@@ -81,8 +75,6 @@ public class TheController extends GUIAbstractObserver{
 				fail(e.toString());
 			}
 		}
-
-		//qui simone mi da il nome del sensore e io lo istanzio e poi glielo restituisco
 		return null;
 	}
 
@@ -90,7 +82,7 @@ public class TheController extends GUIAbstractObserver{
 	public ArrayList<Room> getRoomList() {
 		System.out.println("controller: getRoomList");
 		//return this.roomList;
-		return  this.flat != null && this.flat.getRooms().size()>0 ? new ArrayList<>(flat.getRooms()) : null;
+		return  this.flat != null && this.flat.getRooms().size() > 0 ? new ArrayList<>(flat.getRooms()) : null;
 	}
 
 	@Override
@@ -115,45 +107,39 @@ public class TheController extends GUIAbstractObserver{
 	@Override
 	public void closeProgram() {
 		System.out.println("controller: closeProgram");
-
-		//qui si puo mettere il modo per stoppare l'agent
 	}
 
 	@Override
 	public void save(final String filePathWithName, final String imageFilePath) {
-		System.out.println("controller: save  file name: " + filePathWithName + " Image file: "+imageFilePath);
+		System.out.println("controller: save  file name: " + filePathWithName + " Image file: " + imageFilePath);
 		this.flat.setImagePath(imageFilePath);
-		try{
+		try {
 			Backup bac = new BackupImpl(filePathWithName);
 			bac.backupNow(this.flat);
-		}
-		catch (BackupDomoConfException e){
+		} catch (BackupDomoConfException e) {
 			System.out.println(e);
 		}
-
 	}
 
 	@Override
 	public Flat load(final String filePath) {
 		System.out.println("controller: load filename: " + filePath);
-		try{
+		try {
 			Restore res = new RestoreImpl();
 			this.flat = res.restoreNow(filePath);
-
-		}
-		catch(RestoreDomoConfException e){
+		} catch (RestoreDomoConfException e) {
 			System.out.println(e);
 		}
-		return this.flat==null ? null : this.flat;
-	}
+		return this.flat == null ? null : this.flat;
+		}
 
 	@Override
 	public void refreshSensorList() {
 		System.out.println("controller: refreshSensorList");
 		for (Room rooms : flat.getRooms()) {
 			
-			for  (Sensor sensor : rooms.getSensor()){
-				if(inallarm) {
+			for (Sensor sensor : rooms.getSensor()) {
+				if (inallarm) {
 					sensor.setAlert(true);
 					
 				} else  {
@@ -161,7 +147,7 @@ public class TheController extends GUIAbstractObserver{
 					
 				}
 			}
-			if(inallarm) {
+			if (inallarm) {
 				graphicInterface.setSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
 			} else {
 				graphicInterface.resetSensorsInAllarm(rooms, new ArrayList<Sensor>(rooms.getSensor()));
@@ -174,8 +160,7 @@ public class TheController extends GUIAbstractObserver{
 	}
 
 	@Override
-	public void deleteSensors(ArrayList<Sensor> sensors) {
-		// TODO Auto-generated method stub
+	public void deleteSensors(final ArrayList<Sensor> sensors) {
 		for (Room room : flat.getRooms()) {
 			for (Sensor sensor : sensors) {
 				if (room.getSensor().contains(sensor)) {
