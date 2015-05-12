@@ -198,4 +198,10 @@ public class GUIWorkingArea extends JLayeredPane {
 	public boolean isSetBackground() {
 		return (this.bgImage != null);
 	}
+	
+	public void deselectAllSensor() {
+		for (GUISensor sensor : sensorList) {
+			sensor.setSelect(false);
+		}
+	}
 }

@@ -694,6 +694,7 @@ public class GUIFlatImpl implements GUIFlat {
 				}
 				westPanel.refreshWestPane(controller.getRoomList());
 				addRoomFrame.dispose();
+				workingArea.deselectAllSensor();
 
 			}
 

@@ -265,4 +265,9 @@ public class GUISensor extends ImageView {
 	public void setSensor(Sensor sens) {
 		this.sensor = sens;
 	}
+	
+	public void setSelect(boolean select) {
+		this.isSelect = select;
+		GUISensor.this.setBorder(null);
+	}
 }
