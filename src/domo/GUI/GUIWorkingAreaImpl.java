@@ -27,7 +27,7 @@ public class GUIWorkingAreaImpl extends JLayeredPane implements GUIWorkingArea{
 	/**
 	 * the background image, an ImageView class instance
 	 */
-	private ImageView bgImage;
+	private ImageViewimpl bgImage;
 	/**
 	 * A sensor graphic representation list
 	 */
@@ -53,7 +53,7 @@ public class GUIWorkingAreaImpl extends JLayeredPane implements GUIWorkingArea{
 			if (this.bgImage != null) {
 				this.remove(bgImage);
 			}
-			bgImage = new ImageView(imageBuf, this.getBounds());
+			bgImage = new ImageViewimpl(imageBuf, this.getBounds());
 			this.add(bgImage, 0);
 		} catch (IOException e) {
 			e.printStackTrace();

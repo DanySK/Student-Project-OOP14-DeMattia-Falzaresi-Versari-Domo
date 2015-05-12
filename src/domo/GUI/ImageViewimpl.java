@@ -20,9 +20,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-public class ImageView extends JLabel {
-
+/**
+ * 
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
+ *
+ */
+public class ImageViewimpl extends JLabel implements ImageView {
+/**
+ * Color filter type:<br><br>COLOR_FILTER_NONE,<br>
+						COLOR_FILTER_RED,<br>
+						COLOR_FILTER_GREEN<br>
+		
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
+ *
+ */
 	public enum ColorFilter {
 		COLOR_FILTER_NONE,
 		COLOR_FILTER_RED,
@@ -30,21 +41,42 @@ public class ImageView extends JLabel {
 		
 	}
 	/**
-	 * 
+	 * serial version
 	 */
 	private static final long serialVersionUID = -1218944812028248824L;
 
-	//private JLabel imageLabel;
+	/**
+	 * the image show in parent JPanel
+	 * used because it lost definition when change from 
+	 * scale down to scale up
+	 */
 	private BufferedImage currentImage;
+	/**
+	 * the filtered image 
+	 */
 	private BufferedImage filtImage;
+	/**
+	 * the original image reference
+	 */
 	private BufferedImage originalImage;
+	/**
+	 * the min scale factor available
+	 */
 	private final double MIN_FACTOR_SCALE = 0.0001;
 
-	
+	/**
+	 * the total rotation according to (total radius + radius to add) % 360
+	 */
 	private double totalRotationDegree = 0;
+	/**
+	 * total scale factor
+	 */
 	private double totalScaleFactor = 1;
 	
-	public ImageView ()	{
+	/**
+	 * standard constructor that create an empty object
+	 */
+	public ImageViewimpl ()	{
 		super();
 		this.setOpaque(true);
 		this.setHorizontalAlignment(JLabel.CENTER);
@@ -52,28 +84,50 @@ public class ImageView extends JLabel {
 		
 	}
 	
-	public ImageView (final String imagePath) throws IOException	{
+	/**
+	 * create an instance with a image
+	 * @param imagePath the image path
+	 * @throws IOException throw when open file fail
+	 */
+	public ImageViewimpl (final String imagePath) throws IOException	{
 		super();
 		this.setImage(imagePath);
 	}
 	
-	public ImageView (final BufferedImage imageBuf) {
+	/**
+	 * create an instance with a image
+	 * @param imageBuf the BufferedImage object to set as image
+	 */
+	public ImageViewimpl (final BufferedImage imageBuf) {
 		super();
 		this.setImage(imageBuf);
 	}
 	
-	public ImageView (final BufferedImage imageBuf, Point middlePoint) {
+	/**
+	* create an instance with a image and put in a middle position
+	 * @param imageBuf the BufferedImage object to set as image
+	 * @param middlePoint the middle point
+	 */
+	public ImageViewimpl (final BufferedImage imageBuf, Point middlePoint) {
 		this(imageBuf);
 		middlePoint.x = middlePoint.x - (this.getWidth() / 2);
 		middlePoint.y = middlePoint.y - (this.getHeight() / 2);
 		this.setLocation(middlePoint);
 	}
 	
-	public ImageView (final BufferedImage imageBuf, Rectangle parentBound) {
+	/**
+	 * create an instance with a image and fit its dimension to maximize 
+	 * in its parent
+	 * @param imageBuf the BufferedImage object to set as image
+	 * @param parentBound the parent to fit
+	 */
+	public ImageViewimpl (final BufferedImage imageBuf, Rectangle parentBound) {
 		this(imageBuf);
 		this.setAspectFillToParent(parentBound);
 	}
-
+/* (non-Javadoc)
+ * @see domo.GUI.ImageView#setImage(java.awt.image.BufferedImage)
+ */
 	public void setImage(final BufferedImage image) {
 		this.setIcon(new ImageIcon(image));
 		this.setSize(new Dimension(image.getWidth(), image.getHeight()));
@@ -84,11 +138,16 @@ public class ImageView extends JLabel {
 			 this.originalImage = copyImage(this.currentImage);
 		}
 	}
-	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#setImage(java.lang.String)
+	 */
 	public void setImage(final String imagePath) throws IOException {
 		this.setImage(ImageIO.read(new File(imagePath)));
 	}
 
+	/**
+	 * rotate the image base to the totalrotation private variable
+	 */
 	private void rotate() {
 		double radians = this.totalRotationDegree * Math.PI / 180;
 		AffineTransform transform = new AffineTransform();
@@ -98,11 +157,17 @@ public class ImageView extends JLabel {
 	    this.setImage(this.currentImage);
 	}
 	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#rotate(double)
+	 */
 	public void rotate(final double degree) {
 	    this.totalRotationDegree  = (this.totalRotationDegree + degree) % 360;
 	    this.rotate();
 	}
 	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#rotate90(boolean)
+	 */
 	public void rotate90(boolean clockwise) {
 		double radians = clockwise ? 90 * Math.PI / 180 : -90 * Math.PI / 180;
 		AffineTransform transform = new AffineTransform();
@@ -118,6 +183,9 @@ public class ImageView extends JLabel {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#setColorFilter(domo.GUI.ImageViewimpl.ColorFilter)
+	 */
 	public void setColorFilter(final ColorFilter filter) {
 		Image tmpImg;
 		RGBImageFilter filterRGB;
@@ -163,6 +231,9 @@ public class ImageView extends JLabel {
 
 	}
 	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#setAspectFillToParent(java.awt.Rectangle)
+	 */
 	public void setAspectFillToParent(Rectangle parentBound) {
 		parentBound.setLocation(new Point(0, 0));
 		double widthFactor = parentBound.getWidth() / this.currentImage.getWidth();
@@ -177,11 +248,18 @@ public class ImageView extends JLabel {
 		this.setLocation(middlePoint);
 	}
 	
+	/**
+	 * private scale for aspect fit method
+	 * @param imgScale double factor scale 
+	 */
 	private void setScaleForAspetcFill(final double imgScale) {
 		this.totalScaleFactor *= imgScale;
 		this.setScale(this.totalScaleFactor);
 	}
 	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#setScale(double)
+	 */
 	public void setScale(final double imgScale) {
 		BufferedImage imgToResize = copyImage(this.originalImage);
 		this.totalScaleFactor = Math.max(MIN_FACTOR_SCALE, imgScale);
@@ -202,14 +280,24 @@ public class ImageView extends JLabel {
 		this.rotate();
 	}
 
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#containsPoint(java.awt.Point)
+	 */
 	public boolean containsPoint(Point point) {
 		return this.getBounds().contains(point);
 	}
-		
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#getScale()
+	 */
 	public double getScale() {
 		return this.totalScaleFactor;
 	}
 	
+	/**
+	 * create a Buffered Image object copy
+	 * @param source BufferedImage to copy
+	 * @return a BufferedImage copy
+	 */
 	private static BufferedImage copyImage(BufferedImage source){
 	    BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
 	    Graphics g = b.getGraphics();
@@ -218,6 +306,9 @@ public class ImageView extends JLabel {
 	    return b;
 	}
 	
+	/* (non-Javadoc)
+	 * @see domo.GUI.ImageView#getRotationDegree()
+	 */
 	public double getRotationDegree() {
 		return this.totalRotationDegree;
 	}

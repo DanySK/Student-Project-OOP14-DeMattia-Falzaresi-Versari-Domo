@@ -18,7 +18,7 @@ import domo.devices.Sensor;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
-public class GUISensorImpl extends ImageView implements GUISensor {
+public class GUISensorImpl extends ImageViewimpl implements GUISensor {
 	
 	/**
 	 * 
@@ -37,7 +37,7 @@ public class GUISensorImpl extends ImageView implements GUISensor {
 	/**
 	 * ImageView object that represent the 
 	 */
-	ImageView parent;
+	ImageViewimpl parent;
 	/**
 	 * set the min scale for position and scale 
 	 */
@@ -73,7 +73,7 @@ public class GUISensorImpl extends ImageView implements GUISensor {
 	 * @param sens the sensor data structure to represent
 	 * @throws IOException exception when load image file fail
 	 */
-	public GUISensorImpl (String imagePath, ImageView parentBounds, Sensor sens) throws IOException {
+	public GUISensorImpl (String imagePath, ImageViewimpl parentBounds, Sensor sens) throws IOException {
 		super(imagePath);
 		this.sensor = sens;
 		this.setMouseEnabled(true);
