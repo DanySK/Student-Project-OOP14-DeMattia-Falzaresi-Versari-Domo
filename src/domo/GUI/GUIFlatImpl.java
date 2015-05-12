@@ -66,7 +66,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 * Object that handle the working area 
 	 * background image, sensor, move, resize, color ...
 	 */
-	private GUIWorkingArea workingArea;
+	private GUIWorkingAreaImpl workingArea;
 
 	/**
 	 * The top menu
@@ -151,7 +151,7 @@ public class GUIFlatImpl implements GUIFlat {
 		//mainPanel.setBackground(Color.darkGray);
 		mainFrame.setContentPane(mainPanel);
 
-		workingArea = new GUIWorkingArea();
+		workingArea = new GUIWorkingAreaImpl();
 
 		mainFrame.getRootPane().addComponentListener(new ComponentAdapter() {
 			public void componentResized(final ComponentEvent e) {
@@ -188,12 +188,10 @@ public class GUIFlatImpl implements GUIFlat {
 	}
 
 	/**
-	 * Create the JMenu
+	 * Create the JMenu top bar
 	 */
 	private void createJMenu() {
-		//Implementazione della barra menu'
 		JMenu menuFile = new JMenu("File");
-		//nuovo oggetto menu
 		JMenuItem menuNew = new JMenuItem("New", KeyEvent.VK_N);
 		menuNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
 		menuNew.addActionListener(new ActionListener() {

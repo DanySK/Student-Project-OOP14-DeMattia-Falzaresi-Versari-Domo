@@ -18,7 +18,7 @@ import domo.devices.Sensor;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
-public class GUIWorkingArea extends JLayeredPane {
+public class GUIWorkingAreaImpl extends JLayeredPane implements GUIWorkingArea{
 
 	/**
 	 * serial id
@@ -36,7 +36,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	/**
 	 * create a standard GUIWorkingArea object instance
 	 */
-	public GUIWorkingArea() {
+	public GUIWorkingAreaImpl() {
 		super();
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 	}
@@ -67,7 +67,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	public void resize() {
 		if (bgImage != null) {
 			bgImage.setAspectFillToParent(this.getBounds());
-			for (GUISensorImpl t : sensorList)  {
+			for (GUISensor t : sensorList)  {
 				t.setScale(bgImage.getScale());
 			}
 		}
@@ -134,7 +134,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 */
 	public ArrayList<Sensor> getSelectedSensor(){
 		ArrayList<Sensor> sel = new ArrayList<>();
-		for (GUISensorImpl sens : sensorList) {
+		for (GUISensor sens : sensorList) {
 			if (sens.isSelect()) {
 				sel.add(sens.getSensor());
 			}
@@ -151,7 +151,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	private void setLightToSensor(Sensor sens, int lightIndex) {
 		switch (lightIndex) {
 		case 0:
-			for (GUISensorImpl tSens : sensorList) {
+			for (GUISensor tSens : sensorList) {
 				if(tSens.getSensor().equals(sens)) {
 					tSens.setRedColorFilter();
 					return;
@@ -159,7 +159,7 @@ public class GUIWorkingArea extends JLayeredPane {
 			}
 			break;
 		case 1:
-			for (GUISensorImpl tSens : sensorList) {
+			for (GUISensor tSens : sensorList) {
 				if(tSens.getSensor().equals(sens)) {
 					tSens.setRedColorFilter();
 					return;

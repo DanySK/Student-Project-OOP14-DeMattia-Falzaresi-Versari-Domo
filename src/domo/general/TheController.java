@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import domo.GUI.GUIAbstractObserver;
-import domo.GUI.GUIFlatImpl;
+import domo.GUI.GUIFlat;
 import domo.bckRst.Backup;
 import domo.bckRst.BackupDomoConfException;
 import domo.bckRst.BackupImpl;
@@ -25,14 +25,14 @@ import domo.devices.loader.DynamicLoaderImpl;
  */
 public class TheController extends GUIAbstractObserver{
 	
-	private GUIFlatImpl graphicInterface;
+	private GUIFlat graphicInterface;
 	private Flat flat;
 	
 	/**
 	 * Constructor.
 	 * @param GI a GUIFlatImpl object to start with the controller 
 	 */
-	public TheController(GUIFlatImpl GI) {
+	public TheController(GUIFlat GI) {
 		
 		
 		this.graphicInterface = GI;

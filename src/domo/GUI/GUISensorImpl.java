@@ -18,7 +18,7 @@ import domo.devices.Sensor;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
-public class GUISensorImpl extends ImageView{
+public class GUISensorImpl extends ImageView implements GUISensor {
 	
 	/**
 	 * 
