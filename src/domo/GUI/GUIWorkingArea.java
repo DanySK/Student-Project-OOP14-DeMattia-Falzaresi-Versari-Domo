@@ -31,7 +31,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	/**
 	 * A sensor graphic representation list
 	 */
-	private final ArrayList <GUISensorImpl> sensorList = new ArrayList<>();
+	private final ArrayList <GUISensor> sensorList = new ArrayList<>();
 	
 	/**
 	 * create a standard GUIWorkingArea object instance
@@ -67,7 +67,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	public void resize() {
 		if (bgImage != null) {
 			bgImage.setAspectFillToParent(this.getBounds());
-			for (GUISensorImpl t : sensorList)  {
+			for (GUISensor t : sensorList)  {
 				t.setScale(bgImage.getScale());
 			}
 		}
@@ -77,7 +77,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * remove all selected sensors from view
 	 */
 	public void removeSelectSensor() {
-		for (GUISensorImpl t : sensorList) {
+		for (GUISensor t : sensorList) {
 			if (t.isSelect()) {
 				this.remove(t);
 				t = null;
@@ -92,9 +92,10 @@ public class GUIWorkingArea extends JLayeredPane {
 	public void addSensor(Sensor sensor) {
 		String imgPath = sensor.getImagePath();
 		if(this.bgImage != null) {
-			GUISensorImpl t;
+			GUISensor t;
 			try {
-				t = new GUISensorImpl(imgPath, this.bgImage, sensor);
+				t = new GUISensor(imgPath, this.bgImage, sensor);
+				t.setSensorAsNew();
 				t.setScale(this.bgImage.getScale());
 				sensorList.add(t);
 				this.add(t, 0);
@@ -113,14 +114,14 @@ public class GUIWorkingArea extends JLayeredPane {
 	 */
 	public void addSensors(ArrayList<Sensor> sensors) {
 		for (Sensor sensor : sensors) {
-			GUISensorImpl t;
+			GUISensor t;
 			try {
-				t = new GUISensorImpl(sensor.getImagePath(), this.bgImage, sensor);
+				t = new GUISensor(sensor.getImagePath(), this.bgImage, sensor);
 				sensorList.add(t);
 				this.add(t, 0);
 				this.moveToFront(t);
 				t.setScale(this.bgImage.getScale());
-				t.updateLocationFromLoadFile();
+				t.updateLocationFromLoad();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -133,7 +134,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 */
 	public ArrayList<Sensor> getSelectedSensor(){
 		ArrayList<Sensor> sel = new ArrayList<>();
-		for (GUISensorImpl sens : sensorList) {
+		for (GUISensor sens : sensorList) {
 			if (sens.isSelect()) {
 				sel.add(sens.getSensor());
 			}
@@ -150,7 +151,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	private void setLightToSensor(Sensor sens, int lightIndex) {
 		switch (lightIndex) {
 		case 0:
-			for (GUISensorImpl tSens : sensorList) {
+			for (GUISensor tSens : sensorList) {
 				if(tSens.getSensor().equals(sens)) {
 					tSens.setRedColorFilter();
 					return;
@@ -158,9 +159,9 @@ public class GUIWorkingArea extends JLayeredPane {
 			}
 			break;
 		case 1:
-			for (GUISensorImpl tSens : sensorList) {
+			for (GUISensor tSens : sensorList) {
 				if(tSens.getSensor().equals(sens)) {
-					tSens.setRedColorFilter();
+					tSens.setResetFilter();
 					return;
 				}
 			}
@@ -196,5 +197,11 @@ public class GUIWorkingArea extends JLayeredPane {
 	 */
 	public boolean isSetBackground() {
 		return (this.bgImage != null);
+	}
+	
+	public void deselectAllSensor() {
+		for (GUISensor sensor : sensorList) {
+			sensor.setSelect(false);
+		}
 	}
 }

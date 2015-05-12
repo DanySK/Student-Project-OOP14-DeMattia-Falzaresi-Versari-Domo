@@ -188,12 +188,10 @@ public class GUIFlatImpl implements GUIFlat {
 	}
 
 	/**
-	 * Create the JMenu
+	 * Create the JMenu top bar
 	 */
 	private void createJMenu() {
-		//Implementazione della barra menu'
 		JMenu menuFile = new JMenu("File");
-		//nuovo oggetto menu
 		JMenuItem menuNew = new JMenuItem("New", KeyEvent.VK_N);
 		menuNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
 		menuNew.addActionListener(new ActionListener() {
@@ -468,6 +466,18 @@ public class GUIFlatImpl implements GUIFlat {
 			}
 		}
 		northPanel.add(btnTrash);
+		
+		JButton btnAllert = new JButton("allert");
+		btnAllert.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.refreshSensorList();
+				
+			}
+		}) ;
+		northPanel.add(btnAllert);
+		
 		northPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		mainPanel.add(northPanel, BorderLayout.NORTH);
 
@@ -542,11 +552,19 @@ public class GUIFlatImpl implements GUIFlat {
 					sensors.addAll(room.getSensor());
 					t.addAll(room.getSensor());
 				}
+				
+				System.out.println("\nFrom Load Function Before");
+				for (Sensor s : t){
+					System.out.println("s.degree: " + s.getDegree() );
+				}
+				System.out.println("\n");
+
+				
 				workingArea.addSensors(sensors);
 				
-				System.out.println("\nFrom Load Function");
+				System.out.println("\nFrom Load Function After");
 				for (Sensor s : t){
-					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
+					System.out.println("s.degree: " + s.getDegree() );
 				}
 				System.out.println("\n");
 
@@ -575,7 +593,7 @@ public class GUIFlatImpl implements GUIFlat {
 				System.out.println("\nFrom Save Function");
 				ArrayList<Sensor> t = workingArea.getSelectedSensor();
 				for (Sensor s : t){
-					System.out.println("s.X: " + s.getXPosition() + "   " + s.getYPosition());
+					System.out.println("s.degree: " + s.getDegree() );
 				}
 				System.out.println("\n");
 
@@ -676,6 +694,7 @@ public class GUIFlatImpl implements GUIFlat {
 				}
 				westPanel.refreshWestPane(controller.getRoomList());
 				addRoomFrame.dispose();
+				workingArea.deselectAllSensor();
 
 			}
 
@@ -697,8 +716,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set in alarm
 	 */
 	public void setSensorsInAllarm(Room room, ArrayList<Sensor> sensors) {
-		westPanel.refreshWestPane(controller.getRoomList());
+		
 		workingArea.setInAllarmToSensor(sensors);
+		westPanel.refreshWestPane(controller.getRoomList());
 	}
 
 	/**
