@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import domo.bckrst.Restore;
 import domo.devices.Sensor;
+import domo.graphic.GUIAbstractInterface;
 import domo.graphic.GUIAbstractObserver;
 import domo.graphic.GUIFlat;
 import domo.bckrst.Backup;
@@ -26,13 +27,13 @@ import java.util.Set;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  */
-public class TheController extends GUIAbstractObserver implements AbstracTestInterface {
+public class TheController implements AbstracTestInterface, GUIAbstractInterface {
 
-	private GUIFlat graphicInterface;
+	private final GUIFlat graphicInterface;
 	private Flat flat;
 	private DomoTest testFrame;
 	@SuppressWarnings("unused")
-	private boolean inallarm = false;
+	private boolean inallarm;
 	
 	/**
 	 * Constructor.
@@ -59,10 +60,10 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 	@Override
 	public void addRoomWithNameAndSensors(final String name, final ArrayList<Sensor> sensors) {
 		System.out.println("controller: addRoomWithNameAndSensors \n number of select sensor: " + sensors.size() + " room name: " + name);
-		int idR = flat.addRoom(name);
-		Room roomToAdd = flat.getRoom(idR);
-		for (Sensor sensor : sensors) {
-			for (Room rooms : flat.getRooms()) {
+		final int idR = flat.addRoom(name);
+		final Room roomToAdd = flat.getRoom(idR);
+		for (final Sensor sensor : sensors) {
+			for (final Room rooms : flat.getRooms()) {
 				getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
 			}
 			flat.addSensorToRoom(roomToAdd, sensor);
@@ -78,10 +79,10 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 		listaClassiSensori.setModulePath(classPath);
 		final Set<String> resLoader = listaClassiSensori.updateModuleList();
-		for (String x : resLoader) {
+		for (final String x : resLoader) {
 			try {
 				if (listaClassiSensori.createClassInstance(x).getName().equals(name)) {
-					Sensor tmp = listaClassiSensori.createClassInstance(x);
+					final Sensor tmp = listaClassiSensori.createClassInstance(x);
 					flat.addSensorToRoom(getRoomfromName("Default Room"), tmp);
 					testFrame.refresh(flat);
 					return tmp;
@@ -104,8 +105,8 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 	@Override
 	public void addSensorToRoom(final ArrayList<Sensor> sensors, final Room room) {
 		System.out.println("controller: addSensorToRoom   number of select sensor: " + sensors.size() + "room name: " + room);
-		for (Sensor sensor : sensors) {
-			for (Room rooms : flat.getRooms()) {
+		for (final Sensor sensor : sensors) {
+			for (final Room rooms : flat.getRooms()) {
 				getRoomfromName(rooms.getName()).removeSensor(sensor.getId());
 			}
 			flat.addSensorToRoom(room, sensor);
@@ -132,7 +133,7 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 		System.out.println("controller: save  file name: " + filePathWithName + " Image file: " + imageFilePath);
 		this.flat.setImagePath(imageFilePath);
 		try {
-			Backup bac = new BackupImpl(filePathWithName);
+			final Backup bac = new BackupImpl(filePathWithName);
 			bac.backupNow(this.flat);
 		} catch (BackupDomoConfException e) {
 			System.out.println(e);
@@ -143,7 +144,7 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 	public Flat load(final String filePath) {
 		System.out.println("controller: load filename: " + filePath);
 		try {
-			Restore res = new RestoreImpl();
+			final Restore res = new RestoreImpl();
 			this.flat = res.restoreNow(filePath);
 
 		} catch (RestoreDomoConfException e) {
@@ -177,8 +178,8 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 	@Override
 	public void deleteSensors(final ArrayList<Sensor> sensors) {
 
-		for (Room room : flat.getRooms()) {
-			for (Sensor sensor : sensors) {
+		for (final Room room : flat.getRooms()) {
+			for (final Sensor sensor : sensors) {
 				if (room.getSensor().contains(sensor)) {
 					room.removeSensor(sensor.getId());
 				}
@@ -188,10 +189,10 @@ public class TheController extends GUIAbstractObserver implements AbstracTestInt
 
 	@Override
 	public void sensorStateChange() {
-		for (Room rooms : flat.getRooms()) {
-			ArrayList<Sensor> tempAllarm = new ArrayList<>();
-			ArrayList<Sensor> tempNotAllarm = new ArrayList<>();
-			for  (Sensor sensor : rooms.getSensor()) {
+		for (final Room rooms : flat.getRooms()) {
+			final ArrayList<Sensor> tempAllarm = new ArrayList<>();
+			final ArrayList<Sensor> tempNotAllarm = new ArrayList<>();
+			for  (final Sensor sensor : rooms.getSensor()) {
 				if (sensor.isInAlert()) {
 					tempAllarm.add(sensor);
 				} else {
