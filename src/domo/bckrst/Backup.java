@@ -1,4 +1,4 @@
-package domo.bckrst2;
+package domo.bckrst;
 
 import domo.general.Flat;
 
