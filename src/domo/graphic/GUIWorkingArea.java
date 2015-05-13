@@ -13,7 +13,7 @@ import javax.swing.JLayeredPane;
 
 import domo.devices.Sensor;
 /**
- * Represent the working area where the user can add, move, delete 
+ * Represent the working area where the user can add, move, delete.
  * the sensors in a flat
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
@@ -34,7 +34,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	private final ArrayList <GUISensor> sensorList = new ArrayList<>();
 	
 	/**
-	 * create a standard GUIWorkingArea object instance
+	 * create a standard GUIWorkingArea object instance.
 	 */
 	public GUIWorkingArea() {
 		super();
@@ -42,10 +42,10 @@ public class GUIWorkingArea extends JLayeredPane {
 	}
 	
 	/**
-	 * set the background image 
+	 * set the background image.
 	 * @param imagePath the path to the image to set as background
 	 */
-	public void setImage(String imagePath) {
+	public void setImage(final String imagePath) {
 		
 		BufferedImage imageBuf;
 		try {
@@ -62,36 +62,35 @@ public class GUIWorkingArea extends JLayeredPane {
 	}
 	
 	/**
-	 * call when need to update the panel (in case of parent resize)
+	 * call when need to update the panel (in case of parent resize).
 	 */
 	public void resize() {
 		if (bgImage != null) {
 			bgImage.setAspectFillToParent(this.getBounds());
-			for (GUISensor t : sensorList)  {
+			for (final GUISensor t : sensorList)  {
 				t.setScale(bgImage.getScale());
 			}
 		}
 	}
 	
 	/**
-	 * remove all selected sensors from view
+	 * remove all selected sensors from view.
 	 */
 	public void removeSelectSensor() {
-		for (GUISensor t : sensorList) {
+		for (final GUISensor t : sensorList) {
 			if (t.isSelect()) {
 				this.remove(t);
-				t = null;
 			}
 		}
 	}
 	
 	/** 
-	 * add a sensor to the area
+	 * add a sensor to the area.
 	 * @param sensor the sensor instance to add.
 	 */
-	public void addSensor(Sensor sensor) {
-		String imgPath = sensor.getImagePath();
-		if(this.bgImage != null) {
+	public void addSensor(final Sensor sensor) {
+		final String imgPath = sensor.getImagePath();
+		if (this.bgImage != null) {
 			GUISensor t;
 			try {
 				t = new GUISensor(imgPath, this.bgImage, sensor);
@@ -109,11 +108,11 @@ public class GUIWorkingArea extends JLayeredPane {
 	}
 	
 	/**
-	 * add a sensor list to the area
+	 * add a sensor list to the area.
 	 * @param sensors list of sensors to add
 	 */
-	public void addSensors(ArrayList<Sensor> sensors) {
-		for (Sensor sensor : sensors) {
+	public void addSensors(final ArrayList<Sensor> sensors) {
+		for (final Sensor sensor : sensors) {
 			GUISensor t;
 			try {
 				t = new GUISensor(sensor.getImagePath(), this.bgImage, sensor);
@@ -129,12 +128,12 @@ public class GUIWorkingArea extends JLayeredPane {
 	}
 	
 	/**
-	 * get the selected sensors list
+	 * get the selected sensors list.
 	 * @return a sensors list
 	 */
-	public ArrayList<Sensor> getSelectedSensor(){
-		ArrayList<Sensor> sel = new ArrayList<>();
-		for (GUISensor sens : sensorList) {
+	public ArrayList<Sensor> getSelectedSensor() {
+		final ArrayList<Sensor> sel = new ArrayList<>();
+		for (final GUISensor sens : sensorList) {
 			if (sens.isSelect()) {
 				sel.add(sens.getSensor());
 			}
@@ -148,19 +147,19 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * @param lightIndex 	index that represent the color:	0 - IN ALLARM
 	 * 															1 - NOT IN ALLARM
 	 */
-	private void setLightToSensor(Sensor sens, int lightIndex) {
+	private void setLightToSensor(final Sensor sens, final int lightIndex) {
 		switch (lightIndex) {
 		case 0:
-			for (GUISensor tSens : sensorList) {
-				if(tSens.getSensor().equals(sens)) {
+			for (final GUISensor tSens : sensorList) {
+				if (tSens.getSensor().equals(sens)) {
 					tSens.setRedColorFilter();
 					return;
 				}
 			}
 			break;
 		case 1:
-			for (GUISensor tSens : sensorList) {
-				if(tSens.getSensor().equals(sens)) {
+			for (final GUISensor tSens : sensorList) {
+				if (tSens.getSensor().equals(sens)) {
 					tSens.setResetFilter();
 					return;
 				}
@@ -176,31 +175,37 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * set a sensor list in alarm. The change is graphic only
 	 * @param sens sensor list
 	 */
-	public void setInAllarmToSensor(ArrayList<Sensor> sens) {
-		for (Sensor sensor: sens) {
+	public void setInAllarmToSensor(final ArrayList<Sensor> sens) {
+		for (final Sensor sensor: sens) {
 			this.setLightToSensor(sensor, 0);
 		}
 	}
 	/**
-	 * set a sensor list not in alarm. The change is graphic only
+	 * set a sensor list not in alarm. The change is graphic only.
 	 * @param sens sensor list
 	 */
-	public void resetAllarmToSensor(ArrayList<Sensor> sens) {
-		for (Sensor sensor: sens) {
+	public void resetAllarmToSensor(final ArrayList<Sensor> sens) {
+		for (final Sensor sensor: sens) {
 			this.setLightToSensor(sensor, 1);
 		}
 	}
 	
 	/**
-	 * tell if the background object is set or not
+	 * tell if the background object is set or not.
 	 * @return true or false if is set or not a background
 	 */
 	public boolean isSetBackground() {
-		return (this.bgImage != null);
+		if (this.bgImage.getIcon() != null) {
+			return true;
+		}
+		return false;
 	}
 	
+	/**
+	 *  Unselect all sensors.
+	 */
 	public void deselectAllSensor() {
-		for (GUISensor sensor : sensorList) {
+		for (final GUISensor sensor : sensorList) {
 			sensor.setSelect(false);
 		}
 	}

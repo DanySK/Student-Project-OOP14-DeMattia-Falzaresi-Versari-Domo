@@ -199,7 +199,10 @@ public class ImageView extends JLabel {
 	public void setColorFilter(final ColorFilter filter) {
 
 		if (filter == ColorFilter.COLOR_FILTER_RED) {
-			this.setBorder(BorderFactory.createLineBorder(Color.red, 3, true));
+			this.setBorder(BorderFactory.createLineBorder(Color.RED, 3, true));
+		}
+		if (filter == ColorFilter.COLOR_FILTER_GREEN) {
+			this.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3, true));
 		}
 		if (filter == ColorFilter.COLOR_FILTER_NONE) {
 			this.setBorder(BorderFactory.createEmptyBorder());

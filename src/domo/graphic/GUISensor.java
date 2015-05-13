@@ -13,7 +13,7 @@ import javax.swing.BorderFactory;
 
 import domo.devices.Sensor;
 /**
- * Class that represent a sensor entity graphics representation
+ * Class that represent a sensor entity graphics representation.
  * 
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
@@ -28,16 +28,16 @@ public class GUISensor extends ImageView {
 	 * X position.
 	 * The position is normalized (from 0 to 1) to handle the screen different dimension 
 	 */
-	double xScaleFactorPos;
+	private double xScaleFactorPos;
 	/**
 	 * Y position.
 	 * The position is normalized (from 0 to 1) to handle the screen different dimension 
 	 */
-	double yScaleFactorPos;
+	private double yScaleFactorPos;
 	/**
 	 * ImageView object that represent the 
 	 */
-	ImageView parent;
+	private ImageView parent;
 	/**
 	 * set the min scale for position and scale 
 	 */
@@ -51,7 +51,7 @@ public class GUISensor extends ImageView {
 	/**
 	 * activate or deactivate the mouse interaction
 	 */
-	private boolean isMouseEnabled = false;
+	private boolean mouseEnabled;
 	/**
 	 * the mouse event for take the last arrow mouse position
 	 */
@@ -63,17 +63,17 @@ public class GUISensor extends ImageView {
 	/**
 	 * if the sensor is select or not
 	 */
-	private boolean isSelect = true;
+	private boolean select = true;
 	
 	/**
 	 * GUISensorImpl constructor: create an empty graphic sensor representation
-	 * after that must to call 'setSensorAsNew()' or 'updateLocationFromLoad()'
+	 * after that must to call 'setSensorAsNew()' or 'updateLocationFromLoad()'.
 	 * @param imagePath the sensor image path
 	 * @param parentBounds the parent bound to fit sensor
 	 * @param sens the sensor data structure to represent
 	 * @throws IOException exception when load image file fail
 	 */
-	public GUISensor (String imagePath, ImageView parentBounds, Sensor sens) throws IOException {
+	public GUISensor(final String imagePath, final ImageView parentBounds, final Sensor sens) throws IOException {
 		super(imagePath);
 		this.sensor = sens;
 		this.setMouseEnabled(true);
@@ -85,13 +85,13 @@ public class GUISensor extends ImageView {
 					new MouseAdapter() {
 						
 						public void mouseClicked(final MouseEvent e) {
-							if ((e.getButton() == MouseEvent.BUTTON3 || e.getButton() == MouseEvent.BUTTON2) && isSelect && isMouseEnabled) {
+							if ((e.getButton() == MouseEvent.BUTTON3 || e.getButton() == MouseEvent.BUTTON2) && select && mouseEnabled) {
 								GUISensor.this.rotate90(true);
 								sensor.setDegree(GUISensor.this.getRotationDegree());
 							}
-							if (e.getButton() == MouseEvent.BUTTON1 && isMouseEnabled) {
-								isSelect = !isSelect;
-								if (isSelect) {
+							if (e.getButton() == MouseEvent.BUTTON1 && mouseEnabled) {
+								select = select ? false : true;
+								if (select) {
 									GUISensor.this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
 								} else {
 									GUISensor.this.setBorder(null);
@@ -100,7 +100,7 @@ public class GUISensor extends ImageView {
 						}
 
 						public void mousePressed(final MouseEvent e) {
-							if (e.getSource() == GUISensor.this && isMouseEnabled) {
+							if (e.getSource() == GUISensor.this && mouseEnabled) {
 								pressed = e;
 								pPoint = GUISensor.this.getLocation();
 							}
@@ -111,7 +111,7 @@ public class GUISensor extends ImageView {
 			this.addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(final MouseWheelEvent e) {
-					if (e.getSource() == GUISensor.this && isMouseEnabled && isSelect) {
+					if (e.getSource() == GUISensor.this && mouseEnabled && select) {
 						if (e.getPreciseWheelRotation() > 0) {
 							GUISensor.this.rotate90(true);
 							sensor.setDegree(GUISensor.this.getRotationDegree());
@@ -126,10 +126,10 @@ public class GUISensor extends ImageView {
 			this.addMouseMotionListener(
 					new MouseMotionAdapter() {
 						public void mouseDragged(final MouseEvent e) {
-							if (e.getSource() == GUISensor.this && isMouseEnabled && isSelect) {
+							if (e.getSource() == GUISensor.this && mouseEnabled && select) {
 								pPoint = GUISensor.this.getLocation(pPoint);
-								int x = GUISensor.this.getLocation().x +  (e.getXOnScreen() - pressed.getXOnScreen());
-								int y = GUISensor.this.getLocation().y +  (e.getYOnScreen() - pressed.getYOnScreen());
+								final int x = GUISensor.this.getLocation().x +  (e.getXOnScreen() - pressed.getXOnScreen());
+								final int y = GUISensor.this.getLocation().y +  (e.getYOnScreen() - pressed.getYOnScreen());
 								GUISensor.this.setLocation(x, y);
 								GUISensor.this.updateFactors();
 							}
@@ -146,13 +146,13 @@ public class GUISensor extends ImageView {
 	private void updateFactors() {
 		this.xScaleFactorPos = Math.max(((double) this.getX() - (double) parent.getX()) / (double) parent.getWidth(), MIN_FACTOR_SCALE);
 		this.yScaleFactorPos = Math.max(((double) this.getY() - (double) parent.getY()) / (double) parent.getHeight(), MIN_FACTOR_SCALE);
-		if(sensor != null) {
+		if (sensor != null) {
 			sensor.setLocation(xScaleFactorPos, yScaleFactorPos);
 		}
 	}
 	
 	/**
-	 * Set sensor as a new sensor (not from a load file)
+	 * Set sensor as a new sensor (not from a load file).
 	 */
 	public void setSensorAsNew() {
 		this.setLocation(10, 10);
@@ -160,15 +160,15 @@ public class GUISensor extends ImageView {
 	}
 	
 	/**
-	 * Update sensor location base to sensor load from file
+	 * Update sensor location base to sensor load from file.
 	 */
 	public void updateLocationFromLoad() {
-		double xFactor = sensor.getXPosition();
-		double yFactor = sensor.getYPosition();
+		final double xFactor = sensor.getXPosition();
+		final double yFactor = sensor.getYPosition();
 		this.xScaleFactorPos = xFactor;
 		this.yScaleFactorPos = yFactor;
-		double newX = (parent.getWidth() * xFactor) + parent.getX();
-		double newY = (parent.getHeight() * yFactor) + parent.getY();
+		final double newX = parent.getWidth() * xFactor + parent.getX();
+		final double newY = parent.getHeight() * yFactor + parent.getY();
 		this.setLocation((int) newX, (int) newY);
 		this.rotate(sensor.getDegree());
 
@@ -177,8 +177,10 @@ public class GUISensor extends ImageView {
 	/**
 	 * set location. this set the sensor location and 
 	 * limit the position inside the parent bounds (working area background image)
+	 * @param x the X position
+	 * @param y the Y position
 	 */
-	public void setLocation(int x, int y) {
+	public void setLocation(final int x, final int y) {
 
 		int xPos = x - this.parent.getX();
 		int yPos = y - this.parent.getY();
@@ -196,7 +198,8 @@ public class GUISensor extends ImageView {
 	}
 	
 	/**
-	 * set the image scale. Typically when parent frame resize
+	 * set the image scale (0 - 1 range value). Typically when parent frame resize
+	 * @param imgScale the image scale factor (0 - 1)
 	 */
 	public void setScale(final double imgScale) {
 		super.setScale(imgScale);
@@ -208,7 +211,7 @@ public class GUISensor extends ImageView {
 	}
 	
 	/** 
-	 * set the image color filter to red
+	 * set the image color filter to red.
 	 */
 	public void setRedColorFilter() {
 		this.setColorFilter(ColorFilter.COLOR_FILTER_RED);
@@ -216,7 +219,7 @@ public class GUISensor extends ImageView {
 	}
 	
 	/** 
-	 * set the image color filter to default (no filter color)
+	 * set the image color filter to default (no filter color).
 	 */
 	public void setResetFilter() {
 		this.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
@@ -224,30 +227,30 @@ public class GUISensor extends ImageView {
 	}
 	
 	/**
-	 * set the mouse enable
+	 * set the mouse enable.
 	 * @param enableMouse 	true - mouse enabled 
-	 * 						false - mouse disabled
+	 * 						false - mouse disabled.
 	 */
 	public void setMouseEnabled(final boolean enableMouse) {
-		this.isMouseEnabled = enableMouse;
+		this.mouseEnabled = enableMouse;
 	}
 	
 	/**
-	 * Tell if the mouse is enabled or not
+	 * Tell if the mouse is enabled or not.
 	 * @return 	true - mouse is enable
-	 * 			false - mouse is disabled
+	 * 			false - mouse is disabled.
 	 */
-	public boolean getMouseEnabled() {
-		return this.isMouseEnabled;
+	public boolean isMouseEnabled() {
+		return this.mouseEnabled;
 	}
 	
 	/**
-	 * Tell if a sensor is selected
+	 * Tell if a sensor is selected.
 	 * @return 	true - the sensor is selected
 	 * 			false - the sensor is not selected
 	 */
 	public boolean isSelect() {
-		return this.isSelect;
+		return this.select;
 	}
 
 	/**
@@ -262,12 +265,16 @@ public class GUISensor extends ImageView {
 	 * 
 	 * @param sens the specific sensor that the GUISensorImpl class instance must be represent
 	 */
-	public void setSensor(Sensor sens) {
+	public void setSensor(final Sensor sens) {
 		this.sensor = sens;
 	}
 	
-	public void setSelect(boolean select) {
-		this.isSelect = select;
+	/**
+	 * set if sensor is select or not.
+	 * @param sel true / false
+	 */
+	public void setSelect(final boolean sel) {
+		this.select = sel;
 		GUISensor.this.setBorder(null);
 	}
 }
