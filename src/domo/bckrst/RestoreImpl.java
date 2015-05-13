@@ -91,7 +91,9 @@ public class RestoreImpl implements Restore {
 			final String eleType = cl.getName();
 			String eleName;
 			int eleId;
-			if (nList != null) {
+			if (nList == null) {
+				throw new RestoreDomoConfException(toAdd + " entity not imported correctly");
+			} else {
 				for (int i = 0; i < nList.getLength(); i++) {
 					//go over all the elements and select attributes I need
 					final Element el = (Element) nList.item(i);
@@ -142,10 +144,7 @@ public class RestoreImpl implements Restore {
 					default:
 						break;
 					}
-				}
-				
-			} else {
-				throw new RestoreDomoConfException(toAdd + " entity not imported correctly");
+				}	
 			}
 		}
 		/**
@@ -167,20 +166,18 @@ public class RestoreImpl implements Restore {
 				final File fL = new File(file);
 				final ZipInputStream zIn = new ZipInputStream(new FileInputStream(file));
 				File dir = new File(fL.getParent() + System.getProperty("file.separator") + "Domo" + System.getProperty("file.separator"));
-				if (!dir.exists()) {
-						if (!dir.mkdir()) {
-							//throw an exception if I'm unable to create the requested folder
-							zIn.close();
-							throw new RestoreDomoConfException("Unable to Create Restore Folder");
-						}
+				if (!dir.exists() && !dir.mkdir()) {
+					zIn.close();
+					throw new RestoreDomoConfException("Unable to Create Restore Folder");
 				}
 				final byte[] bos = new byte[1];
 				ZipEntry zEntry;
 				while ((zEntry = zIn.getNextEntry()) != null) {
-					final FileOutputStream fos = new FileOutputStream(dir + System.getProperty("file.separator") + zEntry.getName());
+					final String foName = dir + System.getProperty("file.separator") + zEntry.getName();
+					final FileOutputStream fos = new FileOutputStream(foName);
 					
 					if (zEntry.getName().contains(".dom")) {
-						fileName = dir + System.getProperty("file.separator") + zEntry.getName();
+						fileName = foName;
 					}
 					int len;
 			        while ((len = zIn.read(bos)) > 0) {
@@ -188,9 +185,9 @@ public class RestoreImpl implements Restore {
 			        }
 			        fos.flush();
 			        fos.close();
-			        final String mimetype = new MimetypesFileTypeMap().getContentType(new File(dir + System.getProperty("file.separator") + zEntry.getName()));
+			        final String mimetype = new MimetypesFileTypeMap().getContentType(new File(foName));
 					if (mimetype.contains("image")) {
-						this.flatImageName = dir + System.getProperty("file.separator") + zEntry.getName();
+						this.flatImageName = foName;
 					}
 				}
 				zIn.close();
