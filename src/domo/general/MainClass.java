@@ -1,38 +1,37 @@
 package domo.general;
 
+import domo.devices.loader.DynamicLoaderImpl;
+import domo.devices.loader.DynamicLoader;
 import static org.junit.Assert.fail;
-
+import domo.util.test.DomoTestImpl;
+import domo.GUI.GUIFlatImpl;
+import domo.devices.Sensor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import domo.GUI.GUIFlat;
 import java.util.Map;
 import java.util.Set;
 
-
-
-import domo.GUI.*;
-import domo.devices.Sensor;
-import domo.devices.loader.DynamicLoader;
-import domo.devices.loader.DynamicLoaderImpl;
-
 /**
- * 
+ * The MainClass where everythings begun.
  * @author Marco Versari
+ * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
  *
  */
 public class MainClass {
 
 	/**
 	 * 
-	 * @param args
-	 * @throws IOException
+	 * @param args 
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+	public static void main(final String[] args) throws IOException {
 		
-		System.out.println("Welcome!");
 		Flat fl;
-		//usato per OSX (barra menu a schermo)
+		System.out.println("Welcome!");
+		
+		//used in OSX (menu on the upper screen)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		
 		final String classPath = "classi";
@@ -57,12 +56,7 @@ public class MainClass {
 		});
 		
 		GUIFlat t = new GUIFlatImpl("Domo", sensorTypeList);
-		
-		new TheController(t);
-		
-		
-
+		TheController controller = new TheController(t);
+		controller.startTesting(new DomoTestImpl());
 	}
-
-
 }
