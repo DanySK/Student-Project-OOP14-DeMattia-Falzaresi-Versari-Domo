@@ -1,11 +1,11 @@
 package domo.graphic;
 
 import java.awt.Color;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -31,7 +31,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	/**
 	 * A sensor graphic representation list
 	 */
-	private final ArrayList <GUISensor> sensorList = new ArrayList<>();
+	private final Collection <GUISensor> sensorList = new ArrayList<>();
 	
 	/**
 	 * create a standard GUIWorkingArea object instance.
@@ -110,7 +110,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * add a sensor list to the area.
 	 * @param sensors list of sensors to add
 	 */
-	public void addSensors(final ArrayList<Sensor> sensors) {
+	public void addSensors(final Collection<Sensor> sensors) {
 		for (final Sensor sensor : sensors) {
 			GUISensor t;
 			try {
@@ -130,7 +130,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * get the selected sensors list.
 	 * @return a sensors list
 	 */
-	public ArrayList<Sensor> getSelectedSensor() {
+	public Collection<Sensor> getSelectedSensor() {
 		final ArrayList<Sensor> sel = new ArrayList<>();
 		for (final GUISensor sens : sensorList) {
 			if (sens.isSelect()) {
@@ -174,7 +174,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * set a sensor list in alarm. The change is graphic only
 	 * @param sens sensor list
 	 */
-	public void setInAllarmToSensor(final ArrayList<Sensor> sens) {
+	public void setInAllarmToSensor(final Collection<Sensor> sens) {
 		for (final Sensor sensor: sens) {
 			this.setLightToSensor(sensor, 0);
 		}
@@ -183,7 +183,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * set a sensor list not in alarm. The change is graphic only.
 	 * @param sens sensor list
 	 */
-	public void resetAllarmToSensor(final ArrayList<Sensor> sens) {
+	public void resetAllarmToSensor(final Collection<Sensor> sens) {
 		for (final Sensor sensor: sens) {
 			this.setLightToSensor(sensor, 1);
 		}

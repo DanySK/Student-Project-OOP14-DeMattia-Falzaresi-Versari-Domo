@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class GUIFlatImpl implements GUIFlat {
 	/**
 	 * the type sensor list
 	 */
-	private final List <Map <String, String>> sensorTypeList;
+	private Collection<Map <String, String>> sensorTypeList;
 
 	/**
 	 * The project room list
@@ -87,6 +88,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 * bottom panel object
 	 */
 	private final SouthPanel southPanel;
+	private JPanel northPanel;
+	private JPanel primaryNorthPanel;
+
 	/**
 	 * background image path
 	 */
@@ -176,12 +180,63 @@ public class GUIFlatImpl implements GUIFlat {
 			this.roomList = new ArrayList<>(controller.getRoomList());
 		}
 		createJMenu();
+		primaryNorthPanel = new JPanel(new BorderLayout(10, 10));
+		mainFrame.add(primaryNorthPanel, BorderLayout.NORTH);
 		createNorthMenu();
 		southPanel = new SouthPanel();
 		mainFrame.add(southPanel, BorderLayout.SOUTH);
 		westPanel = new WestPanel(null);
 		mainFrame.add(westPanel, BorderLayout.WEST);
 		mainFrame.setVisible(true);
+	}
+
+	/** 
+	 * Refresh the top menu.
+	 * Need because refresh the sensor type (add a sensor at runtime)
+	 */
+	public void refreshMenu() {
+
+		this.sensorTypeList = controller.refreshSensorList();
+		if (northPanel != null) {
+			primaryNorthPanel.remove(northPanel);
+		}
+		this.createNorthMenu();
+		primaryNorthPanel.repaint();
+		primaryNorthPanel.revalidate();
+	}
+
+	/**
+	 * Set a list of sensor in alarm state .
+	 * (change left panel led color and the color filter in 
+	 *  main window)
+	 * @param room the sensor's room
+	 * @param sensors sensors list to set in alarm
+	 */
+	public void setSensorsInAllarm(final Room room, final Collection<Sensor> sensors) {
+
+		workingArea.setInAllarmToSensor(sensors);
+		westPanel.refreshWestPane(controller.getRoomList());
+	}
+
+	/**
+	 * Reset a list of sensor from in alarm state to 'not in alarm' state.
+	 * (change left panel led color and the color filter in 
+	 *  main window)
+	 * @param room the sensor's room
+	 * @param sensors sensors list to set 'not in alarm'
+	 */
+	public void resetSensorsInAllarm(final Room room, final Collection<Sensor> sensors) {
+		workingArea.resetAllarmToSensor(sensors);
+		westPanel.refreshWestPane(controller.getRoomList());
+	}
+
+	/**
+	 * Set the observer for the Graphic Interface.
+	 * 
+	 * @param observer the class observer
+	 */
+	public void setController(final GUIAbstractInterface observer) {
+		controller = observer;	
 	}
 
 	/**
@@ -271,10 +326,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 * 
 	 */
 	private void createNorthMenu() {
-		final JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
+		northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
 		northPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
 		final ArrayList<JButton> btnSensorsList = new ArrayList<>();
-
 		final ImageIcon imgNew = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "new.png");
 		final ImageIcon imgOpen = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png");
 		final ImageIcon imgSave = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "save.jpg");
@@ -299,9 +353,11 @@ public class GUIFlatImpl implements GUIFlat {
 		btnAddRoom.setToolTipText("Add Sensor To Room");
 		btnTrash.setToolTipText("Delete Sensor/s");
 
-		btnAddRoom.setEnabled(false);
-		btnSave.setEnabled(false);
-		btnTrash.setEnabled(false);
+		if (!workingArea.isSetBackground()) {
+			btnAddRoom.setEnabled(false);
+			btnSave.setEnabled(false);
+			btnTrash.setEnabled(false);
+		}
 
 		btnNew.addActionListener(new ActionListener() {
 			@Override
@@ -329,7 +385,6 @@ public class GUIFlatImpl implements GUIFlat {
 				}
 				);
 		btnOpen.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(final ActionEvent e) {			
 				final boolean res = GUIFlatImpl.this.openFile();
@@ -352,10 +407,8 @@ public class GUIFlatImpl implements GUIFlat {
 					public void mouseExited(final MouseEvent e) {
 						southPanel.setText(" ");
 					}
-				}
-				);
+				});
 		btnSave.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				GUIFlatImpl.this.saveFile();
@@ -370,8 +423,7 @@ public class GUIFlatImpl implements GUIFlat {
 					public void mouseExited(final MouseEvent e) {
 						southPanel.setText(" ");
 					}
-				}
-				);
+				});
 		btnAddRoom.addActionListener(new ActionListener() {
 
 			@Override
@@ -390,16 +442,13 @@ public class GUIFlatImpl implements GUIFlat {
 					public void mouseExited(final MouseEvent e) {
 						southPanel.setText(" ");
 					}
-				}
-				);
+				});
 		btnTrash.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 
 				if (controller != null) {
-
-					controller.deleteSensors(workingArea.getSelectedSensor());
-
+					controller.deleteSensors(new ArrayList<Sensor>(workingArea.getSelectedSensor()));
 					workingArea.removeSelectSensor();
 					workingArea.repaint();
 
@@ -420,8 +469,7 @@ public class GUIFlatImpl implements GUIFlat {
 					public void mouseExited(final MouseEvent e) {
 						southPanel.setText(" ");
 					}
-				}
-				);
+				});
 		northPanel.add(btnNew);
 		northPanel.add(btnOpen);
 		northPanel.add(btnSave);
@@ -433,7 +481,10 @@ public class GUIFlatImpl implements GUIFlat {
 				btnAddSensor.setSize(new Dimension(BUTTON_ICON_DIMENSION, BUTTON_ICON_DIMENSION));
 				btnAddSensor.setToolTipText("Insert Sensor");
 				btnSensorsList.add(btnAddSensor);
-				btnAddSensor.setEnabled(false);
+				boolean a = workingArea.isSetBackground();
+				if (!workingArea.isSetBackground()) {
+					btnAddSensor.setEnabled(false);
+				}
 				btnAddSensor.addActionListener(new ActionListener() {
 
 					@Override
@@ -458,26 +509,25 @@ public class GUIFlatImpl implements GUIFlat {
 							public void mouseExited(final MouseEvent e) {
 								southPanel.setText(" ");
 							}
-						}
-						);
+						});
 				btnAddSensor.setName(map.get("name"));
 				northPanel.add(btnAddSensor);
 			}
 		}
 		northPanel.add(btnTrash);
+		//debug
+		final JButton btnRefreshMenu = new JButton("ricarica sensori");
+		btnRefreshMenu.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				controller.refreshSensorList();
+				refreshMenu();
+			}
+		});
+		northPanel.add(btnRefreshMenu);
 		northPanel.setBorder(BorderFactory.createEmptyBorder(STANDARD_BORDER, STANDARD_BORDER, STANDARD_BORDER, STANDARD_BORDER));
-		mainPanel.add(northPanel, BorderLayout.NORTH);
-	}
-
-	/** 
-	 * Refresh the top menu.
-	 * Need because refresh the sensor type (add a sensor at runtime)
-	 */
-	public void refreshMenu() {
-		final BorderLayout layout = (BorderLayout) this.mainPanel.getLayout();
-		mainPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-		this.createNorthMenu();
+		primaryNorthPanel.add(northPanel, BorderLayout.CENTER);
 	}
 
 	private String openFile(final FileNameExtensionFilter filter) {
@@ -631,7 +681,7 @@ public class GUIFlatImpl implements GUIFlat {
 					System.out.println(cmbRoomName.getSelectedIndex());
 					if (cmbRoomName.getSelectedIndex() <= 0) {
 						if (cmbRoomName.getSelectedItem() != null) {
-							controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
+							controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), new ArrayList<Sensor>(workingArea.getSelectedSensor()));
 							if (controller.getRoomList().size() > 0 && westPanel == null) {
 								westPanel = new WestPanel(controller.getRoomList());
 								mainFrame.add(westPanel, BorderLayout.WEST);
@@ -644,7 +694,7 @@ public class GUIFlatImpl implements GUIFlat {
 							workingArea.resize();
 						}
 					} else {
-						controller.addSensorToRoom(workingArea.getSelectedSensor(), roomList.get(cmbRoomName.getSelectedIndex() - 1));
+						controller.addSensorToRoom(new ArrayList<Sensor>(workingArea.getSelectedSensor()), roomList.get(cmbRoomName.getSelectedIndex() - 1));
 					}
 				}
 				westPanel.refreshWestPane(controller.getRoomList());
@@ -657,40 +707,6 @@ public class GUIFlatImpl implements GUIFlat {
 		addRoomFrame.setVisible(true);
 		addRoomFrame.setMinimumSize(new Dimension(addRoomFrame.getPreferredSize().width, addRoomFrame.getPreferredSize().height));
 		addRoomFrame.setMaximumSize(new Dimension(addRoomFrame.getPreferredSize().width, addRoomFrame.getPreferredSize().height));
-	}
-
-	/**
-	 * Set a list of sensor in alarm state .
-	 * (change left panel led color and the color filter in 
-	 *  main window)
-	 * @param room the sensor's room
-	 * @param sensors sensors list to set in alarm
-	 */
-	public void setSensorsInAllarm(final Room room, final ArrayList<Sensor> sensors) {
-
-		workingArea.setInAllarmToSensor(sensors);
-		westPanel.refreshWestPane(controller.getRoomList());
-	}
-
-	/**
-	 * Reset a list of sensor from in alarm state to 'not in alarm' state.
-	 * (change left panel led color and the color filter in 
-	 *  main window)
-	 * @param room the sensor's room
-	 * @param sensors sensors list to set 'not in alarm'
-	 */
-	public void resetSensorsInAllarm(final Room room, final ArrayList<Sensor> sensors) {
-		workingArea.resetAllarmToSensor(sensors);
-		westPanel.refreshWestPane(controller.getRoomList());
-	}
-
-	/**
-	 * Set the observer for the Graphic Interface.
-	 * 
-	 * @param observer the class observer
-	 */
-	public void setController(final GUIAbstractInterface observer) {
-		controller = observer;	
 	}
 
 
