@@ -56,7 +56,7 @@ public class GUIWorkingArea extends JLayeredPane {
 			bgImage = new ImageView(imageBuf, this.getBounds());
 			this.add(bgImage, 0);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Exception GUIWorkingArea: error set image");
 		}
 		
 	}
@@ -101,8 +101,7 @@ public class GUIWorkingArea extends JLayeredPane {
 				this.moveToFront(t);
 				
 			} catch (IOException e) {
-
-				e.printStackTrace();
+				System.out.println("Exception GUIWorkingArea: error set image sensor");
 			}
 		}
 	}
@@ -122,7 +121,7 @@ public class GUIWorkingArea extends JLayeredPane {
 				t.setScale(this.bgImage.getScale());
 				t.updateLocationFromLoad();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Exception GUIWorkingArea: error set image sensor list");
 			}
 		}
 	}

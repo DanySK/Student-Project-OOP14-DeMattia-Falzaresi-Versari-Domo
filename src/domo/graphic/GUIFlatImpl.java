@@ -111,11 +111,13 @@ public class GUIFlatImpl implements GUIFlat {
 
 	private static final String FILE_DOMO_EXTENTION = "dprj";
 
+	private static final String IMAGE_ROOT_FOLDER = "res";
+
 	private static final int ADD_ROOM_FRAME_BORDER = 15;
 
 	private static final int STANDARD_BORDER = 5;
 
-	
+
 	/**
 	 * Standard icon square dimension
 	 */
@@ -168,10 +170,10 @@ public class GUIFlatImpl implements GUIFlat {
 		});
 		mainPanel.add(workingArea, BorderLayout.CENTER);
 		this.sensorTypeList = sensorsTypes;
-		if (controller != null && controller.getRoomList() != null) {
-			this.roomList = new ArrayList<>(controller.getRoomList());
-		} else {
+		if (controller == null || controller.getRoomList() == null) {
 			this.roomList = new ArrayList<>();
+		} else {
+			this.roomList = new ArrayList<>(controller.getRoomList());
 		}
 		createJMenu();
 		createNorthMenu();
@@ -272,12 +274,12 @@ public class GUIFlatImpl implements GUIFlat {
 		final JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
 		northPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
 		final ArrayList<JButton> btnSensorsList = new ArrayList<>();
-		
-		final ImageIcon imgNew = new ImageIcon("res" + SYSTEM_SEPARATOR + "new.png");
-		final ImageIcon imgOpen = new ImageIcon("res" + SYSTEM_SEPARATOR + "open.png");
-		final ImageIcon imgSave = new ImageIcon("res" + SYSTEM_SEPARATOR + "save.jpg");
-		final ImageIcon imgAddRoom = new ImageIcon("res" + SYSTEM_SEPARATOR + "addRoom.png");
-		final ImageIcon imgTrash = new ImageIcon("res" + SYSTEM_SEPARATOR + "trash.png");
+
+		final ImageIcon imgNew = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "new.png");
+		final ImageIcon imgOpen = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png");
+		final ImageIcon imgSave = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "save.jpg");
+		final ImageIcon imgAddRoom = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "addRoom.png");
+		final ImageIcon imgTrash = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "trash.png");
 
 		final JButton btnNew = new JButton(imgNew);
 		final JButton btnOpen = new JButton(imgOpen);
@@ -300,7 +302,7 @@ public class GUIFlatImpl implements GUIFlat {
 		btnAddRoom.setEnabled(false);
 		btnSave.setEnabled(false);
 		btnTrash.setEnabled(false);
-		
+
 		btnNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
@@ -400,7 +402,7 @@ public class GUIFlatImpl implements GUIFlat {
 
 					workingArea.removeSelectSensor();
 					workingArea.repaint();
-					
+
 					if (controller.getRoomList() != null && controller.getRoomList().size() > 0) {
 						westPanel.refreshWestPane(controller.getRoomList());
 						westPanel.repaint();
@@ -463,7 +465,7 @@ public class GUIFlatImpl implements GUIFlat {
 			}
 		}
 		northPanel.add(btnTrash);
-	
+
 		northPanel.setBorder(BorderFactory.createEmptyBorder(STANDARD_BORDER, STANDARD_BORDER, STANDARD_BORDER, STANDARD_BORDER));
 		mainPanel.add(northPanel, BorderLayout.NORTH);
 	}
@@ -497,27 +499,26 @@ public class GUIFlatImpl implements GUIFlat {
 			final int choose = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the current project. All changes will be lost!", "ATTENTION!", JOptionPane.OK_CANCEL_OPTION);
 			if (choose == 0) {
 				final String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
-				if (imgAddress != null) {
+				if (imgAddress == null) {
+					return false;
+				} else {
 					workingArea.setImage(imgAddress);
 					this.projectImagePath = imgAddress;
 					mainFrame.repaint();
 					if (controller != null) {
 						controller.newProject();
 					}
-				} else {
-					return false;
 				}
 			}
 		} else {
 			final String imgAddress = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
-			if (imgAddress != null) {
-
+			if (imgAddress == null) {
+				return false;
+			} else {
 				workingArea.setImage(imgAddress);
 				this.projectImagePath = imgAddress;
 				mainFrame.repaint();
 				controller.newProject();
-			} else {
-				return false;
 			}
 		}
 		return true;
@@ -528,7 +529,9 @@ public class GUIFlatImpl implements GUIFlat {
 	 * Handle the controller call too (load(pathFile))
 	 */
 	private boolean openFile() {	
-		if (controller != null) {
+		if (controller == null) {
+			return false;
+		} else {
 			final String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", FILE_DOMO_EXTENTION));
 			if (pathFile != null) {
 				final Flat file = controller.load(pathFile);
@@ -542,8 +545,6 @@ public class GUIFlatImpl implements GUIFlat {
 				westPanel.refreshWestPane(controller.getRoomList());
 				mainFrame.repaint();
 				return true;
-			} else {
-				return false;
 			}
 		}
 		return false;
@@ -573,7 +574,9 @@ public class GUIFlatImpl implements GUIFlat {
 		addRoomFrame.setLocation(new Point(this.mainFrame.getX() + 10, this.mainFrame.getY() + 10));
 
 		JComboBox<String> cmbRoomName;
-		if (controller != null) {
+		if (controller == null) {
+			cmbRoomName = new JComboBox<String>();
+		} else {
 			if (controller.getRoomList() != null && controller.getRoomList().size() > 0) {
 				final 	HashMap<String, Integer> roomsNames = new HashMap<>();
 				roomList = new ArrayList<>(controller.getRoomList());
@@ -589,12 +592,8 @@ public class GUIFlatImpl implements GUIFlat {
 			} else {
 				cmbRoomName = new JComboBox<String>();
 			}
-		} else {
-			cmbRoomName = new JComboBox<String>();
 		}
-
 		cmbRoomName.setEditable(true);
-
 		final JLabel lblNome = new JLabel("nome stanza:");
 		lblNome.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 		final JButton btnOk = new JButton("Ok");
@@ -633,14 +632,11 @@ public class GUIFlatImpl implements GUIFlat {
 					if (cmbRoomName.getSelectedIndex() <= 0) {
 						if (cmbRoomName.getSelectedItem() != null) {
 							controller.addRoomWithNameAndSensors((String) cmbRoomName.getSelectedItem(), workingArea.getSelectedSensor());
-							if (controller.getRoomList().size() > 0) {
-								if (westPanel == null) {
-									westPanel = new WestPanel(controller.getRoomList());
-									mainFrame.add(westPanel, BorderLayout.WEST);
-									mainPanel.repaint();
-								}
+							if (controller.getRoomList().size() > 0 && westPanel == null) {
+								westPanel = new WestPanel(controller.getRoomList());
+								mainFrame.add(westPanel, BorderLayout.WEST);
+								mainPanel.repaint();
 							}
-
 							workingArea.resize();
 						}
 						if (controller.getRoomList() != null) {
@@ -654,14 +650,10 @@ public class GUIFlatImpl implements GUIFlat {
 				westPanel.refreshWestPane(controller.getRoomList());
 				addRoomFrame.dispose();
 				workingArea.deselectAllSensor();
-
 			}
-
 		});
-
 		addRoomFrame.setContentPane(panel);
 		addRoomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 		addRoomFrame.setVisible(true);
 		addRoomFrame.setMinimumSize(new Dimension(addRoomFrame.getPreferredSize().width, addRoomFrame.getPreferredSize().height));
 		addRoomFrame.setMaximumSize(new Dimension(addRoomFrame.getPreferredSize().width, addRoomFrame.getPreferredSize().height));
@@ -675,7 +667,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param sensors sensors list to set in alarm
 	 */
 	public void setSensorsInAllarm(final Room room, final ArrayList<Sensor> sensors) {
-		
+
 		workingArea.setInAllarmToSensor(sensors);
 		westPanel.refreshWestPane(controller.getRoomList());
 	}
