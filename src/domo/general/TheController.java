@@ -5,7 +5,6 @@ import domo.bckrst.RestoreDomoConfException;
 import domo.bckrst.BackupDomoConfException;
 import domo.util.test.AbstracTestInterface;
 import domo.devices.loader.DynamicLoader;
-import domo.GUI.GUIAbstractObserver;
 import static org.junit.Assert.fail;
 import domo.util.test.DomoTest;
 import domo.bckrst.RestoreImpl;
@@ -15,8 +14,9 @@ import java.util.ArrayList;
 
 import domo.bckrst.Restore;
 import domo.devices.Sensor;
+import domo.graphic.GUIAbstractObserver;
+import domo.graphic.GUIFlat;
 import domo.bckrst.Backup;
-import domo.GUI.GUIFlat;
 
 import java.util.Set;
 

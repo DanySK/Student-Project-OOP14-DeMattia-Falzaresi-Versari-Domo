@@ -4,12 +4,13 @@ import domo.devices.loader.DynamicLoaderImpl;
 import domo.devices.loader.DynamicLoader;
 import static org.junit.Assert.fail;
 import domo.util.test.DomoTestImpl;
-import domo.GUI.GUIFlatImpl;
 import domo.devices.Sensor;
+import domo.graphic.GUIFlat;
+import domo.graphic.GUIFlatImpl;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import domo.GUI.GUIFlat;
 import java.util.Map;
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package domo.GUI;
+package domo.graphic;
 
 import java.awt.Color;
 import java.awt.Dimension;
