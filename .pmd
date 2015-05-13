@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd>
     <useProjectRuleSet>false</useProjectRuleSet>
-    <ruleSetFile>.ruleset</ruleSetFile>
+    <ruleSetFile>C:\Users\Stefano\OneDrive\Documenti\Personali\Univeristà\Secondo Anno\OOP\laboratorio\pmd.xml</ruleSetFile>
     <rules>
         <rule>
             <name>CallSuperFirst</name>
@@ -61,10 +61,6 @@
         </rule>
         <rule>
             <name>ClassCastExceptionWithToArray</name>
-            <ruleset>Basic</ruleset>
-        </rule>
-        <rule>
-            <name>CollapsibleIfStatements</name>
             <ruleset>Basic</ruleset>
         </rule>
         <rule>
@@ -184,8 +180,8 @@
             <ruleset>Basic JSP</ruleset>
         </rule>
         <rule>
-            <name>NoUnsanitizedJSPExpression</name>
-            <ruleset>Basic JSP</ruleset>
+            <name>CollapsibleIfStatements</name>
+            <ruleset>Basic</ruleset>
         </rule>
         <rule>
             <name>EmptyForeachStmt</name>
@@ -236,15 +232,7 @@
             <ruleset>Clone Implementation</ruleset>
         </rule>
         <rule>
-            <name>ProperCloneImplementation</name>
-            <ruleset>Clone Implementation</ruleset>
-        </rule>
-        <rule>
             <name>CyclomaticComplexity</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>ExcessiveClassLength</name>
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
@@ -276,14 +264,6 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>ModifiedCyclomaticComplexity</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>NcssConstructorCount</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
             <name>NcssMethodCount</name>
             <ruleset>Code Size</ruleset>
         </rule>
@@ -292,15 +272,7 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>NcssTypeCount</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
             <name>NPathComplexity</name>
-            <ruleset>Code Size</ruleset>
-        </rule>
-        <rule>
-            <name>StdCyclomaticComplexity</name>
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
@@ -312,27 +284,7 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>CommentContent</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
-            <name>CommentRequired</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
-            <name>CommentSize</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
             <name>AssignmentInOperand</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>AtLeastOneConstructor</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidAccessibilityAlteration</name>
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
@@ -344,31 +296,11 @@
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
-            <name>AvoidPrefixingMethodParameters</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidUsingNativeCode</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
             <name>AvoidUsingShortType</name>
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
-            <name>AvoidUsingVolatile</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
             <name>BooleanInversion</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>CallSuperInConstructor</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>DataflowAnomalyAnalysis</name>
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
@@ -392,10 +324,6 @@
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
-            <name>OnlyOneReturn</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
             <name>SuspiciousOctalEscape</name>
             <ruleset>Controversial</ruleset>
         </rule>
@@ -405,11 +333,7 @@
         </rule>
         <rule>
             <name>UnnecessaryParentheses</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>UseConcurrentHashMap</name>
-            <ruleset>Controversial</ruleset>
+            <ruleset>Unnecessary</ruleset>
         </rule>
         <rule>
             <name>UseObjectForClearerAPI</name>
@@ -424,15 +348,7 @@
             <ruleset>Coupling</ruleset>
         </rule>
         <rule>
-            <name>LawOfDemeter</name>
-            <ruleset>Coupling</ruleset>
-        </rule>
-        <rule>
             <name>LooseCoupling</name>
-            <ruleset>Coupling</ruleset>
-        </rule>
-        <rule>
-            <name>LoosePackageCoupling</name>
             <ruleset>Coupling</ruleset>
         </rule>
         <rule>
@@ -453,10 +369,6 @@
         </rule>
         <rule>
             <name>AvoidConstantsInterface</name>
-            <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidDeeplyNestedIfStmts</name>
             <ruleset>Design</ruleset>
         </rule>
         <rule>
@@ -544,10 +456,6 @@
             <ruleset>Design</ruleset>
         </rule>
         <rule>
-            <name>MissingBreakInSwitch</name>
-            <ruleset>Design</ruleset>
-        </rule>
-        <rule>
             <name>MissingStaticMethodInNonInstantiatableClass</name>
             <ruleset>Design</ruleset>
         </rule>
@@ -577,10 +485,6 @@
         </rule>
         <rule>
             <name>PreserveStackTrace</name>
-            <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>ReturnEmptyArrayRatherThanNull</name>
             <ruleset>Design</ruleset>
         </rule>
         <rule>
@@ -617,10 +521,6 @@
         </rule>
         <rule>
             <name>UncommentedEmptyConstructor</name>
-            <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>UncommentedEmptyMethod</name>
             <ruleset>Design</ruleset>
         </rule>
         <rule>
@@ -661,7 +561,7 @@
         </rule>
         <rule>
             <name>EmptyIfStmt</name>
-            <ruleset>Empty Code</ruleset>
+            <ruleset>Basic Velocity</ruleset>
         </rule>
         <rule>
             <name>EmptyInitializer</name>
@@ -689,10 +589,6 @@
         </rule>
         <rule>
             <name>EmptyTryBlock</name>
-            <ruleset>Empty Code</ruleset>
-        </rule>
-        <rule>
-            <name>EmptyWhileStmt</name>
             <ruleset>Empty Code</ruleset>
         </rule>
         <rule>
@@ -732,24 +628,12 @@
             <ruleset>Import Statements</ruleset>
         </rule>
         <rule>
-            <name>TooManyStaticImports</name>
-            <ruleset>Import Statements</ruleset>
-        </rule>
-        <rule>
             <name>UnnecessaryFullyQualifiedName</name>
             <ruleset>Import Statements</ruleset>
         </rule>
         <rule>
             <name>UnusedImports</name>
             <ruleset>Import Statements</ruleset>
-        </rule>
-        <rule>
-            <name>DoNotCallSystemExit</name>
-            <ruleset>J2EE</ruleset>
-        </rule>
-        <rule>
-            <name>DoNotUseThreads</name>
-            <ruleset>J2EE</ruleset>
         </rule>
         <rule>
             <name>LocalHomeNamingConvention</name>
@@ -761,14 +645,6 @@
         </rule>
         <rule>
             <name>MDBAndSessionBeanNamingConvention</name>
-            <ruleset>J2EE</ruleset>
-        </rule>
-        <rule>
-            <name>RemoteInterfaceNamingConvention</name>
-            <ruleset>J2EE</ruleset>
-        </rule>
-        <rule>
-            <name>RemoteSessionInterfaceNamingConvention</name>
             <ruleset>J2EE</ruleset>
         </rule>
         <rule>
@@ -788,14 +664,6 @@
             <ruleset>Jakarta Commons Logging</ruleset>
         </rule>
         <rule>
-            <name>ProperLogger</name>
-            <ruleset>Jakarta Commons Logging</ruleset>
-        </rule>
-        <rule>
-            <name>UseCorrectExceptionLogging</name>
-            <ruleset>Jakarta Commons Logging</ruleset>
-        </rule>
-        <rule>
             <name>AvoidPrintStackTrace</name>
             <ruleset>Java Logging</ruleset>
         </rule>
@@ -812,14 +680,6 @@
             <ruleset>Java Logging</ruleset>
         </rule>
         <rule>
-            <name>SystemPrintln</name>
-            <ruleset>Java Logging</ruleset>
-        </rule>
-        <rule>
-            <name>BeanMembersShouldSerialize</name>
-            <ruleset>JavaBeans</ruleset>
-        </rule>
-        <rule>
             <name>MissingSerialVersionUID</name>
             <ruleset>JavaBeans</ruleset>
         </rule>
@@ -833,10 +693,6 @@
         </rule>
         <rule>
             <name>JUnitStaticSuite</name>
-            <ruleset>JUnit</ruleset>
-        </rule>
-        <rule>
-            <name>JUnitTestContainsTooManyAsserts</name>
             <ruleset>JUnit</ruleset>
         </rule>
         <rule>
@@ -956,10 +812,6 @@
             <ruleset>Naming</ruleset>
         </rule>
         <rule>
-            <name>LongVariable</name>
-            <ruleset>Naming</ruleset>
-        </rule>
-        <rule>
             <name>MethodNamingConventions</name>
             <ruleset>Naming</ruleset>
         </rule>
@@ -980,15 +832,7 @@
             <ruleset>Naming</ruleset>
         </rule>
         <rule>
-            <name>ShortClassName</name>
-            <ruleset>Naming</ruleset>
-        </rule>
-        <rule>
             <name>ShortMethodName</name>
-            <ruleset>Naming</ruleset>
-        </rule>
-        <rule>
-            <name>ShortVariable</name>
             <ruleset>Naming</ruleset>
         </rule>
         <rule>
@@ -1013,10 +857,6 @@
         </rule>
         <rule>
             <name>AvoidArrayLoops</name>
-            <ruleset>Optimization</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidInstantiatingObjectsInLoops</name>
             <ruleset>Optimization</ruleset>
         </rule>
         <rule>
@@ -1076,10 +916,6 @@
             <ruleset>Security Code Guidelines</ruleset>
         </rule>
         <rule>
-            <name>AvoidCatchingGenericException</name>
-            <ruleset>Strict Exceptions</ruleset>
-        </rule>
-        <rule>
             <name>AvoidCatchingNPE</name>
             <ruleset>Strict Exceptions</ruleset>
         </rule>
@@ -1133,10 +969,6 @@
         </rule>
         <rule>
             <name>AvoidStringBufferField</name>
-            <ruleset>String and StringBuffer</ruleset>
-        </rule>
-        <rule>
-            <name>ConsecutiveAppendsShouldReuse</name>
             <ruleset>String and StringBuffer</ruleset>
         </rule>
         <rule>
@@ -1250,6 +1082,10 @@
         <rule>
             <name>UseConcatOnce</name>
             <ruleset>XPath in XSL</ruleset>
+        </rule>
+        <rule>
+            <name>UncommentedEmptyMethod</name>
+            <ruleset>Design</ruleset>
         </rule>
     </rules>
     <includeDerivedFiles>false</includeDerivedFiles>
