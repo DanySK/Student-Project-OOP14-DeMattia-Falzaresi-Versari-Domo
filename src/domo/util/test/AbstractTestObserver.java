@@ -11,7 +11,7 @@ public abstract class AbstractTestObserver implements AbstracTestInterface {
 	 * Reference to DomoTest interface.
 	 */
 
-	private DomoTest domoTest;
+	protected DomoTest domoTest;
 	
 	/**
 	 * Tell to the observer that sensors change state.
@@ -24,11 +24,4 @@ public abstract class AbstractTestObserver implements AbstracTestInterface {
 	 */
 	public abstract void sensorStateChange();
 	
-	/**
-	 * set domoTest reference.
-	 * @param domo
-	 */
-	protected void setDomoTest(final DomoTest domo) {
-		this.domoTest = domo;
-	}
 }

@@ -17,8 +17,7 @@ public interface GUIAbstractInterface {
 	 * @param name	the room name to create
 	 * @param arrayList the sensors list to add in room
 	 */
-	void addRoomWithNameAndSensors(String name,
-			ArrayList<Sensor> arrayList);
+	void addRoomWithNameAndSensors(String name, ArrayList<Sensor> arrayList);
 
 	/**
 	 * Add a sensor in not specific room.

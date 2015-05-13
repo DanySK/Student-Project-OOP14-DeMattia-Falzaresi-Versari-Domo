@@ -194,7 +194,7 @@ public class GUIWorkingArea extends JLayeredPane {
 	 * @return true or false if is set or not a background
 	 */
 	public boolean isSetBackground() {
-		if (this.bgImage.getIcon() != null) {
+		if (this.bgImage != null) {
 			return true;
 		}
 		return false;

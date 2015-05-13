@@ -26,9 +26,10 @@ public class WestPanel extends JPanel {
 	/**
 	 * 
 	 */
+	
+	private static final long serialVersionUID = -1185955850039860687L;
 	private static final int BORDER_5 = 5;
 	private static final int BORDER_15 = 15;
-	private static final long serialVersionUID = -1185955850039860687L;
 	private final Map <Room, ArrayList<ItemForWestPanel>> labelForRoom = new HashMap<>();
 	private JPanel griglia;
 

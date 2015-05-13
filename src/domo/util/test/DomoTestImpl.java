@@ -34,6 +34,9 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 	 */
 	private AbstracTestInterface observer;
 
+	private static final int BORDER_5 = 5;
+	private static final int BORDER_15 = 15;
+	private static final int START_DIMENSION = 200;
 	/**
 	 * primary panel
 	 */
@@ -54,8 +57,8 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 
 		this.add(panel);
 
-		this.setMinimumSize(new Dimension(200, 500));
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setMinimumSize(new Dimension(START_DIMENSION, START_DIMENSION * 2));
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 	}
 
@@ -71,18 +74,16 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 		}
 		if (flat.getRooms() != null && flat.getRooms().size() > 0) {
 			panel = new JPanel(new BorderLayout(10, 10));
-
 			this.add(panel);
-			griglia = null;
 			griglia = new JPanel();
 			griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
-			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), "Rooms List"));
-			for (Room room : flat.getRooms()) {
-				JPanel viewPanel = new JPanel();
+			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(BORDER_15, BORDER_5, BORDER_5, BORDER_5), "Rooms List"));
+			for (final Room room : flat.getRooms()) {
+				final JPanel viewPanel = new JPanel();
 				viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 				if (room.getSensor() != null && room.getSensor().size() > 0) {
 					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getId() + " " + room.getName()));
-					for (Sensor sensor : room.getSensor()) {
+					for (final Sensor sensor : room.getSensor()) {
 
 						TestEntity sensorItem;
 						if (sensor.isInAlert()) {
@@ -103,10 +104,9 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 
 
 		} else {
-			griglia = null;
 			griglia = new JPanel();
 			griglia.setLayout(new BoxLayout(griglia, BoxLayout.Y_AXIS));
-			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 5, 5, 5), ""));
+			griglia.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(BORDER_15, BORDER_5, BORDER_5, BORDER_5), ""));
 			griglia.add(new JLabel("No Room              :(  "));
 		}
 
@@ -136,7 +136,7 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 		private final JCheckBox checkbox;
 
 		public TestEntity(final Sensor sensor, final boolean isInAlert) {
-			super(new FlowLayout(FlowLayout.LEFT, 5, 5));
+			super(new FlowLayout(FlowLayout.LEFT, BORDER_5, BORDER_5));
 			checkbox = new JCheckBox(sensor.getName());
 			checkbox.addItemListener(new ItemListener() {
 				@Override
