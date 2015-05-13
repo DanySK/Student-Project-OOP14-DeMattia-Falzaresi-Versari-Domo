@@ -1,21 +1,21 @@
 package domo.general;
 
 import domo.devices.loader.DynamicLoaderImpl;
-import domo.bckRst.RestoreDomoConfException;
-import domo.bckRst.BackupDomoConfException;
+import domo.bckrst.RestoreDomoConfException;
+import domo.bckrst.BackupDomoConfException;
 import domo.util.test.AbstracTestInterface;
 import domo.devices.loader.DynamicLoader;
 import domo.GUI.GUIAbstractObserver;
 import static org.junit.Assert.fail;
 import domo.util.test.DomoTest;
-import domo.bckRst.RestoreImpl;
-import domo.bckRst.BackupImpl;
+import domo.bckrst.RestoreImpl;
+import domo.bckrst.BackupImpl;
 
 import java.util.ArrayList;
 
-import domo.bckRst.Restore;
+import domo.bckrst.Restore;
 import domo.devices.Sensor;
-import domo.bckRst.Backup;
+import domo.bckrst.Backup;
 import domo.GUI.GUIFlat;
 
 import java.util.Set;
