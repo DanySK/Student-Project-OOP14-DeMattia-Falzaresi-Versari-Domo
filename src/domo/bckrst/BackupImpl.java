@@ -62,7 +62,6 @@ public class BackupImpl implements Backup {
 	 *  
 	 */
 	public void backupNow(final Flat flatB) throws BackupDomoConfException {
-		final String tmpFileName = System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + "tmp.dom";
 		if (flatB == null) {
 			throw new BackupDomoConfException("No Flat has been submitted to the backup procedure");
 		}
@@ -112,6 +111,7 @@ public class BackupImpl implements Backup {
 				}	
 			}
 			//take my document and place it in a DOMsource object using a temporary file in the temp folder
+			final String tmpFileName = System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + "tmp.dom";
 			final TransformerFactory transFact = TransformerFactory.newInstance();
 			final Transformer trans = transFact.newTransformer();
 			final DOMSource dom = new DOMSource(document);
@@ -172,7 +172,7 @@ public class BackupImpl implements Backup {
 	 * @param flatB the flat element to be backupped
 	 * @throws BackupDomoConfException custom exceptions
 	 */
-	@SuppressWarnings("unused")
+	
 	private void zipEveryThing(final Flat flatB) throws BackupDomoConfException {
 		final byte[] buf = new byte[1];
 		try {
@@ -181,22 +181,24 @@ public class BackupImpl implements Backup {
 			itemToAdd.add(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + flatB.getName() + ".dom");
 			itemToAdd.add(flatB.getImagePath());
 			for (final String sAdd : itemToAdd) {
-				if (sAdd != null) {
+				if (sAdd == null) {
+					out.close();
+					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
+					
+				} else {
 					final FileInputStream in = new FileInputStream(sAdd);
 					final File ft = new File(sAdd);
 					out.putNextEntry(new ZipEntry(ft.getName()));
-					int len;
-		            while ((len = in.read(buf)) > 0) {
+					int len = in.read(buf);
+		            while (len > 0) {
 		            	out.write(buf);
+		            	len = in.read(buf);
 		            }
 		            out.closeEntry();
 		            in.close();
 		            if (ft.getName().equals(flatB.getName() + ".dom")) {
 		            	ft.delete();
 		            }
-				} else {
-					out.close();
-					throw new BackupDomoConfException("One of the files is null, is not possible to proceed");
 				}
 			}
 			out.close();

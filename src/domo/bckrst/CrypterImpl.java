@@ -2,10 +2,13 @@ package domo.bckrst;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.CipherInputStream;
+
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import javax.crypto.Cipher;
+
 import java.io.File;
 
 /**
@@ -14,15 +17,14 @@ import java.io.File;
  *
  */
 public class CrypterImpl implements Crypter {
-	 
-	private final byte[] key;
-	private final Cipher crypt;
+	
+	private Cipher crypt;
 	private FileOutputStream fos;
 	private FileInputStream fis;
 	private CipherInputStream cis;
-	private final SecretKeySpec secretKey;
-	private final String decFileName;
-	private final String enFileName;
+	private SecretKeySpec secretKey;
+	private String decFileName;
+	private String enFileName;
 	
 	/**
 	 * Constructor, two files are needed, the source file and the destination file.
@@ -30,12 +32,18 @@ public class CrypterImpl implements Crypter {
 	 * @param enFile	Encrypted File
 	 * @throws Exception 
 	 */
-	public CrypterImpl(final String decFile, final String enFile) throws Exception {
-		key = "0DeFaVe0".getBytes();
-		secretKey = new SecretKeySpec(key, "DES");
-		crypt = Cipher.getInstance("DES/ECB/PKCS5Padding");
-		decFileName = decFile;
-		enFileName = enFile;
+	public CrypterImpl(final String decFile, final String enFile) {
+
+		try {
+			byte[] key = "0DeFaVe0".getBytes();
+			secretKey = new SecretKeySpec(key, "DES");
+			crypt = Cipher.getInstance("DES/ECB/PKCS5Padding");
+			decFileName = decFile;
+			enFileName = enFile;	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -51,9 +59,10 @@ public class CrypterImpl implements Crypter {
 	        try {
 	            fos = new FileOutputStream(dataFile);  
 	              final byte[] b = new byte[8];  
-	              int i;
-	              while ((i = cis.read(b)) != -1) {  
-	                  fos.write(b, 0, i);  
+	              int i = cis.read(b);
+	              while (i != -1) {  
+	                  fos.write(b, 0, i);
+	                  i = cis.read(b);
 	             }
 	        } finally {
 	            try {
@@ -88,9 +97,10 @@ public class CrypterImpl implements Crypter {
 	        try {
 	            fos = new FileOutputStream(newDataFile);  
 	              final byte[] b = new byte[8];  
-	          int i;
-	              while ((i = cis.read(b)) != -1) {  
-	                  fos.write(b, 0, i);  
+	          int i = cis.read(b);
+	              while (i != -1) {  
+	                  fos.write(b, 0, i);
+	                  i = cis.read(b);
 	             }                
 	        } finally {
 	            try {

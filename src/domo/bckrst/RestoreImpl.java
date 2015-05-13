@@ -57,19 +57,19 @@ public class RestoreImpl implements Restore {
 			try {
 				//start the parsing procedure
 				docBuild = docBuildFactory.newDocumentBuilder();
-				Document document = docBuild.parse(tmpFile);
+				final Document document = docBuild.parse(tmpFile);
 				//whit this I enter in the first Child "domo"
-				Element rootEle = document.getDocumentElement();
+				final Element rootEle = document.getDocumentElement();
 				//Use the createElement function to search elements in the xml and add everything to the environment
 				//Start with Flat
 				createElement("flat", rootEle, Flat.class);
 				//and now with rooms and all related sensors
 				createElement("room", rootEle, Room.class);
 				//set the flat image (the folder may not be the original folder and throw an exception if something is not correct
-				if (this.flatImageName != null) {
-					this.fl.setImagePath(flatImageName);
-				} else {
+				if (this.flatImageName == null) {
 					throw new RestoreDomoConfException("Flat Image has not been correctly restored");
+				} else {
+					this.fl.setImagePath(flatImageName);
 				}
 			} catch (Exception e) {
 				throw new RestoreDomoConfException(e.toString());
@@ -116,10 +116,9 @@ public class RestoreImpl implements Restore {
 								final String posY = sensEle.getElementsByTagName("YPosition").item(0).getFirstChild().getNodeValue();
 								final String sensName = sensEle.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
 								final String degree = sensEle.getElementsByTagName("degree").item(0).getFirstChild().getNodeValue();
-								//sensor is created by the dinamic loader class 
-								final String classPath = "classi";
+								//sensor is created by the dinamic loader class
 								final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
-								listaClassiSensori.setModulePath(classPath);
+								listaClassiSensori.setModulePath("classi");
 								final Set<String> resLoader = listaClassiSensori.updateModuleList();
 								for (final Room r : fl.getRooms()) {
 									if (r.getId() == roomID) {
@@ -154,9 +153,8 @@ public class RestoreImpl implements Restore {
 		 * @return a string with the name and path of the temporary file with the configuration
 		 * @throws RestoreDomoConfException custom exceptions made for this method
 		 */
-		@SuppressWarnings("unused")
+		
 		private String unzipEveryThing(final String file) throws RestoreDomoConfException {
-			final FileInputStream fIn;
 			String fileName = null;
 			if (file == null) {
 				//custom exception for file name verification
@@ -165,23 +163,24 @@ public class RestoreImpl implements Restore {
 			try {
 				final File fL = new File(file);
 				final ZipInputStream zIn = new ZipInputStream(new FileInputStream(file));
-				File dir = new File(fL.getParent() + System.getProperty("file.separator") + "Domo" + System.getProperty("file.separator"));
+				final File dir = new File(fL.getParent() + System.getProperty("file.separator") + "Domo" + System.getProperty("file.separator"));
 				if (!dir.exists() && !dir.mkdir()) {
 					zIn.close();
 					throw new RestoreDomoConfException("Unable to Create Restore Folder");
 				}
 				final byte[] bos = new byte[1];
-				ZipEntry zEntry;
-				while ((zEntry = zIn.getNextEntry()) != null) {
+				ZipEntry zEntry = zIn.getNextEntry();
+				while (zEntry != null) {
 					final String foName = dir + System.getProperty("file.separator") + zEntry.getName();
 					final FileOutputStream fos = new FileOutputStream(foName);
 					
 					if (zEntry.getName().contains(".dom")) {
 						fileName = foName;
 					}
-					int len;
-			        while ((len = zIn.read(bos)) > 0) {
+					int len = zIn.read(bos);
+			        while (len > 0) {
 			            fos.write(bos);
+			            len = zIn.read(bos);
 			        }
 			        fos.flush();
 			        fos.close();
@@ -189,6 +188,7 @@ public class RestoreImpl implements Restore {
 					if (mimetype.contains("image")) {
 						this.flatImageName = foName;
 					}
+					zEntry = zIn.getNextEntry();
 				}
 				zIn.close();
 			} catch (Exception e) {
