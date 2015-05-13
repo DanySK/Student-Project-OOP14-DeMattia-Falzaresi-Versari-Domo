@@ -297,6 +297,7 @@ public class GUIFlatImpl implements GUIFlat {
 				System.out.println("Premuto Refresh");
 				if (GUIFlatImpl.this.controller != null) {
 					GUIFlatImpl.this.controller.refreshSensorList();
+					GUIFlatImpl.this.refreshMenu();
 				}
 			}
 		});
@@ -515,17 +516,17 @@ public class GUIFlatImpl implements GUIFlat {
 			}
 		}
 		northPanel.add(btnTrash);
-		//debug
-		final JButton btnRefreshMenu = new JButton("ricarica sensori");
-		btnRefreshMenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				controller.refreshSensorList();
-				refreshMenu();
-			}
-		});
-		northPanel.add(btnRefreshMenu);
+//		//debug
+//		final JButton btnRefreshMenu = new JButton("ricarica sensori");
+//		btnRefreshMenu.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(final ActionEvent e) {
+//				controller.refreshSensorList();
+//				refreshMenu();
+//			}
+//		});
+//		northPanel.add(btnRefreshMenu);
 		northPanel.setBorder(BorderFactory.createEmptyBorder(STANDARD_BORDER, STANDARD_BORDER, STANDARD_BORDER, STANDARD_BORDER));
 		primaryNorthPanel.add(northPanel, BorderLayout.CENTER);
 	}
