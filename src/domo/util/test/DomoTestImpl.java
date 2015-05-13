@@ -17,18 +17,37 @@ import domo.devices.Sensor;
 import domo.general.Flat;
 import domo.general.Room;
 
+/**
+ * Domo test class implementation.
+ * @author Simone De Mattia - simopne.demattia@studio.unibo.it
+ *
+ */
 public class DomoTestImpl extends JFrame implements DomoTest {
 
 	/**
-	 * 
+	 * Serial version UID
 	 */
 	private static final long serialVersionUID = -8867083422211938170L;
 
+	/**
+	 * abstract observer reference
+	 */
 	private AbstracTestInterface observer;
 
+	/**
+	 * primary panel
+	 */
 	private JPanel panel;
+	/**
+	 * Panel for component vertical order
+	 */
 	private JPanel griglia;
 
+	/**
+	 * Create DomoTestImpl instance
+	 * Create the frame, the items inside and the 
+	 * sensors initial state.
+	 */
 	public DomoTestImpl() {
 		super("Test Console");
 		panel = new JPanel(new BorderLayout(10, 10));
@@ -40,7 +59,12 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 		this.setVisible(true);
 	}
 
-	public void refresh(Flat flat) {
+	/**
+	 * Refresh the frame, ex when is added a sensor to the project.
+	 * or a room is create
+	 * @param flat the flat with the change
+	 */
+	public void refresh(final Flat flat) {
 
 		if (panel != null) {
 			this.remove(panel);

@@ -23,7 +23,7 @@ import domo.general.Room;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
-public class WestPanel extends JPanel{
+public class WestPanel extends JPanel {
 
 	/**
 	 * 

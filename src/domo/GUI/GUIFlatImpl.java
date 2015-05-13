@@ -132,7 +132,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 * @param title the Frame title (normally the project name)
 	 * @param sensorsTypes Sensor type list. This need to create top menu button
 	 */
-	public GUIFlatImpl(final String title, List<Map <String, String>> sensorsTypes) {	
+	public GUIFlatImpl(final String title, final List<Map <String, String>> sensorsTypes) {	
 		mainFrame.setTitle(title);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -260,7 +260,7 @@ public class GUIFlatImpl implements GUIFlat {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				System.out.println("Premuto Insert new Room");
-				if(workingArea.getSelectedSensor().size() > 0) {
+				if (workingArea.getSelectedSensor().size() > 0) {
 					GUIFlatImpl.this.createRoomFrame();
 				}
 			}
@@ -278,21 +278,18 @@ public class GUIFlatImpl implements GUIFlat {
 	private void createNorthMenu() {
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
 		northPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
-
-
+		ArrayList<JButton> btnSensorsList = new ArrayList<>();
+		
 		ImageIcon imgNew = new ImageIcon("res" + SYSTEM_SEPARATOR + "new.png");
 		ImageIcon imgOpen = new ImageIcon("res" + SYSTEM_SEPARATOR + "open.png");
 		ImageIcon imgSave = new ImageIcon("res" + SYSTEM_SEPARATOR + "save.jpg");
 		ImageIcon imgAddRoom = new ImageIcon("res" + SYSTEM_SEPARATOR + "addRoom.png");
-
-
 		ImageIcon imgTrash = new ImageIcon("res" + SYSTEM_SEPARATOR + "trash.png");
 
 		JButton btnNew = new JButton(imgNew);
 		JButton btnOpen = new JButton(imgOpen);
 		JButton btnSave = new JButton(imgSave);
 		JButton btnAddRoom = new JButton(imgAddRoom);
-
 		JButton btnTrash = new JButton(imgTrash);
 
 		btnNew.setSize(new Dimension(BUTTON_ICON_DIMENSION, BUTTON_ICON_DIMENSION));
@@ -307,13 +304,24 @@ public class GUIFlatImpl implements GUIFlat {
 		btnAddRoom.setToolTipText("Add Sensor To Room");
 		btnTrash.setToolTipText("Delete Sensor/s");
 
+		btnAddRoom.setEnabled(false);
+		btnSave.setEnabled(false);
+		btnTrash.setEnabled(false);
+		
 		btnNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				GUIFlatImpl.this.newFile();
+				boolean res = GUIFlatImpl.this.newFile();
+				if (res) {
+					btnAddRoom.setEnabled(true);
+					btnSave.setEnabled(true);
+					btnTrash.setEnabled(true);
+					for (JButton btnS : btnSensorsList) {
+						btnS.setEnabled(true);
+					}
+				}
 			}
 		});
-
 		btnNew.addMouseListener(
 				new MouseAdapter() {
 					public void mouseEntered(final MouseEvent e) {
@@ -325,15 +333,21 @@ public class GUIFlatImpl implements GUIFlat {
 					}
 				}
 				);
-
 		btnOpen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {			
-				GUIFlatImpl.this.openFile();
+				boolean res = GUIFlatImpl.this.openFile();
+				if (res) {
+					btnAddRoom.setEnabled(true);
+					btnSave.setEnabled(true);
+					btnTrash.setEnabled(true);
+					for (JButton btnS : btnSensorsList) {
+						btnS.setEnabled(true);
+					}
+				}
 			}
 		});
-
 		btnOpen.addMouseListener(
 				new MouseAdapter() {
 					public void mouseEntered(final MouseEvent e) {
@@ -345,7 +359,6 @@ public class GUIFlatImpl implements GUIFlat {
 					}
 				}
 				);
-
 		btnSave.addActionListener(new ActionListener() {
 
 			@Override
@@ -353,7 +366,6 @@ public class GUIFlatImpl implements GUIFlat {
 				GUIFlatImpl.this.saveFile();
 			}
 		});
-
 		btnSave.addMouseListener(
 				new MouseAdapter() {
 					public void mouseEntered(final MouseEvent e) {
@@ -365,17 +377,15 @@ public class GUIFlatImpl implements GUIFlat {
 					}
 				}
 				);
-
 		btnAddRoom.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				if(workingArea.getSelectedSensor().size() > 0) {
+				if (workingArea.getSelectedSensor().size() > 0) {
 					GUIFlatImpl.this.createRoomFrame();
 				}
 			}
 		});
-
 		btnAddRoom.addMouseListener(
 				new MouseAdapter() {
 					public void mouseEntered(final MouseEvent e) {
@@ -387,13 +397,11 @@ public class GUIFlatImpl implements GUIFlat {
 					}
 				}
 				);
-
-
 		btnTrash.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 
-				if(controller != null) {
+				if (controller != null) {
 
 					controller.deleteSensors(workingArea.getSelectedSensor());
 
@@ -408,7 +416,6 @@ public class GUIFlatImpl implements GUIFlat {
 				}
 			}
 		});
-
 		btnTrash.addMouseListener(
 				new MouseAdapter() {
 					public void mouseEntered(final MouseEvent e) {
@@ -420,18 +427,18 @@ public class GUIFlatImpl implements GUIFlat {
 					}
 				}
 				);
-
 		northPanel.add(btnNew);
 		northPanel.add(btnOpen);
 		northPanel.add(btnSave);
 		northPanel.add(btnAddRoom);
 		if (sensorTypeList != null) {
 			for (Map<String, String> map : sensorTypeList) {
-
 				ImageIcon imgAddSensor = new ImageIcon(map.get("image")); 
 				JButton btnAddSensor = new JButton(imgAddSensor);
 				btnAddSensor.setSize(new Dimension(BUTTON_ICON_DIMENSION, BUTTON_ICON_DIMENSION));
 				btnAddSensor.setToolTipText("Insert Sensor");
+				btnSensorsList.add(btnAddSensor);
+				btnAddSensor.setEnabled(false);
 				btnAddSensor.addActionListener(new ActionListener() {
 
 					@Override
@@ -440,12 +447,10 @@ public class GUIFlatImpl implements GUIFlat {
 							Sensor newSensor = controller.addSensorWithName(map.get("name"));
 							workingArea.addSensor(newSensor);
 							//workingArea.addSensor(map.get("image"));
-							if(controller.getRoomList() != null && controller.getRoomList().size() > 0) {
+							if (controller.getRoomList() != null && controller.getRoomList().size() > 0) {
 								westPanel.refreshWestPane(controller.getRoomList());
 							}
 							workingArea.repaint();
-							
-							//mainPanel.repaint();
 						}
 					}
 				});
@@ -462,29 +467,26 @@ public class GUIFlatImpl implements GUIFlat {
 						);
 				btnAddSensor.setName(map.get("name"));
 				northPanel.add(btnAddSensor);
-
 			}
 		}
 		northPanel.add(btnTrash);
 		
-		JButton btnAllert = new JButton("allert");
-		btnAllert.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controller.refreshSensorList();
-				
-			}
-		}) ;
-		northPanel.add(btnAllert);
-		
+//		JButton btnAlert = new JButton("allert");
+//		btnAlert.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(final ActionEvent e) {
+//				controller.refreshSensorList();
+//				
+//			}
+//		});
+//		northPanel.add(btnAlert);
 		northPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		mainPanel.add(northPanel, BorderLayout.NORTH);
-
 	}
 
 	/** 
-	 * Refresh the top menu
+	 * Refresh the top menu.
 	 * Need because refresh the sensor type (add a sensor at runtime)
 	 */
 	public void refreshMenu() {
@@ -507,7 +509,7 @@ public class GUIFlatImpl implements GUIFlat {
 	 * Create a new project
 	 * Handle the controller call too (newProject())
 	 */
-	private void newFile() {
+	private boolean newFile() {
 		if (workingArea.isSetBackground()) {
 			int choose = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the current project. All changes will be lost!", "ATTENTION!", JOptionPane.OK_CANCEL_OPTION);
 			if (choose == 0) {
@@ -519,6 +521,8 @@ public class GUIFlatImpl implements GUIFlat {
 					if (controller != null) {
 						controller.newProject();
 					}
+				} else {
+					return false;
 				}
 			}
 		} else {
@@ -529,18 +533,21 @@ public class GUIFlatImpl implements GUIFlat {
 				this.projectImagePath = imgAddress;
 				mainFrame.repaint();
 				controller.newProject();
+			} else {
+				return false;
 			}
 		}
+		return true;
 	}
 
 	/**
 	 * Open a project.
 	 * Handle the controller call too (load(pathFile))
 	 */
-	private void openFile() {	
+	private boolean openFile() {	
 		if (controller != null) {
 			String pathFile = GUIFlatImpl.this.openFile(new FileNameExtensionFilter("DOMO PROJECT FILE", "dprj"));
-			if(pathFile != null) {
+			if (pathFile != null) {
 				Flat file = controller.load(pathFile);
 				workingArea.setImage(file.getImagePath());
 				this.projectImagePath = file.getImagePath();
@@ -571,12 +578,13 @@ public class GUIFlatImpl implements GUIFlat {
 				westPanel.refreshWestPane(controller.getRoomList());
 				
 				mainFrame.repaint();
+				return true;
 			} else {
 				JOptionPane.showConfirmDialog(null, "Same error occur during open project...", "OPS...", JOptionPane.CANCEL_OPTION);
+				return false;
 			}
-
-
 		}
+		return false;
 	}
 
 	/**
