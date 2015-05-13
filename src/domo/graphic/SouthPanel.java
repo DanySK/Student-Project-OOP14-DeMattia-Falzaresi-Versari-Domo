@@ -17,6 +17,8 @@ public class SouthPanel extends JPanel {
 	/**
 	 * 
 	 */
+	private static final int BORDER_5 = 5;
+	private static final int BORDER_15 = 15;
 	private static final long serialVersionUID = -4847808262714176820L;
 	private final JLabel helpLabel = new JLabel(); 
 	
@@ -24,8 +26,8 @@ public class SouthPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public SouthPanel() {
-		super(new FlowLayout(10,10,FlowLayout.LEADING));
-		helpLabel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 5));
+		super(new FlowLayout(10, 10, FlowLayout.LEADING));
+		helpLabel.setBorder(BorderFactory.createEmptyBorder(BORDER_5, BORDER_15, BORDER_5, BORDER_5));
 		//helpLabel.setSize(new Dimension(10, this.mainFrame.getWidth()));
 		helpLabel.setText("Help: ...");
 		this.add(helpLabel);
