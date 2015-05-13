@@ -2,7 +2,6 @@ package domo.bckrst;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.CipherInputStream;
-
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +9,7 @@ import java.io.IOException;
 import javax.crypto.Cipher;
 
 import java.io.File;
+import java.security.InvalidKeyException;
 
 /**
  * 
@@ -35,8 +35,7 @@ public class CrypterImpl implements Crypter {
 	public CrypterImpl(final String decFile, final String enFile) {
 
 		try {
-			byte[] key = "0DeFaVe0".getBytes();
-			secretKey = new SecretKeySpec(key, "DES");
+			secretKey = new SecretKeySpec("0DeFaVe0".getBytes(), "DES");
 			crypt = Cipher.getInstance("DES/ECB/PKCS5Padding");
 			decFileName = decFile;
 			enFileName = enFile;	
@@ -48,9 +47,11 @@ public class CrypterImpl implements Crypter {
 	
 	/**
 	 * This class do the encryption of the uncrypted temporary file.
+	 * @throws InvalidKeyException 
+	 * @throws IOException 
 	 * @throws Exception  
 	 */
-	public void doEncryption() throws Exception {
+	public void doEncryption() throws InvalidKeyException, IOException {
 		crypt.init(Cipher.ENCRYPT_MODE, secretKey);
 		fis = new FileInputStream(new File(decFileName));
 		final File dataFile = new File(enFileName);
@@ -80,10 +81,12 @@ public class CrypterImpl implements Crypter {
 	}
 	/**
 	 * This class do the decryption from the encrypted file to the decrypted.
+	 * @throws InvalidKeyException 
+	 * @throws IOException 
 	 * 
 	 * @throws Exception 
 	 */
-	public void doDecryption() throws Exception {
+	public void doDecryption() throws InvalidKeyException, IOException {
 		crypt.init(Cipher.DECRYPT_MODE, secretKey);
 		final File dataFile = new File(enFileName);
 		final File newDataFile = new File(decFileName);
