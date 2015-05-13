@@ -1,6 +1,7 @@
 package domo.graphic;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 import domo.devices.Sensor;
 import domo.general.Flat;
@@ -17,8 +18,7 @@ public interface GUIAbstractInterface {
 	 * @param name	the room name to create
 	 * @param arrayList the sensors list to add in room
 	 */
-	void addRoomWithNameAndSensors(String name,
-			ArrayList<Sensor> arrayList);
+	void addRoomWithNameAndSensors(String name, Collection<Sensor> arrayList);
 
 	/**
 	 * Add a sensor in not specific room.
@@ -31,14 +31,14 @@ public interface GUIAbstractInterface {
 	 * get the room list in flat.
 	 * @return a room ArrayList
 	 */
-	ArrayList<Room> getRoomList();
+	Collection<Room> getRoomList();
 
 	/**
 	 * Add a ArrayList of sensor to a specific room.
 	 * @param arrayList sensor list
 	 * @param room room to add sensors
 	 */
-	void addSensorToRoom(ArrayList<Sensor> arrayList, Room room);
+	void addSensorToRoom(Collection<Sensor> arrayList, Room room);
 
 	/**
 	 * called when press the new project button .
@@ -66,13 +66,14 @@ public interface GUIAbstractInterface {
 
 	/**
 	 * Refresh the sensor type list available .
+	 * @return the new sensor list available
 	 */
-	void refreshSensorList();
+	Collection<Map <String, String>> refreshSensorList();
 
 	/**
 	 * Call when some sensor are delete from project.
 	 * @param sensors the sensor list to delete
 	 */
-	void deleteSensors(ArrayList<Sensor> sensors);
+	void deleteSensors(Collection<Sensor> sensors);
 
 }

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,9 +27,10 @@ public class WestPanel extends JPanel {
 	/**
 	 * 
 	 */
+	
+	private static final long serialVersionUID = -1185955850039860687L;
 	private static final int BORDER_5 = 5;
 	private static final int BORDER_15 = 15;
-	private static final long serialVersionUID = -1185955850039860687L;
 	private final Map <Room, ArrayList<ItemForWestPanel>> labelForRoom = new HashMap<>();
 	private JPanel griglia;
 
@@ -36,7 +38,7 @@ public class WestPanel extends JPanel {
 	 * create a west panel with a specific room list.
 	 * @param roomList tha room list
 	 */
-	public WestPanel(final ArrayList<Room> roomList) {
+	public WestPanel(final Collection<Room> roomList) {
 		super(new BorderLayout(10, 10));
 		this.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 
@@ -47,7 +49,7 @@ public class WestPanel extends JPanel {
 	 * Refresh the panel with room list data.
 	 * @param roomList the room list
 	 */
-	public void refreshWestPane(final ArrayList<Room> roomList) {
+	public void refreshWestPane(final Collection<Room> roomList) {
 
 		if (griglia != null) {
 			this.remove(griglia);

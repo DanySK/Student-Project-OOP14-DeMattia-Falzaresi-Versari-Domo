@@ -1,7 +1,8 @@
 package domo.graphic;
 
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 import domo.devices.Sensor;
 import domo.general.Flat;
@@ -13,7 +14,7 @@ import domo.general.Room;
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  */
-public abstract class GUIAbstractObserver implements GUIAbstractInterface {
+public abstract class AbstractGuiObserver implements GUIAbstractInterface {
 	
 	/**
 	 * the interface that the caller must implement for send message.
@@ -25,7 +26,7 @@ public abstract class GUIAbstractObserver implements GUIAbstractInterface {
 	 * @param name	the room name to create
 	 * @param arrayList the sensors list to add in room
 	 */
-	public abstract void addRoomWithNameAndSensors(String name, ArrayList<Sensor> arrayList);
+	public abstract void addRoomWithNameAndSensors(String name, Collection<Sensor> arrayList);
 	
 	/**
 	 * Add a sensor in not specific room.
@@ -38,14 +39,14 @@ public abstract class GUIAbstractObserver implements GUIAbstractInterface {
 	 * get the room list in flat.
 	 * @return a room ArrayList
 	 */
-	public abstract ArrayList<Room> getRoomList();
+	public abstract Collection<Room> getRoomList();
 	
 	/**
 	 * Add a ArrayList of sensor to a specific room.
 	 * @param arrayList sensor list
 	 * @param room room to add sensors
 	 */
-	public abstract void addSensorToRoom(ArrayList<Sensor> arrayList, Room room);
+	public abstract void addSensorToRoom(Collection<Sensor> arrayList, Room room);
 	
 	/**
 	 * called when press the new project button .
@@ -74,12 +75,12 @@ public abstract class GUIAbstractObserver implements GUIAbstractInterface {
 	/**
 	 * Refresh the sensor type list available .
 	 */
-	public abstract void refreshSensorList();	
+	public abstract Collection<Map <String, String>> refreshSensorList();	
 	
 	/**
 	 * Call when some sensor are delete from project.
 	 * @param sensors the sensor list to delete
 	 */
-	public abstract void deleteSensors(ArrayList<Sensor> sensors);
+	public abstract void deleteSensors(Collection<Sensor> sensors);
 
 }
