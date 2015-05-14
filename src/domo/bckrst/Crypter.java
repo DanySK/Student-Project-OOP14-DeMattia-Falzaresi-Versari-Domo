@@ -13,14 +13,16 @@ public interface Crypter {
 
 	/**
 	 * With this class is possible encrypt the given encrypted file.
-	 * @throws InvalidKeyException Encryption exception
+	 * @throws CrypterException  custom exception for encrypt procedure
+	 * @throws InvalidKeyException 
 	 * @throws IOException 
 	 */
-	void doEncryption() throws InvalidKeyException, IOException;
+	void doEncryption() throws CrypterException, InvalidKeyException, IOException;
 	/**
 	 * Whit this class is possible to decrypt a previously encrypted file.
-	 * @throws InvalidKeyException Encryption exception
+	 * @throws CrypterException  custom exception for decrypt procedure
+	 * @throws InvalidKeyException 
 	 * @throws IOException 
 	 */
-	void doDecryption() throws InvalidKeyException, IOException;
+	void doDecryption() throws CrypterException, InvalidKeyException, IOException;
 }

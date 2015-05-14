@@ -48,8 +48,8 @@ public class RestoreImpl implements Restore {
 			try {
 				final CrypterImpl de = new CrypterImpl(tmpFileName, fileToRestore);
 				de.doDecryption();
-			} catch (Exception e1) {
-				e1.printStackTrace();
+			} catch (Exception e) {
+				throw new RestoreDomoConfException("Unable to decrypt the configuration file " + e);
 			}
 			final File tmpFile = new File(tmpFileName);
 			final DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
@@ -72,7 +72,7 @@ public class RestoreImpl implements Restore {
 					this.fl.setImagePath(flatImageName);
 				}
 			} catch (Exception e) {
-				throw new RestoreDomoConfException(e.toString());
+				throw new RestoreDomoConfException("Error in the element creation procedure " + e);
 			}
 			tmpFile.delete();
 			//return the element
@@ -132,7 +132,7 @@ public class RestoreImpl implements Restore {
 												}
 												
 											} catch (Exception e) {
-												throw new RestoreDomoConfException("Error in the adding sensor procedure " + e.toString());
+												throw new RestoreDomoConfException("Error in the adding sensor procedure " + e);
 											}
 										}
 									}
@@ -155,7 +155,6 @@ public class RestoreImpl implements Restore {
 		 */
 		
 		private String unzipEveryThing(final String file) throws RestoreDomoConfException {
-			String fileName = null;
 			if (file == null) {
 				//custom exception for file name verification
 				throw new RestoreDomoConfException("Restore File Cannot Be Null");
@@ -168,6 +167,7 @@ public class RestoreImpl implements Restore {
 					zIn.close();
 					throw new RestoreDomoConfException("Unable to Create Restore Folder");
 				}
+				String fileName = null;
 				final byte[] bos = new byte[1];
 				ZipEntry zEntry = zIn.getNextEntry();
 				while (zEntry != null) {
@@ -191,9 +191,9 @@ public class RestoreImpl implements Restore {
 					zEntry = zIn.getNextEntry();
 				}
 				zIn.close();
+				return fileName;
 			} catch (Exception e) {
-				throw new RestoreDomoConfException(e.toString());
-			}
-			return fileName;
+				throw new RestoreDomoConfException("Error in the unzipping procedure " + e);
+			}	
 		}
 }

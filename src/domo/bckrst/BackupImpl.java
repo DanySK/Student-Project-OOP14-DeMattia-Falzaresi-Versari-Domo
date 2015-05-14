@@ -40,8 +40,9 @@ public class BackupImpl implements Backup {
 	/**
 	 * Constructor.
 	 * @param file The name of the destination file
+	 * @throws BackupDomoConfException Custom exception for backup procedure
 	 */
-	public BackupImpl(final String file) {
+	public BackupImpl(final String file) throws BackupDomoConfException {
 		
 		try {
 			final DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
@@ -49,7 +50,7 @@ public class BackupImpl implements Backup {
 			docBuild = docBuildFactory.newDocumentBuilder();
 			document = docBuild.newDocument();
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+			throw new BackupDomoConfException("Unable to create the source document " + e);
 		}
 		
 		this.fileName = file;
@@ -94,20 +95,18 @@ public class BackupImpl implements Backup {
 				sensorB = room.getSensor();
 				for (final Sensor sensor : sensorB) {
 					//creation of element sensor and all his parameters
-					try {
+					if (sensor.getName() == null || sensor.getImagePath() == null) {
+						throw new BackupDomoConfException("one of the sensor has not been correctly created");
+					} else {
 					final Element sensorE = createElement("sensor", sensor.getName(), sensor.getId(), roomEl);
 					sensorE.appendChild(addArg("image", sensor.getImagePath()));
 					sensorE.appendChild(addArg("XPosition", Double.toString(sensor.getXPosition())));
 					sensorE.appendChild(addArg("YPosition", Double.toString(sensor.getYPosition())));
 					sensorE.appendChild(addArg("degree", Double.toString(sensor.getDegree())));
-						try {
+						if (sensor.getType() != null) {
 							sensorE.appendChild(addArg("typology", sensor.getType().toString()));
-						} catch (NullPointerException e) {
-							//catch this error but go on because is not a mandatory field
 						}
-					} catch (NullPointerException e) {
-						throw new BackupDomoConfException("Error while loading sensor settings");
-					}	
+					} 
 				}	
 			}
 			//take my document and place it in a DOMsource object using a temporary file in the temp folder
@@ -129,7 +128,7 @@ public class BackupImpl implements Backup {
 			zipEveryThing(flatB);
 			
 		} catch (Exception exc) {
-			throw new BackupDomoConfException(exc.toString());
+			throw new BackupDomoConfException("Error in the file creation procedure " + exc);
 		}
 		
 	}

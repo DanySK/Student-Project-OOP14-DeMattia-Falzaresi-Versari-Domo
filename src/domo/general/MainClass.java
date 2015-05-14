@@ -35,16 +35,15 @@ public class MainClass {
 		//used in OSX (menu on the upper screen)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		
-		final String classPath = "classi";
-		System.out.println(classPath);
+		System.out.println("classi");
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
-		listaClassiSensori.setModulePath(classPath);
+		listaClassiSensori.setModulePath("classi");
 		final Set<String> resLoader = listaClassiSensori.updateModuleList();
 		
-		ArrayList <Map <String, String>> sensorTypeList = new ArrayList<>();
+		final ArrayList <Map <String, String>> sensorTypeList = new ArrayList<>();
 		resLoader.forEach(x -> {
 			try {
-				HashMap <String, String> t = new HashMap<>();
+				final HashMap <String, String> t = new HashMap<>();
 				t.put("name", listaClassiSensori.createClassInstance(x).getName());
 				t.put("image", listaClassiSensori.createClassInstance(x).getImagePath());
 				t.put("type", listaClassiSensori.createClassInstance(x).getType().toString());
@@ -56,8 +55,8 @@ public class MainClass {
 			}
 		});
 		
-		GUIFlat t = new GUIFlatImpl("Domo", sensorTypeList);
-		TheController controller = new TheController(t);
+		final GUIFlat t = new GUIFlatImpl("Domo", sensorTypeList);
+		final TheController controller = new TheController(t);
 		controller.startTesting(new DomoTestImpl());
 	}
 }
