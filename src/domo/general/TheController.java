@@ -192,6 +192,7 @@ public class TheController implements AbstracTestInterface, GUIAbstractInterface
 				}
 			}
 		}
+		testFrame.refresh(flat);
 	}
 
 	@Override
