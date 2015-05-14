@@ -116,7 +116,7 @@ public class RestoreImpl implements Restore {
 								final String posY = sensEle.getElementsByTagName("YPosition").item(0).getFirstChild().getNodeValue();
 								final String sensName = sensEle.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
 								final String degree = sensEle.getElementsByTagName("degree").item(0).getFirstChild().getNodeValue();
-								//sensor is created by the dinamic loader class
+								//sensor is created by the dynamic loader class
 								final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 								listaClassiSensori.setModulePath("classi");
 								final Set<String> resLoader = listaClassiSensori.updateModuleList();
