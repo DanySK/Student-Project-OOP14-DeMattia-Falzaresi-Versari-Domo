@@ -95,7 +95,7 @@ public class RestoreImpl implements Restore {
 				throw new RestoreDomoConfException(toAdd + " entity not imported correctly");
 			} else {
 				for (int i = 0; i < nList.getLength(); i++) {
-					//go over all the elements and select attributes I need
+					//go over all the elements and select attributes I need 
 					final Element el = (Element) nList.item(i);
 					eleName = el.getElementsByTagName("name").item(0).getFirstChild().getNodeValue();
 					eleId = Integer.parseInt(el.getAttribute("Id"));
