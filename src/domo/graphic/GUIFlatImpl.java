@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -154,17 +153,13 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 	 * @param sensorsTypes Sensor type list. This need to create top menu button
 	 */
 	public GUIFlatImpl(final String title, final List<Map <String, String>> sensorsTypes) {	
+		super();
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		System.out.println(ClassLoader.getSystemResource("open.png"));
 
-		 Image im = null;
-		    try {
-		    im = ImageIO.read(getClass().getResource(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png"));
-		    } catch (Exception ex) {
-		    	
-		    }
-		    System.out.println("" + getClass().getResource(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png"));
-		    setIconImage(im);
+		this.setIconImage(new ImageIcon(ClassLoader.getSystemResource("addSensor.png")).getImage());
+		
 		final double maxWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * W_SCREEN_MAX_SCALE;
 		final double maxHeight 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * H_SCREEN_MAX_SCALE;
 		final double minWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * W_SCREEN_MIN_SCALE;
