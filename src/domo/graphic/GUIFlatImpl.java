@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -92,7 +94,6 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 	 */
 	private static final int BUTTON_ICON_DIMENSION = 50;
 
-	//private final String USER_HOME_FOLDER = System.getProperty("user.home").toString();
 	/**
 	 * system separator
 	 */
@@ -156,6 +157,14 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		 Image im = null;
+		    try {
+		    im = ImageIO.read(getClass().getResource(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png"));
+		    } catch (Exception ex) {
+		    	
+		    }
+		    System.out.println("" + getClass().getResource(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png"));
+		    setIconImage(im);
 		final double maxWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * W_SCREEN_MAX_SCALE;
 		final double maxHeight 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * H_SCREEN_MAX_SCALE;
 		final double minWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * W_SCREEN_MIN_SCALE;

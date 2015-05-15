@@ -8,6 +8,7 @@ import domo.devices.Sensor;
 import domo.graphic.GUIFlat;
 import domo.graphic.GUIFlatImpl;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class MainClass {
 		
 		//used in OSX (menu on the upper screen)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		Toolkit.getDefaultToolkit().getImage("res"+System.getProperty("file.separator").toString()+"open.png");
 		
 		System.out.println("classi");
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
