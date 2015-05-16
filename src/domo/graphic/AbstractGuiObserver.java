@@ -74,6 +74,8 @@ public abstract class AbstractGuiObserver implements GUIAbstractInterface {
 	
 	/**
 	 * Refresh the sensor type list available .
+	 * @return a maps collection where each items is a map with
+	 * the sensor data. Example name, image path, ... , ...
 	 */
 	public abstract Collection<Map <String, String>> refreshSensorList();	
 	
