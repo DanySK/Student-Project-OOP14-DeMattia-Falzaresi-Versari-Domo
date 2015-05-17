@@ -15,6 +15,7 @@ public class RestoreDomoConfException extends Exception {
 	 * @param e the error message to show 
 	 */
 	public RestoreDomoConfException(final String e) {
+		super(e);
 		this.err = e;
 	}
 	

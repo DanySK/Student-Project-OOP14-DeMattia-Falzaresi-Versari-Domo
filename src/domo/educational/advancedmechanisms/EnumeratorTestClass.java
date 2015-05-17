@@ -15,7 +15,7 @@ public class EnumeratorTestClass {
 	public static void main(String[] args) {
 		
 		/* Creation of the room */
-		Room myRoom = new Room("Living");
+		Room myRoom = new Room("Kitchen");
 		
 		/* Creation of a Standard Sensor */
 		Sensor stSens = new Sensor("Kitchen Door", 1, "Door");
