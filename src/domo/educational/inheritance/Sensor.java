@@ -42,7 +42,7 @@ public interface Sensor {
 	boolean isInAlert();
 	
 	/**
-	 * this method set the alert status and, if the alert is "true" and the previous status was "false" 
+	 * this method set the alert status and, if the alert is "true" and the previous status was "false". 
 	 * the alert count will be incremented by one
 	 * @param alert a boolean alert status
 	 */

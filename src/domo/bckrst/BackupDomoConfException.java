@@ -17,6 +17,7 @@ public class BackupDomoConfException extends Exception {
 	 * @param e the error message to show 
 	 */
 	public BackupDomoConfException(final String e) {
+		super(e);
 		this.err = e;
 	}
 	@Override

@@ -14,6 +14,7 @@ public class CrypterException extends Exception {
 	 * @param e the error message to show 
 	 */
 	public CrypterException(final String e) {
+		super(e);
 		this.err = e;
 	}
 	@Override
