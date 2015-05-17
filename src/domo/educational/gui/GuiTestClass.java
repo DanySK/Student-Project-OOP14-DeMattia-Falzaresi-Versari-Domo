@@ -12,6 +12,7 @@ public class GuiTestClass {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		EasyGUI myGUI = new EasyGUI();
 	}
 
 }
