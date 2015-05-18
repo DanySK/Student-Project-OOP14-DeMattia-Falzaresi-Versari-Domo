@@ -57,7 +57,7 @@ public class GUISensor extends ImageView {
 	 */
 	private MouseEvent pressed;
 	/**
-	 * the last position 
+	 * the last position used in image movement
 	 */
 	private Point pPoint;
 	/**
@@ -214,7 +214,7 @@ public class GUISensor extends ImageView {
 	 * set the image color filter to red.
 	 */
 	public void setRedColorFilter() {
-		this.setColorFilter(ColorFilter.COLOR_FILTER_RED);
+		this.setColorBorder(ColorFilter.COLOR_FILTER_RED);
 		this.repaint();
 	}
 	
@@ -222,7 +222,7 @@ public class GUISensor extends ImageView {
 	 * set the image color filter to default (no filter color).
 	 */
 	public void setResetFilter() {
-		this.setColorFilter(ColorFilter.COLOR_FILTER_NONE);
+		this.setColorBorder(ColorFilter.COLOR_FILTER_NONE);
 		this.repaint();
 	}
 	
