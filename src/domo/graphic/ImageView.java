@@ -196,7 +196,7 @@ public class ImageView extends JLabel {
 	 * set the border color.
 	 * @param filter the color
 	 */
-	public void setColorFilter(final ColorFilter filter) {
+	public void setColorBorder(final ColorFilter filter) {
 
 		if (filter == ColorFilter.COLOR_FILTER_RED) {
 			this.setBorder(BorderFactory.createLineBorder(Color.RED, 3, true));
