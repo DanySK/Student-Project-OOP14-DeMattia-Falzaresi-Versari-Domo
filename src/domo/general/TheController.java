@@ -34,8 +34,7 @@ public class TheController implements AbstracTestInterface, GUIAbstractInterface
 	private final GUIFlat graphicInterface;
 	private Flat flat;
 	private DomoTest testFrame;
-	@SuppressWarnings("unused")
-	private boolean inallarm;
+	
 	private static final String ROOT_SENSOR_FOLDER = "classi";
 	
 	/**
