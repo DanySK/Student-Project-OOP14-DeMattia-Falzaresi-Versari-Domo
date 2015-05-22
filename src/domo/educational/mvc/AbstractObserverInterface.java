@@ -12,7 +12,11 @@ public interface AbstractObserverInterface {
 	 * 
 	 * @param text -
 	 */
-	void textChangedFromView(final String text);
+	void newProject(String imagePath);
+	
+	void saveProject(String fileName);
+	
+	void openProject(String fileName);
 	
 	
 }

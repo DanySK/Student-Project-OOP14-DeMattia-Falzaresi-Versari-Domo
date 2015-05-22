@@ -2,7 +2,7 @@ package domo.educational.mvc;
 
 /**
  * 
- * @author Simone De Mattia - simopne.demattia@studio.unibo.it
+ * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
  *
  */
 public interface ViewInterface {

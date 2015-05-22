@@ -8,7 +8,7 @@ package domo.educational.mvc;
 public class Controller implements AbstractObserverInterface {
 
 	private final ViewInterface view;
-	private ModelInterface model;
+	private Flat myFlat;
 	
 
 
@@ -17,25 +17,36 @@ public class Controller implements AbstractObserverInterface {
 	 * @param tView -
 	 * @param tModel -
 	 */
-	public Controller(final ViewInterface tView, final ModelInterface tModel) {
+	public Controller(final ViewInterface tView) {
 		this.view = tView;
-		this.model = tModel;
 		view.setObserver(this);
 	}
-	
+	/*
 	@Override
 	public void textChangedFromView(final String text) {
 		model.setModelText(text);
 		view.updateView(model.getModelText());
 	}
-
-	/**
-	 * 
-	 * @param tModel -
-	 */
-	public void setModel(final ModelInterface tModel) {
-		this.model = tModel;
+*/
+	@Override
+	public void newProject(final String imagePath) {
+		System.out.println("controller: NewProject ");
+		this.myFlat = new Flat("Default Flat");
+		this.myFlat.setImage(imagePath);
+		
 	}
-	
+
+	@Override
+	public void saveProject(final String fileName) {
+		System.out.println("controller: SaveProject");
+		
+	}
+
+	@Override
+	public void openProject(final String fileName) {
+		System.out.println("controller: OpenProject");
+		
+	}
+
 
 }

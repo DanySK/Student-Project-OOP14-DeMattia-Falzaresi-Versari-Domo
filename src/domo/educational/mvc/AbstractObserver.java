@@ -12,10 +12,11 @@ public abstract class AbstractObserver implements AbstractObserverInterface {
 	 */
 	private ViewInterface view;
 	
-	/**
-	 * @param text -
-	 */
-	public abstract void textChangedFromView(final String text);
+	public abstract void newProject(String imagePath);
+	
+	public abstract void saveProject(String fileName);
+	
+	public abstract void openProject(String fileName);
 	
 	/**
 	 * 
