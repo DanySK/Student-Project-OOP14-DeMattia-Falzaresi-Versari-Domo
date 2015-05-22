@@ -16,7 +16,7 @@ public abstract class AbstractObserver implements AbstractObserverInterface {
 	
 	public abstract void saveProject(String fileName);
 	
-	public abstract void openProject(String fileName);
+	public abstract String openProject(String fileName);
 	
 	/**
 	 * 

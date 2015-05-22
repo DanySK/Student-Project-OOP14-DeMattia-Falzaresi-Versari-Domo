@@ -4,11 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,14 +18,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import domo.graphic.GUIFlatImpl;
-import domo.graphic.ImageView;
 
 /**
  * 
@@ -108,7 +103,7 @@ public class ViewImpl extends JFrame implements ViewInterface {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (observer != null) {
-					final String imgAddress = ViewImpl.this.chooseFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
+					final String imgAddress = ViewImpl.this.openFile(new FileNameExtensionFilter("Image file", "jpg", "jpeg", "png", "bmp", "gif"));
 					ViewImpl.this.setImage(imgAddress);
 					observer.newProject(imgAddress);
 				}
@@ -121,8 +116,14 @@ public class ViewImpl extends JFrame implements ViewInterface {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (observer != null) {
-					final String imgAddress = ViewImpl.this.chooseFile(new FileNameExtensionFilter("Txt file", "txt"));
-					observer.openProject();
+					final String resAdd = ViewImpl.this.openFile(new FileNameExtensionFilter("Txt file", "txt"));
+					String resImaAdd = observer.openProject(resAdd);
+					if (resImaAdd != null) {
+						setImage(resImaAdd);
+						JOptionPane.showMessageDialog(myFrame, "Restore Completed!");
+					} else {
+						JOptionPane.showMessageDialog(myFrame, "Error in restore procedure\n check console for errors!");
+					}
 				}
 				
 			}
@@ -133,18 +134,29 @@ public class ViewImpl extends JFrame implements ViewInterface {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (observer != null) {
-					final String imgAddress = ViewImpl.this.chooseFile(new FileNameExtensionFilter("Txt file", "txt"));
-					observer.saveProject();
+					final String backupAdd = ViewImpl.this.saveFile(new FileNameExtensionFilter("Txt file", "txt"));
+					observer.saveProject(backupAdd+".txt");
+					JOptionPane.showMessageDialog(myFrame,"Backup Done!");
 				}
 				
 			}
 		});
 	}
 	
-	private String chooseFile(final FileNameExtensionFilter filter) {
+	private String openFile(final FileNameExtensionFilter filter) {
 		final JFileChooser openFile = new JFileChooser();
 		openFile.setFileFilter(filter);
 		final int result = openFile.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			return openFile.getSelectedFile().getPath();
+		}
+		return null;
+	}
+	
+	private String saveFile(final FileNameExtensionFilter filter) {
+		final JFileChooser openFile = new JFileChooser();
+		openFile.setFileFilter(filter);
+		final int result = openFile.showSaveDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			return openFile.getSelectedFile().getPath();
 		}
@@ -154,15 +166,10 @@ public class ViewImpl extends JFrame implements ViewInterface {
 	 * This Private method open a previously decided image and draw it in the background of the application
 	 */
 	private void setImage(String imageFile) {
-		ImageView bgImage;
-		BufferedImage imageBuf;
-		try {
-			imageBuf = ImageIO.read(new File(imageFile));
-			bgImage = new ImageView(imageBuf, this.myFrame.getBounds());
-			this.mainPanel.add(bgImage, BorderLayout.CENTER);
-		} catch (IOException e) {
-			System.out.println("Unable to Load Image");
-		}
+		ImageView imageJp;
+		Dimension dim = new Dimension(mainPanel.getWidth(), mainPanel.getHeight());
+		imageJp = new ImageView(imageFile,dim);
+		this.mainPanel.add(imageJp, BorderLayout.CENTER);
 		myFrame.repaint();
 		
 	}

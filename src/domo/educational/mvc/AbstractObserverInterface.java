@@ -16,7 +16,7 @@ public interface AbstractObserverInterface {
 	
 	void saveProject(String fileName);
 	
-	void openProject(String fileName);
+	String openProject(String fileName);
 	
 	
 }

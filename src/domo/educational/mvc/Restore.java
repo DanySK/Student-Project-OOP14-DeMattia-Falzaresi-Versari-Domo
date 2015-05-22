@@ -29,14 +29,14 @@ public class Restore {
 	 */
 	public Flat doRestore(final String fName) throws Exception {
 		Flat resFlat = null;
-		DataInputStream dIs = new DataInputStream(new FileInputStream(new File(System.getProperty("user.home") + System.getProperty("file.separator") + fName)));
+		DataInputStream dIs = new DataInputStream(new FileInputStream(new File(fName)));
 		resFlat = new Flat(dIs.readUTF());
+		resFlat.setImage(dIs.readUTF());
 		String s = dIs.readUTF();
-		do {
+		while (!s.equals("resEnd")){
 			resFlat.addRoom(new Room(s));
 			s = dIs.readUTF();
-			System.out.println();
-		} while (!s.equals("resEnd"));
+		} 
 		dIs.close();
 		return resFlat;
 	}

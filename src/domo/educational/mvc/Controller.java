@@ -9,6 +9,8 @@ public class Controller implements AbstractObserverInterface {
 
 	private final ViewInterface view;
 	private Flat myFlat;
+	private Backup myBackup;
+	private Restore myRestore;
 	
 
 
@@ -39,13 +41,20 @@ public class Controller implements AbstractObserverInterface {
 	@Override
 	public void saveProject(final String fileName) {
 		System.out.println("controller: SaveProject");
-		
+		this.myBackup = new Backup(myFlat);
+		myBackup.doBackup(fileName);
 	}
 
 	@Override
-	public void openProject(final String fileName) {
-		System.out.println("controller: OpenProject");
-		
+	public String openProject(final String fileName) {
+		this.myRestore = new Restore();
+		try{
+			this.myFlat = myRestore.doRestore(fileName);
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		return this.myFlat.getImage();
 	}
 
 
