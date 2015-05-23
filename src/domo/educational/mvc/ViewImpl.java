@@ -7,12 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageProducer;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,16 +19,17 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * 
- * @author Simone De Mattia - simopne.demattia@studio.unibo.it
+ * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ *
+ *	This view is quite similar in the aspect to the EasyGui saw in the previous Lesson, the changed things are related to the MVC pattern:
+ *
+ *	- A new AbstractObserverInterface object is added, this object is used to exchange informations from the view to the controller
+ *	- the action listener of the JButton is changed and now method of the observer are used to do things in the view (like open file)
  *
  */
 public class ViewImpl extends JFrame implements ViewInterface {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5382453651359158867L;
-
 	private static final String IMAGE_ROOT_FOLDER = "res";
 	private static final String SYSTEM_SEPARATOR = System.getProperty("file.separator").toString();
 	private AbstractObserverInterface observer;
@@ -43,8 +39,8 @@ public class ViewImpl extends JFrame implements ViewInterface {
 	
 	
 	/**
-	 * 
-	 * @param title the JFrame title
+	 * This is the constructor of the view.
+	 * @param title the to set on the JFrame
 	 */
 	public ViewImpl(final String title) {
 		this.myFrame = new JFrame(title);
@@ -96,7 +92,9 @@ public class ViewImpl extends JFrame implements ViewInterface {
 		
 		/*
 		 * The row below indicate the "ActionListener" this method indicate what happen when the button is pressed
-		 * in our case a MessageDialog will popup 
+		 * in this case we check if the observer is not null and we ask the user to select an image (see the openFile 
+		 * method to more information about) and the image is set on the view, after that the observer send to the controller
+		 * the path of our flat image
 		 */
 		btnNew.addActionListener(new ActionListener() {
 			
@@ -111,6 +109,10 @@ public class ViewImpl extends JFrame implements ViewInterface {
 			}
 		});
 		
+		/*
+		 * The open button action listener ask the user to select a txt file and send to the controller the request to restore
+		 * the flat with our backup file
+		 */	
 		btnOpen.addActionListener(new ActionListener() {
 			
 			@Override
@@ -129,20 +131,28 @@ public class ViewImpl extends JFrame implements ViewInterface {
 			}
 		});
 		
+		/*
+		 * the save button ask the user to select a file where to save the backup file and send to the controller this file path
+		 */
 		btnSave.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (observer != null) {
 					final String backupAdd = ViewImpl.this.saveFile(new FileNameExtensionFilter("Txt file", "txt"));
-					observer.saveProject(backupAdd+".txt");
-					JOptionPane.showMessageDialog(myFrame,"Backup Done!");
+					observer.saveProject(backupAdd + ".txt");
+					JOptionPane.showMessageDialog(myFrame, "Backup Done!");
 				}
 				
 			}
 		});
 	}
 	
+	/**
+	 * this method open a JFile chooser (for open procedure) and return the string with the path of the selected file.
+	 * @param filter the filter to apply to the file extensions
+	 * @return string with the file path
+	 */
 	private String openFile(final FileNameExtensionFilter filter) {
 		final JFileChooser openFile = new JFileChooser();
 		openFile.setFileFilter(filter);
@@ -153,6 +163,11 @@ public class ViewImpl extends JFrame implements ViewInterface {
 		return null;
 	}
 	
+	/**
+	 * this method open a JFile chooser (for save procedure) and return the string with the path of the selected file.
+	 * @param filter the filter to apply to the file extensions
+	 * @return string with the file path
+	 */
 	private String saveFile(final FileNameExtensionFilter filter) {
 		final JFileChooser openFile = new JFileChooser();
 		openFile.setFileFilter(filter);
@@ -162,28 +177,23 @@ public class ViewImpl extends JFrame implements ViewInterface {
 		}
 		return null;
 	}
+	
 	/**
 	 * This Private method open a previously decided image and draw it in the background of the application
+	 * @param imageFile the file to set as background
 	 */
-	private void setImage(String imageFile) {
+	private void setImage(final String imageFile) {
 		ImageView imageJp;
 		Dimension dim = new Dimension(mainPanel.getWidth(), mainPanel.getHeight());
-		imageJp = new ImageView(imageFile,dim);
+		imageJp = new ImageView(imageFile, dim);
 		this.mainPanel.add(imageJp, BorderLayout.CENTER);
 		myFrame.repaint();
 		
 	}
-
-	/**
-	 * 
-	 * @param text -
-	 */
-	public void updateView(final String text) {
-		//this.lblTheText.setText(text);
-	}
 	
 	/**
-	 * @param tObserver - 
+	 * this method create the observer object.
+	 * @param tObserver the observer that this view need to use to dialogue with the controller
 	 */
 	public void setObserver(final AbstractObserverInterface tObserver) {
 		this.observer = tObserver;

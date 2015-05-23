@@ -9,16 +9,20 @@ package domo.educational.mvc;
  * The MVC pattern is composed by some classes:
  * 
  * Model:
- * 	- Model Interface (a generic interface)
- *  - Model Impl (an implemantation class of the Model Interface)
+ * 	- Flat related classes (Flat,Room,Sensor,Sensor Typology,Exceptions)
+ * 	- Backup and restore classes
  * 
  * View:
  *  - View Interface (a generic interface)
  *  - View Impl (a class that implement the View Interface)
  *  
  * Controller:
- *  - Abstract Observer Interface (a generic interface)
- *  -
+ *  - Controller
+ *  
+ * In this case we decided to use to more classes as the Java MVC standard require:
+ * 	- Abstract Observer Interface
+ * 	- Abstract Observer
+ * this two classes are used for send information from the View to the controller
  *
  */
 public class MVCTestClass {
