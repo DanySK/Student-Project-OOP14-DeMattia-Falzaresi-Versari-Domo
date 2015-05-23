@@ -3,7 +3,7 @@ package domo.educational.mvc;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
- * 
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  *	This is the interface of the observer used to exchange information between View and Controller
  */
 public interface AbstractObserverInterface {

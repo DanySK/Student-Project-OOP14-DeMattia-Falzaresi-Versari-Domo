@@ -3,6 +3,7 @@ package domo.educational.mvc;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  * this is the observer class, this class implements the related interface
  * and is used by the view to send information to the controller

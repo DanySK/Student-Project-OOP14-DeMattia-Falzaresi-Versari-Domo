@@ -3,6 +3,7 @@ package domo.educational.mvc;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  * This is a generic class for MVC Gui tests
  * 

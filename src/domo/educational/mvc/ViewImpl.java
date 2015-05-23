@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  *
  *	This view is quite similar in the aspect to the EasyGui saw in the previous Lesson, the changed things are related to the MVC pattern:
  *
