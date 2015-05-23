@@ -25,7 +25,8 @@ public class Room {
 		try {
 			checkName(rName);
 		} catch (CustomExceptions e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e);
 		}
 		this.roomName = rName;
 		sensors = new LinkedList<>();
@@ -66,7 +67,8 @@ public class Room {
 		try {
 			checkName(rName);
 		} catch (CustomExceptions e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e);
 		}
 		this.roomName = rName;
 	}

@@ -56,7 +56,8 @@ public class Controller implements AbstractObserverInterface {
 		try {
 			this.myFlat = myRestore.doRestore(fileName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e);
 			return null;
 		}
 		return this.myFlat.getImage();

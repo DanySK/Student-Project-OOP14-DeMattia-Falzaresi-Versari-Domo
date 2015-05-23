@@ -15,7 +15,7 @@ public class Flat {
 	
 	private String flatName;
 	private String flatImage;
-	private List<Room> rooms;
+	private final List<Room> rooms;
 	/**
 	 * The constructor of the flat, the name to set is a mandatory parameter.
 	 * @param fName name to set on the flat
@@ -24,7 +24,8 @@ public class Flat {
 		try {
 			checkName(fName);
 		} catch (CustomExceptions e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e);
 		}
 		this.flatName = fName;
 		this.rooms = new LinkedList<>();
@@ -40,12 +41,19 @@ public class Flat {
 			throw new CustomExceptions("The name inserted is not correct");
 		}
 	}
-	
-	public String getImage(){
+	/**
+	 * 
+	 * @return -
+	 */
+	public String getImage() {
 		return this.flatImage;
 	}
 	
-	public void setImage(String s){
+	/**
+	 * 
+	 * @param s -
+	 */
+	public void setImage(final String s) {
 		this.flatImage = s;
 	}
 	/**
@@ -88,7 +96,7 @@ public class Flat {
 	
 	@Override
 	public String toString() {
-		return this.rooms != null ? "Flat Name: " + this.flatName + " Number of Rooms: " + this.rooms.size() : "Flat Name: " + this.flatName + "This Flat is Empty";
+		return this.rooms == null ? "Flat Name: " + this.flatName + "This Flat is Empty" : "Flat Name: " + this.flatName + " Number of Rooms: " + this.rooms.size();
 	}
 
 }

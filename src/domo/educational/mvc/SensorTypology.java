@@ -17,7 +17,7 @@ public enum SensorTypology {
 	 * This method returns the types of sensor with the ability to move lenses (pan and tilt).
 	 * @return true if is a camera
 	 */
-	public boolean isTiltable(){
+	public boolean isTiltable() {
 		return this == CAMERA;
 	}
 }

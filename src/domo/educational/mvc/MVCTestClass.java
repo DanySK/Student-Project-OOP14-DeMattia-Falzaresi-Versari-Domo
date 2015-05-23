@@ -28,6 +28,10 @@ package domo.educational.mvc;
  */
 public class MVCTestClass {
 
+	/**
+	 * 
+	 * @param args -
+	 */
 	public static void main(final String[] args) {
 		
 		final ViewInterface view = new ViewImpl("Domotic Application With MVC");

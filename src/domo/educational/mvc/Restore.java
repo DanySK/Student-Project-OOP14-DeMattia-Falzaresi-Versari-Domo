@@ -29,11 +29,11 @@ public class Restore {
 	 */
 	public Flat doRestore(final String fName) throws Exception {
 		Flat resFlat = null;
-		DataInputStream dIs = new DataInputStream(new FileInputStream(new File(fName)));
+		final DataInputStream dIs = new DataInputStream(new FileInputStream(new File(fName)));
 		resFlat = new Flat(dIs.readUTF());
 		resFlat.setImage(dIs.readUTF());
 		String s = dIs.readUTF();
-		while (!s.equals("resEnd")){
+		while (!s.equals("resEnd")) {
 			resFlat.addRoom(new Room(s));
 			s = dIs.readUTF();
 		} 

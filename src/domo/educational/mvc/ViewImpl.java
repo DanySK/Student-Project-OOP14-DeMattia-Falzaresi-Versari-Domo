@@ -120,12 +120,12 @@ public class ViewImpl extends JFrame implements ViewInterface {
 			public void actionPerformed(final ActionEvent e) {
 				if (observer != null) {
 					final String resAdd = ViewImpl.this.openFile(new FileNameExtensionFilter("Txt file", "txt"));
-					String resImaAdd = observer.openProject(resAdd);
-					if (resImaAdd != null) {
+					final String resImaAdd = observer.openProject(resAdd);
+					if (resImaAdd == null) {
+						JOptionPane.showMessageDialog(myFrame, "Error in restore procedure\n check console for errors!");
+					} else {
 						setImage(resImaAdd);
 						JOptionPane.showMessageDialog(myFrame, "Restore Completed!");
-					} else {
-						JOptionPane.showMessageDialog(myFrame, "Error in restore procedure\n check console for errors!");
 					}
 				}
 				
@@ -185,7 +185,7 @@ public class ViewImpl extends JFrame implements ViewInterface {
 	 */
 	private void setImage(final String imageFile) {
 		ImageView imageJp;
-		Dimension dim = new Dimension(mainPanel.getWidth(), mainPanel.getHeight());
+		final Dimension dim = new Dimension(mainPanel.getWidth(), mainPanel.getHeight());
 		imageJp = new ImageView(imageFile, dim);
 		this.mainPanel.add(imageJp, BorderLayout.CENTER);
 		myFrame.repaint();
