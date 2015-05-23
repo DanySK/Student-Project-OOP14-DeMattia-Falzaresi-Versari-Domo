@@ -1,4 +1,4 @@
-package domo.educational.gui;
+package domo.educational.mvc;
 
 import java.util.LinkedList;
 import java.util.List;

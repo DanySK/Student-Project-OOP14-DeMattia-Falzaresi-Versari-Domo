@@ -1,4 +1,4 @@
-package domo.educational.gui;
+package domo.educational.mvc;
 
 /**
  * 

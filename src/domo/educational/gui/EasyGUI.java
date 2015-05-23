@@ -7,19 +7,13 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
-
-import domo.graphic.ImageView;
 
 /**
  * 
@@ -69,11 +63,10 @@ public class EasyGUI {
 		myFrame.setMinimumSize(myFrame.getSize());
 		
 		createNorthPanel();
-		setImage();
 		/* All the panels are added to the Frame */
 		myFrame.add(northPanel, BorderLayout.NORTH);
 		myFrame.add(mainPanel, BorderLayout.CENTER);
-		
+		setImage();
 		/* Set Visible make the frame visible */
 		myFrame.setVisible(true);
 		
@@ -136,18 +129,14 @@ public class EasyGUI {
 	}
 	/**
 	 * This Private method open a previously decided image and draw it in the background of the application
+	 * the ImageView object is a custom JPanel used to resize the requested image
 	 */
 	private void setImage() {
-		ImageView bgImage;
-		BufferedImage imageBuf;
-		try {
-			imageBuf = ImageIO.read(new File(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "domo.jpg"));
-			bgImage = new ImageView(imageBuf, this.myFrame.getBounds());
-			this.mainPanel.add(bgImage, BorderLayout.CENTER);
-		} catch (IOException e) {
-			System.out.println("Unable to Load Image");
-		}
-		
+		ImageView imageJp;
+		Dimension dim = new Dimension(myFrame.getWidth(), myFrame.getHeight());
+		imageJp = new ImageView(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "domo.jpg", dim);
+		this.mainPanel.add(imageJp, BorderLayout.CENTER);
+		myFrame.repaint();
 	}
 
 }

@@ -1,4 +1,4 @@
-package domo.educational.gui;
+package domo.educational.mvc;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 public class Flat {
 	
 	private String flatName;
+	private String flatImage;
 	private List<Room> rooms;
 	/**
 	 * The constructor of the flat, the name to set is a mandatory parameter.
@@ -40,6 +41,13 @@ public class Flat {
 		}
 	}
 	
+	public String getImage(){
+		return this.flatImage;
+	}
+	
+	public void setImage(String s){
+		this.flatImage = s;
+	}
 	/**
 	 * This method return the name of the flat.
 	 * @return name of the element
