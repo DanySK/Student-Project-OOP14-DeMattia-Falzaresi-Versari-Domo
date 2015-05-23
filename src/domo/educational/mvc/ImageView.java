@@ -38,7 +38,7 @@ public class ImageView extends JPanel {
 	 */
 	private ImageView(final Image imgF) {
 	  this.img = imgF;
-	  Dimension size = new Dimension(imgF.getWidth(null), imgF.getHeight(null));
+	  final Dimension size = new Dimension(imgF.getWidth(null), imgF.getHeight(null));
 	  this.ratio = imgF.getHeight(null) / imgF.getWidth(null);
 	  if (this.ratio == 0) {
 	  	this.ratio = 1;

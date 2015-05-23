@@ -10,7 +10,7 @@ package domo.educational.mvc;
 public class CustomExceptions extends Exception {
 
 	private static final long serialVersionUID = 1063662989458389142L;
-	private String err;
+	private final String err;
 	
 	/**
 	 * The constructor accept a String with the error Occurred.

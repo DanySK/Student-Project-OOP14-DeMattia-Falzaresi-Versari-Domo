@@ -3,6 +3,7 @@ package domo.educational.mvc;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  * This is a generic class for MVC Gui tests
  * 
@@ -27,6 +28,10 @@ package domo.educational.mvc;
  */
 public class MVCTestClass {
 
+	/**
+	 * 
+	 * @param args -
+	 */
 	public static void main(final String[] args) {
 		
 		final ViewInterface view = new ViewImpl("Domotic Application With MVC");

@@ -35,12 +35,12 @@ public class Backup {
 	public boolean doBackup(final String sFile) {
 		try {
 			// A new DataOutputStream is created, this will be the destination of our backup
-			DataOutputStream file = new DataOutputStream(new FileOutputStream(sFile));
+			final DataOutputStream file = new DataOutputStream(new FileOutputStream(sFile));
 			//writeUTF allow us to write a string in the file
 			file.writeUTF(this.myFlat.getName());
 			file.writeUTF(this.myFlat.getImage());
 			
-			for (Room room : this.myFlat.getRooms()) {
+			for (final Room room : this.myFlat.getRooms()) {
 				file.writeUTF(room.getName());
 			}
 			file.writeUTF("resEnd");

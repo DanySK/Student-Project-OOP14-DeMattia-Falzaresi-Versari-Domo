@@ -3,6 +3,7 @@ package domo.educational.mvc;
 /**
  * 
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
+ * @author Simone De Mattia simone.demattia@studio.unibo.it
  * 
  * this is the Controller part of the MVC pattern for this project.
  * the Controller gets information from the user input (the View), 
@@ -55,7 +56,8 @@ public class Controller implements AbstractObserverInterface {
 		try {
 			this.myFlat = myRestore.doRestore(fileName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e);
 			return null;
 		}
 		return this.myFlat.getImage();
