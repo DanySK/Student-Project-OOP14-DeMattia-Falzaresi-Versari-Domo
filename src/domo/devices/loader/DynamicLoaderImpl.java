@@ -31,6 +31,8 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 	
 	private File modulePath;
 	private final Map<String, Class<?>> moduleList;
+	
+	private static final int ONE = 1;
 
 	/**
 	 * Create a module loader instance.
@@ -86,7 +88,7 @@ public class DynamicLoaderImpl<E> implements DynamicLoader<E> {
 								//System.out.println(interfaces);		
 								if (interfaces.getName().endsWith(interfaceName)) {										
 									moduleList.put(c2.getName(), c2);										
-									if (Array.getLength(c2.getConstructors()) == 1) {									
+									if (Array.getLength(c2.getConstructors()) == ONE) {									
 										for (final Method met : Class.forName(interfacePath + "." + interfaceName).getMethods()) {										
 											try {										
 												interfaces.getDeclaredMethod(met.getName(), met.getParameterTypes());											
