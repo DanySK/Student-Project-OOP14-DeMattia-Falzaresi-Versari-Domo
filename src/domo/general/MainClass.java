@@ -28,14 +28,13 @@ public class MainClass {
 	 * @param args 
 	 * @throws IOException 
 	 */
-	public static void main(final String[] args) throws IOException {
+	public static void main(final String... args) throws IOException {
 		
-		Flat fl;
 		System.out.println("Welcome!");
 		
 		//used in OSX (menu on the upper screen)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getDefaultToolkit().getImage("res"+System.getProperty("file.separator").toString()+"open.png");
+		Toolkit.getDefaultToolkit().getImage("res" + System.getProperty("file.separator").toString() + "open.png");
 		
 		System.out.println("classi");
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			

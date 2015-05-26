@@ -20,6 +20,8 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 	private int id;
 	private double degree;
 	
+	private static final int PRIME = 31;
+	
 	@Override
 	public abstract String getName();
 
@@ -98,9 +100,8 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = PRIME * result + id;
 		return result;
 	} 
 
@@ -115,11 +116,8 @@ public abstract class AbstractSensor extends Observable implements Sensor {
 		if (!(obj instanceof AbstractSensor)) {
 			return false;
 		}
-		AbstractSensor other = (AbstractSensor) obj;
-		if (id != other.id) {
-			return false;
-		}
-		return true;
+		final AbstractSensor other = (AbstractSensor) obj;		
+		return id == other.id ? true : false; 
 	}
 
 }
