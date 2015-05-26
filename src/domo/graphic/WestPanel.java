@@ -101,8 +101,8 @@ public class WestPanel extends JPanel {
 		private final JLabel textLabel = new JLabel();
 		private boolean isInAlert;
 
-		private final ImageIcon redLedImage = new ImageIcon("res" + System.getProperty("file.separator").toString() + "redLed.png");
-		private final ImageIcon greenLedImage = new ImageIcon("res" + System.getProperty("file.separator").toString() + "greenLed.png");
+		private final ImageIcon redLedImage = new ImageIcon(getClass().getResource("redLed.png"));
+		private final ImageIcon greenLedImage = new ImageIcon(getClass().getResource("greenLed.png"));
 
 		public ItemForWestPanel(final String textForSensor, final int id, final boolean isAlert) {
 			super(new FlowLayout(FlowLayout.LEFT, BORDER_5, BORDER_5));
