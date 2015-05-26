@@ -30,7 +30,7 @@ simone.demattia@studio.unibo.it
 stefano.falzaresi2@studio.unibo.it
 marco.versari@studio.unibo.it
 
-# Licensing Informations #
+### Licensing Informations ###
 
 Domo is an open source software created under GPLv3 License.
 Copyright (C) 2015 Simone De Mattia
