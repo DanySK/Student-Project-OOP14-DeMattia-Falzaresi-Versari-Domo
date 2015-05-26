@@ -339,12 +339,11 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 		northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 1));
 		northPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
 		final ArrayList<JButton> btnSensorsList = new ArrayList<>();
-		final ImageIcon imgNew = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "new.png");
-		final ImageIcon imgOpen = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "open.png");
-		final ImageIcon imgSave = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "save.jpg");
-		final ImageIcon imgAddRoom = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "addRoom.png");
-		final ImageIcon imgTrash = new ImageIcon(IMAGE_ROOT_FOLDER + SYSTEM_SEPARATOR + "trash.png");
-
+		final ImageIcon imgNew = new ImageIcon(getClass().getResource("/new.png"));
+		final ImageIcon imgOpen = new ImageIcon(getClass().getResource("/open.png"));
+		final ImageIcon imgSave = new ImageIcon(getClass().getResource("/save.jpg"));
+		final ImageIcon imgAddRoom = new ImageIcon(getClass().getResource("/addRoom.png"));
+		final ImageIcon imgTrash = new ImageIcon(getClass().getResource("/trash.png"));
 		final JButton btnNew = new JButton(imgNew);
 		final JButton btnOpen = new JButton(imgOpen);
 		final JButton btnSave = new JButton(imgSave);
