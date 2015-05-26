@@ -11,9 +11,9 @@ import domo.devices.SensorTypology;
 
 public class SteSensor extends AbstractSensor  {
 	
-	private static final String NAME 			= "STEZSTAZ SENSOR";
+	private static final String NAME 			= "STESTAZ SENSOR";
 	private static final SensorTypology TYPE 	= SensorTypology.MOTION;	
-	private static final String IMAGE 			= "res" + System.getProperty("file.separator").toString() + "stestaz.jpg";	
+	private static final String IMAGE 			= "classi" + System.getProperty("file.separator").toString() + "stestaz.jpg";	
 	
 	@Override
 	public String getName() {

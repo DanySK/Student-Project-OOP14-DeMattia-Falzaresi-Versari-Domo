@@ -13,7 +13,7 @@ public class SimoSensor extends AbstractSensor  {
 	
 	private static final String NAME 			= "SIMO SENSOR";
 	private static final SensorTypology TYPE 	= SensorTypology.MOTION;	
-	private static final String IMAGE 			= "res" + System.getProperty("file.separator").toString() + "simoSensor.jpg";	
+	private static final String IMAGE 			= "classi" + System.getProperty("file.separator").toString() + "simoSensor.jpg";	
 	
 	@Override
 	public String getName() {
