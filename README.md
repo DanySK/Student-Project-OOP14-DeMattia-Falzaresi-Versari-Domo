@@ -1,29 +1,35 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This README would document which are the steps for correctly run this application
 
 ### What is this repository for? ###
 
 * Quick summary
+This Repository contain sorce files and executable jar of a domotic application
+
 * Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+1.0.0
 
 ### How do I get set up? ###
 
 * Summary of set up
+Download the .jar file and classi.zip from the download section
+
 * Configuration
-This software needs a folder in the same position of the jar folder with the name "classi" with the sensor class to implement, a zip file with some standard sensor is provided in the dowload section of this project
+Unzip classi.zip and put the unzipped folder in tha same locarion of the jar file and start the project running the .jar file (is a runnable java files)
+
 * Dependencies
+In the folder classi are inserted some demo sensors, this application has a dinamic sensor loader so each user can develop his own sensor type and add it to this folder, the application automatically will show it in the sensor panel.
+
 * How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
+Open application and press "New Project" provide an image file with the plan of the flat after that add a new sensor from the sensor bar and move it to the correct location (Sensor can be rotated by right click or scrolling  mouse wheel) when done is possible to save the configuration with the "Save" button.
+With the "Open" button is possible to restart an alredy created project
+ 
 
 ### Who do I talk to? ###
 
 * Repo owner or admin
-* Other community or team contact
+Admins of this repository are:
+simone.demattia@studio.unibo.it
+stefano.falzaresi2@studio.unibo.it
+marco.versari@studio.unibo.it
