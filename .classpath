@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="domo/devices/sensor/|domo/educational/advancedmechanisms/|domo/educational/exceptions/|domo/educational/generics/|domo/educational/gui/|domo/educational/inheritance/|domo/educational/io/|domo/educational/mvc/" kind="src" path="src"/>
 	<classpathentry kind="src" path="classi"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
