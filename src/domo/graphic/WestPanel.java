@@ -63,7 +63,7 @@ public class WestPanel extends JPanel {
 				final JPanel viewPanel = new JPanel();
 				viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 				if (room.getSensor() != null && room.getSensor().size() > 0) {
-					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getId() + " " + room.getName()));
+					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
 					for (final Sensor sensor : room.getSensor()) {
 
 						ItemForWestPanel sensorItem;
@@ -102,7 +102,7 @@ public class WestPanel extends JPanel {
 		private boolean isInAlert;
 
 		private final ImageIcon redLedImage = new ImageIcon(getClass().getResource("/redLed.png"));
-		private final ImageIcon greenLedImage = new ImageIcon(getClass().getResource("/sgreenLed.png"));
+		private final ImageIcon greenLedImage = new ImageIcon(getClass().getResource("/greenLed.png"));
 
 		public ItemForWestPanel(final String textForSensor, final int id, final boolean isAlert) {
 			super(new FlowLayout(FlowLayout.LEFT, BORDER_5, BORDER_5));
@@ -111,7 +111,7 @@ public class WestPanel extends JPanel {
 			imageLabel.setIcon(redLedImage);
 			imageLabel.setSize(new Dimension(redLedImage.getIconWidth(), redLedImage.getIconHeight()));
 			this.isInAlert = isAlert;
-			textLabel.setText(id + " " + textForSensor);
+			textLabel.setText(textForSensor);
 			this.add(imageLabel);
 			this.add(textLabel);
 		}

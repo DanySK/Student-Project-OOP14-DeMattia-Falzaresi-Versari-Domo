@@ -19,7 +19,7 @@ import java.util.Set;
  * The MainClass where everythings begun.
  * @author Marco Versari
  * @author Stefano Falzaresi Stefano.Falzaresi2@studio.unibo.it
- *
+ *	@autor Simone De Mattia simone.demattia@studio.unibo.it
  */
 public class MainClass {
 
@@ -35,8 +35,6 @@ public class MainClass {
 		//used in OSX (menu on the upper screen)
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		
-		
-		System.out.println("classi");
 		final DynamicLoader<Sensor> listaClassiSensori = new DynamicLoaderImpl<Sensor>("domo.devices", "Sensor", "AbstractSensor");			
 		listaClassiSensori.setModulePath("classi");
 		final Set<String> resLoader = listaClassiSensori.updateModuleList();
