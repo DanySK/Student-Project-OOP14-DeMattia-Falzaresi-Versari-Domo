@@ -4,19 +4,19 @@ This README would document which are the steps for correctly run this applicatio
 
 ### What is this repository for? ###
 
-* Quick summary
-This Repository contain sorce files and executable jar of a domotic application
+* This Repository contain sorce files and executable jar of a domotic application
 
-* Version
+* Version: 
 1.0.0
 
 ### How do I get set up? ###
 
-* Download the .jar file and classi.zip from the download section
+* Download the Domo.zip file from the download section
 
-* Unzip classi.zip and put the unzipped folder in tha same locarion of the jar file and start the project running the .jar file (is a runnable java files)
+* Unzip the downloaded file  and start the project running the Domo.jar file (is a runnable java files) located in the foledr \Domo\DomoApp
 
-* In the folder classi are inserted some demo sensors, this application has a dinamic sensor loader so each user can develop his own sensor type and add it to this folder, the application automatically will show it in the sensor panel.
+* In the downloaded file are inserted the .jar file, a "classi" folder with 4 examples of sensor (.class files) with their icons.
+ In the "Sensor Java Example" folder there is an example of .java file rapresenting a standard sensor and in the "Test Image" folder is present a plan of a generic flat.T his application has a dinamic sensor loader so each user can develop his own sensor type  starting from the .java example. When a new sensor is added to the classi folder (with its image icon)  the application automatically will show it in the sensor panel (an automatic compatibility check is done).
 
 * How to run tests:
 Open application and press "New Project" provide an image file with the plan of the flat after that add a new sensor from the sensor bar and move it to the correct location (Sensor can be rotated by right click or scrolling  mouse wheel) when done is possible to save the configuration with the "Save" button.
