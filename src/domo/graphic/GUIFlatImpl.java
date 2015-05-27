@@ -335,11 +335,6 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 		final ImageIcon imgSave = new ImageIcon(getClass().getResource("/save.jpg"));
 		final ImageIcon imgAddRoom = new ImageIcon(getClass().getResource("/addRoom.png"));
 		final ImageIcon imgTrash = new ImageIcon(getClass().getResource("/trash.png"));
-		final ImageIcon imgNew = new ImageIcon(getClass().getResource("/new.png"));
-		final ImageIcon imgOpen = new ImageIcon(getClass().getResource("/open.png"));
-		final ImageIcon imgSave = new ImageIcon(getClass().getResource("/save.jpg"));
-		final ImageIcon imgAddRoom = new ImageIcon(getClass().getResource("/addRoom.png"));
-		final ImageIcon imgTrash = new ImageIcon(getClass().getResource("/trash.png"));
 
 		final JButton btnNew = new JButton(imgNew);
 		final JButton btnOpen = new JButton(imgOpen);
