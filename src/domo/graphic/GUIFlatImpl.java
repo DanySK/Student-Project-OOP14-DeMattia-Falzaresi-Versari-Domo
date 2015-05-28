@@ -44,7 +44,8 @@ import domo.general.Room;
 
 
 /**
- * 
+ * Graphic interface implementation. 
+ *  
  * @author Simone De Mattia simone.demattia@studio.unibo.it
  */
 public class GUIFlatImpl extends JFrame implements GUIFlat {
@@ -81,8 +82,6 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 
 	private static final String FILE_DOMO_EXTENTION = "dprj";
 
-	private static final String IMAGE_ROOT_FOLDER = "res";
-
 	private static final int ADD_ROOM_FRAME_BORDER = 15;
 
 	private static final int STANDARD_BORDER = 5;
@@ -91,11 +90,6 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 	 * Standard icon square dimension
 	 */
 	private static final int BUTTON_ICON_DIMENSION = 50;
-
-	/**
-	 * system separator
-	 */
-	private static final String SYSTEM_SEPARATOR = System.getProperty("file.separator").toString();
 
 	/**
 	 * The Graphic Main Frame
@@ -155,9 +149,6 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 		super();
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		System.out.println(ClassLoader.getSystemResource("open.png"));
-
-		this.setIconImage(new ImageIcon(ClassLoader.getSystemResource("addSensor.png")).getImage());
 		
 		final double maxWidth 	= Toolkit.getDefaultToolkit().getScreenSize().getWidth() * W_SCREEN_MAX_SCALE;
 		final double maxHeight 	= Toolkit.getDefaultToolkit().getScreenSize().getHeight() * H_SCREEN_MAX_SCALE;
@@ -344,11 +335,6 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 		final ImageIcon imgSave = new ImageIcon(getClass().getResource("/save.jpg"));
 		final ImageIcon imgAddRoom = new ImageIcon(getClass().getResource("/addRoom.png"));
 		final ImageIcon imgTrash = new ImageIcon(getClass().getResource("/trash.png"));
-		final ImageIcon imgNew = new ImageIcon(getClass().getResource("/new.png"));
-		final ImageIcon imgOpen = new ImageIcon(getClass().getResource("/open.png"));
-		final ImageIcon imgSave = new ImageIcon(getClass().getResource("/save.jpg"));
-		final ImageIcon imgAddRoom = new ImageIcon(getClass().getResource("/addRoom.png"));
-		final ImageIcon imgTrash = new ImageIcon(getClass().getResource("/trash.png"));
 
 		final JButton btnNew = new JButton(imgNew);
 		final JButton btnOpen = new JButton(imgOpen);
@@ -517,7 +503,7 @@ public class GUIFlatImpl extends JFrame implements GUIFlat {
 				btnAddSensor.addMouseListener(
 						new MouseAdapter() {
 							public void mouseEntered(final MouseEvent e) {
-								southPanel.setText("Add \"" + map.get("name") + "\" Sensor to flat");
+								southPanel.setText("Sensor: " + map.get("name") + ". | Left Click to Select/Unselect. Drag&Drop to move. Right click or mouse wheel to rotate");
 							}
 
 							public void mouseExited(final MouseEvent e) {

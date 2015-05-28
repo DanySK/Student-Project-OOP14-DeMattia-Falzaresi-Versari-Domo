@@ -82,7 +82,7 @@ public class DomoTestImpl extends JFrame implements DomoTest {
 				final JPanel viewPanel = new JPanel();
 				viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
 				if (room.getSensor() != null && room.getSensor().size() > 0) {
-					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getId() + " " + room.getName()));
+					viewPanel.setBorder(BorderFactory.createTitledBorder(room.getName()));
 					for (final Sensor sensor : room.getSensor()) {
 
 						TestEntity sensorItem;
