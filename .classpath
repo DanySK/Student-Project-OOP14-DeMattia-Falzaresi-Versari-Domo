@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="domo/devices/sensor/|domo/educational/advancedmechanisms/|domo/educational/exceptions/|domo/educational/generics/|domo/educational/gui/|domo/educational/inheritance/|domo/educational/io/|domo/educational/mvc/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="classi"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="src" path="educational"/>
