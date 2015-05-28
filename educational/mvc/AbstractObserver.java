@@ -24,9 +24,8 @@ public abstract class AbstractObserver implements AbstractObserverInterface {
 	/**
 	 * Open project accept a txt path file and restore flat and related image.
 	 * @param fileName the file to restore
-	 * @return a string with the image path
 	 */
-	public abstract String openProject(String fileName);
+	public abstract void openProject(String fileName);
 
 	
 }

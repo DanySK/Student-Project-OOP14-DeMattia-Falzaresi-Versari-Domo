@@ -1,4 +1,4 @@
-package mvc;
+ package mvc;
 
 /**
  * 
@@ -50,16 +50,15 @@ public class Controller implements AbstractObserverInterface {
 	 * to repaint the background
 	 */
 	@Override
-	public String openProject(final String fileName) {
+	public void openProject(final String fileName) {
 		final Restore myRestore = new Restore();
 		try {
 			this.myFlat = myRestore.doRestore(fileName);
 		} catch (Exception e) {
 			//e.printStackTrace();
 			System.out.println(e);
-			return null;
 		}
-		return this.myFlat.getImage();
+		view.addImage(myFlat.getImage());
 	}
 
 

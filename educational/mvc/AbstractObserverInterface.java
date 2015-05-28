@@ -25,7 +25,7 @@ public interface AbstractObserverInterface {
 	 * @param fileName the file to restore
 	 * @return a string with the image path
 	 */
-	String openProject(String fileName);
+	void openProject(String fileName);
 	
 	
 }

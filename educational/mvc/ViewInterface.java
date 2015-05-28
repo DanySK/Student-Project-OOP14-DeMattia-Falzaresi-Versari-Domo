@@ -15,4 +15,10 @@ public interface ViewInterface {
 	 * @param observer to use with this instance of the view
 	 */
 	void setObserver(final AbstractObserverInterface observer);
+	
+	/**
+	 * This method set the image to use in the gui.
+	 * @param image to set as background
+	 */
+	void addImage(final String image);
 }
